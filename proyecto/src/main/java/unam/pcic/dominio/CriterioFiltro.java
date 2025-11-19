@@ -1,4 +1,4 @@
 package unam.pcic.dominio;
 
-public class CriterioFIltro {
+public class CriterioFiltro {
 }
