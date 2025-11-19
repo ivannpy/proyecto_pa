@@ -1,5 +1,8 @@
 package unam.pcic;
 
-// Decide si se usará el procesador concurrente o el secuencial
+/**
+ * - Crea instancias de ProcesadorCSV según sea secuencial o concurrente.
+ * - Inyecta dependencias.
+ */
 public class FabricaProcesador {
 }
