@@ -8,4 +8,5 @@ package unam.pcic.procesamiento;
  * - Usa la implementación orientada a renglones (RegistroCSV).
  */
 public class ProcesadorSecuencial implements ProcesadorCSV {
+
 }
