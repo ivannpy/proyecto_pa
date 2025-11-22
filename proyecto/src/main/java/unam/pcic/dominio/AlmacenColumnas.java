@@ -1,7 +1,7 @@
 package unam.pcic.dominio;
 
 /**
- * - Almacena las columnas seleccionadas en arrays
+ * - Almacena el CSV como una lista de columnas.
  */
 public class AlmacenColumnas {
 }

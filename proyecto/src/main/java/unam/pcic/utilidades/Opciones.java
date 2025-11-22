@@ -4,19 +4,21 @@ import java.util.Arrays;
 
 public class Opciones {
     /** Indica si se pasaron argumentos al programa. */
-    private boolean hayArgumentos = false;
+    private boolean hayArgumentos;
 
     /** Indica si se puso un archivo csv de entrada. */
-    private boolean hayArchivo = false;
+    private boolean hayArchivo;
 
     /** Ruta del archivo csv de entrada. */
-    private String archivo = null;
+    private String archivo;
 
     /** Lista de columnas a procesar. */
-    private int[] columnas = null;
+    private int[] columnas;
 
     /** Filtros a aplicar a las columnas. */
-    private String[] filtros = null;
+    private String[] filtros;
+
+    private boolean todasLasColumnas;
 
     /**
      * Regresa si se pasaron argumentos al programa.
@@ -94,6 +96,14 @@ public class Opciones {
      */
     public void setColumnas(int[] columnas) {
         this.columnas = columnas;
+    }
+
+    public void setTodasLasColumnas(boolean todasLasColumnas) {
+        this.todasLasColumnas = todasLasColumnas;
+    }
+
+    public boolean getTodasLasColumnas() {
+        return todasLasColumnas;
     }
 
     /**

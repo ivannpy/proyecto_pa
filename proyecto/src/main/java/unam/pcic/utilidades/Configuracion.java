@@ -1,5 +1,7 @@
 package unam.pcic.utilidades;
 
+import java.util.Arrays;
+
 /**
  * - Lee parámetros de entrada del usuario
  * - Valida criterios de búsqueda o filtrado.
@@ -43,14 +45,22 @@ public class Configuracion {
                     if (columnasRepetido)
                         throw new IllegalArgumentException("La opción columnas se repite.");
                     if (i + 1 >= args.length)
-                        throw new IllegalArgumentException("La opción columnas requiere una lista de enteros.");
+                        throw new IllegalArgumentException("La opción columnas requiere una lista de enteros o *");
+                    System.out.println(Arrays.toString(args));
                     String columnasStr = args[++i];
+                    System.out.println(columnasStr);
+                    if (columnasStr.equals("todas")) {
+                        opciones.setColumnas(new int[0]);
+                        opciones.setTodasLasColumnas(true);
+                        columnasRepetido = true;
+                        break;
+                    }
                     String[] listaColumnas = columnasStr.split(",");
                     int[] columnas = new int[listaColumnas.length];
                     for (int j = 0; j < listaColumnas.length; j++) {
                         try {
                             columnas[j] = Integer.parseInt(listaColumnas[j]);
-                            if (columnas[j] <= 0)
+                            if (columnas[j] < 0)
                                 throw new NumberFormatException("La columna debe ser mayor a cero.");
                         } catch (NumberFormatException e) {
                             throw new IllegalArgumentException("Las columnas deben ser enteros positivos separados por comas.");
