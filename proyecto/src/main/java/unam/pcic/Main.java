@@ -10,6 +10,11 @@ public class Main {
      * @param args los argumentos de la linea de comandos.
      */
     private static void ayuda(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Uso: java -jar proyecto.jar archivo.csv [ banderas ]");
+            System.exit(1);
+        }
+
         if (args.length == 1 && (args[0].equals("-h") || args[0].equals("--help"))) {
             System.out.println("Uso: java -jar proyecto.jar [archivo.csv | banderas]");
             System.out.println("Banderas:");
@@ -26,6 +31,6 @@ public class Main {
         Opciones opciones = Configuracion.parsea(args);
         System.out.println(opciones);
 
-        ControladorAplicacion.run(opciones);
+        ControladorAplicacion.ejecutar(opciones);
     }
 }

@@ -21,30 +21,15 @@ public class ControladorAplicacion {
      *
      * @param opciones Configuraciones para ejecutar el programa.
      */
-    public static void run(Opciones opciones) {
-        System.out.println("Ejecutando app");
+    public static void ejecutar(Opciones opciones) {
+        System.out.println("Ejecutando app...");
         prueba(opciones);
     }
 
 
     private static void prueba(Opciones opciones) {
         try {
-            File inputFile;
-            // Si la ejecución de hace sin argumentos
-            if (!opciones.getHayArgumentos() || !opciones.getHayArchivo()){
-                ClassLoader classLoader = Main.class.getClassLoader();
-                URL resource = classLoader.getResource("sample.csv");
-
-                if (resource == null) {
-                    // Meterlo a Logger
-                    System.err.println("Error: No se encontró el archivo en resources/");
-                    return;
-                }
-                inputFile = new File(resource.getFile());
-            } else {
-                // Si la ejecución se hace con argumentos
-                inputFile = new File(opciones.getArchivo());
-            }
+            File inputFile = new File(opciones.getArchivo());
 
             LectorCSV lector = new LectorCSV(inputFile, true);
 

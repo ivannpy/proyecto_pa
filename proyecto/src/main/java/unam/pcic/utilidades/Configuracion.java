@@ -12,6 +12,8 @@ public class Configuracion {
      * @return una instancia de {@link Opciones}.
      */
     public static Opciones parsea(String[] args) {
+        // Aquí se tienen que hacer las validaciones de los argumentos de la linea de comandos
+
         Opciones opciones = new Opciones();
 
         opciones.setHayArgumentos(args.length > 0);
