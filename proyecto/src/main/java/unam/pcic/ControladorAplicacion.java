@@ -59,8 +59,10 @@ public class ControladorAplicacion {
             System.out.println("Total de registros leídos: " + almacen.getLongitud());
 
             for (RegistroCSV registro : almacen) {
-                if (registro.getNumeroColumnas() != 24)
+                if (registro.getNumeroColumnas() != 24) {
                     System.out.println("No hay 24 columnas en cada registro");
+                    System.out.println("R:" + registro);
+                }
             }
 
             int n = opciones.getLimiteImpresion();
@@ -69,7 +71,6 @@ public class ControladorAplicacion {
                 RegistroCSV registro = almacen.get(i);
                 System.out.println("Línea " + registro.getNumeroLinea() + ": " + registro);
             }
-
 
             // Seleccion de columnas
 

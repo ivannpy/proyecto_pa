@@ -37,6 +37,9 @@ public class LectorCSV {
     /** El encabezado del archivo CSV */
     private String[] encabezado;
 
+    /** Cantidad de columnas del archivo CSV */
+    private int cantidadColumnas;
+
     /**
      * Construye un LectorCSV usando el delimitador y la codificación por defecto.
      *
@@ -88,6 +91,7 @@ public class LectorCSV {
             if (linea != null) {
                 encabezado = parsearLinea(linea);
             }
+            cantidadColumnas = encabezado.length;
             return encabezado;
         }
     }
@@ -150,8 +154,18 @@ public class LectorCSV {
                 }
 
                 String[] valores = parsearLinea(linea);
+
+                if (valores.length != cantidadColumnas) {
+                    numeroLinea++;
+                    continue;
+                }
+
                 registros.add(new RegistroCSV(valores, numeroLinea));
                 numeroLinea++;
+
+                if (numeroLinea == 5_000_000) {
+                    break;
+                }
             }
         }
         return registros;
