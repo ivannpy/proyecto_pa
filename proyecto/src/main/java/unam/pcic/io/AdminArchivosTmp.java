@@ -6,4 +6,16 @@ package unam.pcic.io;
  * - Hace la limpieza automática al finalizar.
  */
 public class AdminArchivosTmp {
+
+    public static void creaCarpetaTemporal() {
+
+    }
+
+    public static void eliminaCarpetaTemporal() {
+
+    }
+
+    public static void creaArchivoTemporal(int indice) {
+
+    }
 }

@@ -7,4 +7,5 @@ package unam.pcic.io;
  * - Incluye detalles de los errores.
  */
 public class Logger {
+
 }

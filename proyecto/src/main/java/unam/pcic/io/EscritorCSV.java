@@ -1,5 +1,6 @@
 package unam.pcic.io;
 
+import unam.pcic.dominio.AlmacenRenglones;
 import unam.pcic.dominio.RegistroCSV;
 
 import java.io.File;
@@ -14,6 +15,10 @@ import java.io.Writer;
 public class EscritorCSV {
 
     public static void escribeRegistro(RegistroCSV registro, File archivo) {
+
+    }
+
+    public static void escribeLinea(String linea, File archivo) {
 
     }
 }
