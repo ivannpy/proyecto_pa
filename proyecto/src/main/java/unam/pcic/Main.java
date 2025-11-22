@@ -2,28 +2,62 @@ package unam.pcic;
 
 import unam.pcic.dominio.RegistroCSV;
 import unam.pcic.io.LectorCSV;
+import unam.pcic.utilidades.Configuracion;
+import unam.pcic.utilidades.Opciones;
+
 import java.io.*;
 import java.net.URL;
 import java.util.List;
 
 
 public class Main {
-    public static void main(String[] args) {
-        prueba();
+    /**
+     * Imprime las instrucciones de uso.
+     *
+     * @param args los argumentos de la linea de comandos.
+     */
+    private static void ayuda(String[] args) {
+        if (args.length == 1 && (args[0].equals("-h") || args[0].equals("--help"))) {
+            System.out.println("Uso: java -jar proyecto.jar [archivo.csv | banderas]");
+            System.out.println("Banderas:");
+            System.out.println("-h, --ayuda: Imprime esta ayuda.");
+            System.out.println("-c --columnas: Lista de columnas separadas por comas.");
+            System.out.println("-f --filtros: Filtro por aplicar.");
+            System.exit(1);
+        }
     }
 
-    private static void prueba() {
-        try {
-            ClassLoader classLoader = Main.class.getClassLoader();
-            URL resource = classLoader.getResource("sample.csv");
+    public static void main(String[] args) {
+        Main.ayuda(args);
 
-            if (resource == null) {
-                // Meterlo a Logger
-                System.err.println("Error: No se encontró el archivo en resources/");
-                return;
+        Opciones opciones = Configuracion.parsea(args);
+
+        // ControladorAplicacion.run(opciones)
+
+        System.out.println(opciones);
+
+        prueba(opciones);
+    }
+
+    private static void prueba(Opciones opciones) {
+        try {
+            File inputFile;
+            // Si la ejecución de hace sin argumentos
+            if (!opciones.getHayArgumentos() || !opciones.getHayArchivo()){
+                ClassLoader classLoader = Main.class.getClassLoader();
+                URL resource = classLoader.getResource("sample.csv");
+
+                if (resource == null) {
+                    // Meterlo a Logger
+                    System.err.println("Error: No se encontró el archivo en resources/");
+                    return;
+                }
+                inputFile = new File(resource.getFile());
+            } else {
+                // Si la ejecución se hace con argumentos
+                inputFile = new File(opciones.getArchivo());
             }
 
-            File inputFile = new File(resource.getFile());
             LectorCSV lector = new LectorCSV(inputFile, true);
 
             String[] encabezados = lector.leerEncabezado();
