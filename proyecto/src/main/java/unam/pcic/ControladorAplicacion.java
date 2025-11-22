@@ -1,9 +1,6 @@
 package unam.pcic;
 
-import unam.pcic.dominio.Almacen;
-import unam.pcic.dominio.AlmacenRenglones;
-import unam.pcic.dominio.CriterioFiltro;
-import unam.pcic.dominio.RegistroCSV;
+import unam.pcic.dominio.*;
 import unam.pcic.io.LectorCSV;
 import unam.pcic.utilidades.Opciones;
 import java.io.File;
@@ -31,6 +28,8 @@ public class ControladorAplicacion {
 
 
     private static void prueba(Opciones opciones) {
+        Almacen<RegistroCSV> almacen;
+
         try {
             File inputFile = new File(opciones.getArchivo());
 
@@ -38,9 +37,9 @@ public class ControladorAplicacion {
 
             String[] encabezados = lector.leerEncabezado();
             System.out.println("Columnas: " + encabezados.length);
-            for (int i = 0; i < encabezados.length; i++) {
-                System.out.println("  [" + i + "] " + encabezados[i]);
-            }
+            //for (int i = 0; i < encabezados.length; i++) {
+            //    System.out.println("  [" + i + "] " + encabezados[i]);
+            //}
 
             if (opciones.getTodasLasColumnas()) {
                 List<Integer> columnas = new ArrayList<>();
@@ -55,7 +54,7 @@ public class ControladorAplicacion {
             // RegistroCSV para row-oriented
             // ColumnaCSV para column-oriented
 
-            Almacen<RegistroCSV> almacen = new AlmacenRenglones(lector.leer());
+            almacen = new AlmacenRenglones(lector.leer());
 
             System.out.println("Total de registros leídos: " + almacen.getLongitud());
 
@@ -64,25 +63,55 @@ public class ControladorAplicacion {
                     System.out.println("No hay 24 columnas en cada registro");
             }
 
-            int n = 10;
+            int n = opciones.getLimiteImpresion();
             System.out.println("\nPrimeros " + n + " registros:");
             for (int i = 0; i < Math.min(n, almacen.getLongitud()); i++) {
                 RegistroCSV registro = almacen.get(i);
                 System.out.println("Línea " + registro.getNumeroLinea() + ": " + registro);
             }
 
+
+            // Seleccion de columnas
+
             if (opciones.getColumnas() != null) {
                 CriterioFiltro<RegistroCSV> criterio = CriterioFiltro.paraRegistroCSV();
-                Almacen<RegistroCSV> seleccionados = criterio.seleccionarColumnas(almacen, opciones.getColumnas());
+                almacen = criterio.seleccionarColumnas(almacen, opciones.getColumnas());
 
-                int m = 10;
-                System.out.println("\nPrimeros " + m + " registros (columnas seleccionadas):");
-                for (int i = 0; i < Math.min(m, almacen.getLongitud()); i++) {
-                    RegistroCSV registro = seleccionados.get(i);
+                System.out.println("\nPrimeros " + n + " registros (columnas seleccionadas):");
+                for (int i = 0; i < Math.min(n, almacen.getLongitud()); i++) {
+                    RegistroCSV registro = almacen.get(i);
                     System.out.println("Línea " + registro.getNumeroLinea() + ": " + registro);
                 }
-
             }
+
+            if (opciones.getFiltros() != null) {
+                // Hay que hacer un metodo auxiliar para crear las condiciones
+                String[] filtros = opciones.getFiltros();
+                List<CondicionFiltro> condiciones = new ArrayList<>();
+                for (String filtro : filtros) {
+                    String columna = filtro.split("=")[0].replace("c", "");
+                    String valor = filtro.split("=")[1];
+                    int columnaInt = Integer.parseInt(columna);
+
+                    CondicionFiltro condicion = new CondicionIgualdad(columnaInt, valor);
+                    condiciones.add(condicion);
+                }
+
+                // Hay que crear una forma de unir condiciones
+                CondicionFiltro cond = condiciones.getFirst();
+
+                System.out.println("\nRegistros que cumplen los filtros:");
+
+                int j = 0;
+                for (RegistroCSV registro : almacen) {
+                    if (cond.cumple(registro)) {
+                        j++;
+                        System.out.println("Línea " + registro.getNumeroLinea() + ": " + registro);
+                    }
+                    if (j >= n) break;
+                }
+            }
+
         } catch (Exception e) {
             System.err.println("Error al leer archivo: " + e.getMessage());
         }

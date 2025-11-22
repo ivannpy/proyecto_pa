@@ -8,12 +8,12 @@ package unam.pcic.dominio;
  *      - Filtro por valor constante
  *      - Mayor que, menor que, mayor o igual que, menor o igual que.
  */
-public interface CondicionFiltro<R> {
+public interface CondicionFiltro {
     /**
      * Indica si el registro cumple la condición de este filtro.
      *
      * @param registro Registro a evaluar
      * @return true si el registro cumple la condición, false en caso contrario.
      */
-    boolean cumple(R registro);
+    boolean cumple(RegistroCSV registro);
 }

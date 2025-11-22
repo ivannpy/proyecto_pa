@@ -27,11 +27,23 @@ public class Configuracion {
 
         boolean columnasRepetido = false;
         boolean filtrosRepetido = false;
+        boolean limiteRepetido = false;
 
         for (int i = 0; i < args.length; i++) {
             String arg = args[i];
 
             switch (arg) {
+                case "-l":
+                case "--limite":
+                    if (limiteRepetido)
+                        throw new IllegalArgumentException("La opción filtros se repite.");
+                    if (i + 1 >= args.length)
+                        throw new IllegalArgumentException("La opción limite requiere numero entero");
+                    String limiteStr = args[++i];
+                    int limite = Integer.parseInt(limiteStr);
+                    opciones.setLimiteImpresion(limite);
+                    break;
+
                 case "-f":
                 case "--filtros":
                     if (filtrosRepetido)
@@ -46,10 +58,8 @@ public class Configuracion {
                         throw new IllegalArgumentException("La opción columnas se repite.");
                     if (i + 1 >= args.length)
                         throw new IllegalArgumentException("La opción columnas requiere una lista de enteros o *");
-                    System.out.println(Arrays.toString(args));
                     String columnasStr = args[++i];
-                    System.out.println(columnasStr);
-                    if (columnasStr.equals("todas")) {
+                    if (columnasStr.equals("todas") || columnasStr.equals("all")) {
                         opciones.setColumnas(new int[0]);
                         opciones.setTodasLasColumnas(true);
                         columnasRepetido = true;

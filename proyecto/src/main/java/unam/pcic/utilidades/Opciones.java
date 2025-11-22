@@ -18,7 +18,11 @@ public class Opciones {
     /** Filtros a aplicar a las columnas. */
     private String[] filtros;
 
-    private boolean todasLasColumnas;
+    /** Indica si se seleccionan todas las columnas. */
+    private boolean todasLasColumnas = false;
+
+    /** Indica cuantos registros se imprimen en la consola */
+    private int limiteImpresion;
 
     /**
      * Regresa si se pasaron argumentos al programa.
@@ -115,6 +119,24 @@ public class Opciones {
     }
 
     /**
+     * Modifica el limite de registros a imprimir.
+     *
+     * @param limiteImpresion cuantos registros se imprimen en la consola
+     */
+    public void setLimiteImpresion(int limiteImpresion) {
+        this.limiteImpresion = limiteImpresion;
+    }
+
+    /**
+     * Regresa el limite de registros a imprimir.
+     *
+     * @return el limite de registros a imprimir.
+     */
+    public int getLimiteImpresion() {
+        return limiteImpresion;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -128,6 +150,10 @@ public class Opciones {
         sb.append(Arrays.toString(columnas));
         sb.append(", filtros=");
         sb.append(Arrays.toString(filtros));
+        sb.append(", todasLasColumnas=");
+        sb.append(todasLasColumnas);
+        sb.append(", limiteImpresion=");
+        sb.append(limiteImpresion);
         sb.append(')');
         return sb.toString();
     }
