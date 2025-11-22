@@ -1,6 +1,7 @@
 package unam.pcic;
 
 import unam.pcic.dominio.*;
+import unam.pcic.io.DivisorArchivo;
 import unam.pcic.io.LectorCSV;
 import unam.pcic.utilidades.Opciones;
 import java.io.File;
@@ -23,7 +24,16 @@ public class ControladorAplicacion {
      */
     public static void ejecutar(Opciones opciones) {
         System.out.println("Ejecutando app...");
-        prueba(opciones);
+        pruebaDivisor(opciones);
+    }
+
+    private static void pruebaDivisor(Opciones opciones) {
+        try {
+            File inputFile = new File(opciones.getArchivo());
+            DivisorArchivo.divide(inputFile);
+        } catch (Exception e) {
+            System.err.println("Error al dividir archivo: " + e.getMessage());
+        }
     }
 
 
