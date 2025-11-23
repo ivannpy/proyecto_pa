@@ -28,7 +28,6 @@ public class CriterioFiltro<R> {
                 new SeleccionRenglon(),
                 AlmacenRenglones::new
         );
-
     }
 
     public Almacen<R> seleccionarColumnas(Almacen<R> almacen, int[] columnas) {
