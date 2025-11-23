@@ -78,8 +78,8 @@ public class DivisorArchivo {
 
         try {
             RegistroCSV registro;
-            while ((registro = lector.nextRegistro()) != null) {
-                EscritorCSV.escribeRegistro(registro, archivosTemporales.get(i % cantidadProcesadores));
+            while ((registro = lector.siguienteRegistro()) != null) {
+                EscritorCSV.escribeRegistro(registro, archivosTemporales.get(i % cantidadSubarchivos));
                 i++;
             }
         } catch (Exception e) {

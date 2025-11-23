@@ -204,7 +204,7 @@ public class LectorCSV {
         lectorSecuencialInicializado = true;
     }
 
-    public RegistroCSV nextRegistro() throws Exception {
+    public RegistroCSV siguienteRegistro() throws Exception {
         inicializarLectorSecuencial();
 
         String linea;
