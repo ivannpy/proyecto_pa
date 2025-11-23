@@ -1,13 +1,18 @@
 package unam.pcic.dominio;
 
+import java.util.List;
+
 /**
  * Almacen para almacenar registros.
+ *  Representa un archivo CSV completo.
  *
  * @param <R> Tipo genérico para RegistroCSV o ColumnaCSV.
  */
 public interface Almacen<R> extends Iterable<R> {
     /**
-     * Número de registros almacenados.
+     * Obtiene cuántos registros tiene el almacén
+     *
+     * @return cantidad de registros en el almacén.
      */
     int getLongitud();
 

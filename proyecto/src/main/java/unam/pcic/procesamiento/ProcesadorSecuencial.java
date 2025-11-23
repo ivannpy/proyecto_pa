@@ -1,5 +1,7 @@
 package unam.pcic.procesamiento;
 
+import unam.pcic.utilidades.Opciones;
+
 /**
  * - Implementa ProcesadorCSV.
  * - Lee el archivo completo secuencialmente.
@@ -9,4 +11,11 @@ package unam.pcic.procesamiento;
  */
 public class ProcesadorSecuencial implements ProcesadorCSV {
 
+    /**
+     * Hace el procesamiento secuencial.
+     *
+     * @param opciones Configuraciones para ejecutar el programa.
+     */
+    public void procesa(Opciones opciones) {
+    }
 }

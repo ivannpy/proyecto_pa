@@ -1,5 +1,7 @@
 package unam.pcic.procesamiento;
 
+import unam.pcic.utilidades.Opciones;
+
 /**
  * - Usa el DividorArchivo para dividir el archivo en subarchivos de entrada.
  * - Instancia un AdministradorTrabajo para coordinar el pool de hilos.
@@ -7,5 +9,12 @@ package unam.pcic.procesamiento;
  * - Limpia los subarchivos temporales.
  * - Usa la implementación orientada a columnas.
  */
-public class ProcesadorConcurrente {
+public class ProcesadorConcurrente implements ProcesadorCSV {
+    /**
+     * Hace el procesamiento concurrente.
+     *
+     * @param opciones Configuraciones para ejecutar el programa.
+     */
+    public void procesa(Opciones opciones) {
+    }
 }

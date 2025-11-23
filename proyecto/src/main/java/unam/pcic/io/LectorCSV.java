@@ -177,7 +177,7 @@ public class LectorCSV {
         return registros;
     }
 
-    // Lector secuencial, sin leer el csv completo a memoria
+    // ************ Lector secuencial, sin leer el csv completo a memoria ************
 
     /**
      * Inicializa el lector secuencial si aún no ha sido creado.
@@ -218,7 +218,7 @@ public class LectorCSV {
             String[] valores = parsearLinea(linea);
 
             if (valores.length != cantidadColumnas) {
-                // Registro inválido: lo saltamos y seguimos
+                // Registro inválido (no se pudo parsear bien)
                 continue;
             }
 

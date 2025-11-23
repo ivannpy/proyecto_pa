@@ -1,6 +1,7 @@
 package unam.pcic.io;
 
 import unam.pcic.dominio.RegistroCSV;
+
 import java.io.File;
 import java.util.List;
 
@@ -12,22 +13,46 @@ import java.util.List;
  * - Preserva el encabezado de cada subarchivo.
  */
 public class DivisorArchivo {
+    /** Cantidad de procesadores en el sistema */
     private final int cantidadProcesadores;
 
+    /** Cantidad de subarchivos a crear */
+    private final int cantidadSubarchivos;
+
+    /**
+     * Constructor por defecto.
+     * El DivisorArchivo sabe cuantos procesadores hay en el sistema.
+     */
     public DivisorArchivo() {
+        int K = 2;
         this.cantidadProcesadores = Runtime.getRuntime().availableProcessors();
+        this.cantidadSubarchivos = cantidadProcesadores * K;
     }
 
+    /**
+     * Regresa la cantidad de procesadores disponibles.
+     *
+     * @return la cantidad de procesadores disponibles.
+     */
     public int getCantidadProcesadores() {
         return cantidadProcesadores;
     }
 
     /**
-     * Divide el archivo de entrada en subarchivos.
+     * Regresa la cantidad de subarchivos a crear.
+     *
+     * @return la cantidad de subarchivos a crear.
+     */
+    public int getCantidadSubarchivos() {
+        return cantidadSubarchivos;
+    }
+
+    /**
+     * Divide el archivo de entrada en tantos subarchivos como procesadores hay en el sistema.
      *
      * @param archivo el archivo de entrada.
      */
-    public void divide(File archivo){
+    public void divide(File archivo) {
         // Divide no hace ningun procesamiento.
         // Solo toma el archivo y lo divide en subarchivos.
         // Luego, cada subarchivo se procesa por separado.
@@ -37,7 +62,7 @@ public class DivisorArchivo {
         LectorCSV lector = new LectorCSV(archivo, true);
 
         // Hacer limpieza de otros archivos temporales
-        List<File> archivosTemporales = AdminArchivosTmp.creaArchivosTemporales(archivo, cantidadProcesadores);
+        List<File> archivosTemporales = AdminArchivosTmp.creaArchivosTemporales(archivo, cantidadSubarchivos);
 
         // Escribe el encabezado en cada subarchivo.
         try {
@@ -61,6 +86,5 @@ public class DivisorArchivo {
             e.printStackTrace();
         }
     }
-
 
 }

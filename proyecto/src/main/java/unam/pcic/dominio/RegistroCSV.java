@@ -1,7 +1,5 @@
 package unam.pcic.dominio;
 
-import java.util.Arrays;
-
 /**
  * - Representa una fila o renglón del CSV.
  * - Sus atributos son los campos del CSV, y son dinámicos.

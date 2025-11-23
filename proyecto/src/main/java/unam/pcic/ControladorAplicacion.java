@@ -35,6 +35,7 @@ public class ControladorAplicacion {
         // Ejecutar versión concurrente via ProcesadorCSV
 
         // El analizador de redimiento guarda los datos medidos.
+
         pruebaDivisor(opciones);
     }
 
@@ -47,7 +48,6 @@ public class ControladorAplicacion {
             System.err.println("Error al dividir archivo: " + e.getMessage());
         }
     }
-
 
     private static void prueba(Opciones opciones) {
         Almacen<RegistroCSV> almacen;

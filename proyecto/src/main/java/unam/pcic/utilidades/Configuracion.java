@@ -1,7 +1,5 @@
 package unam.pcic.utilidades;
 
-import java.util.Arrays;
-
 /**
  * - Lee parámetros de entrada del usuario
  * - Valida criterios de búsqueda o filtrado.
