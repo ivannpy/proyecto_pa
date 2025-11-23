@@ -1,6 +1,9 @@
 package unam.pcic.procesamiento;
 
+import unam.pcic.io.DivisorArchivo;
 import unam.pcic.utilidades.Opciones;
+
+import java.io.File;
 
 /**
  * - Implementa ProcesadorCSV.
@@ -17,5 +20,13 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
      * @param opciones Configuraciones para ejecutar el programa.
      */
     public void procesa(Opciones opciones) {
+        try {
+            File inputFile = new File(opciones.getArchivo());
+            DivisorArchivo divisor = new DivisorArchivo();
+            divisor.divide(inputFile);
+        } catch (Exception e) {
+            System.err.println("Error al dividir archivo: " + e.getMessage());
+        }
+        // Una vez que se divide el archivo, se puede procesar de forma secuencial.
     }
 }

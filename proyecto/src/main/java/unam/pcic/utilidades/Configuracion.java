@@ -1,5 +1,7 @@
 package unam.pcic.utilidades;
 
+import unam.pcic.dominio.CondicionFiltro;
+
 /**
  * - Lee parámetros de entrada del usuario
  * - Valida criterios de búsqueda o filtrado.
@@ -47,6 +49,7 @@ public class Configuracion {
                         throw new IllegalArgumentException("La opción filtros se repite.");
                     String filtrosStr = args[++i];
                     opciones.setFiltros(filtrosStr.split(",", -1));
+                    // Los filtros se pueden parsear desde aquí.
                     filtrosRepetido = true;
                     break;
                 case "-c":

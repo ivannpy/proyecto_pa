@@ -1,8 +1,8 @@
 package unam.pcic;
 
 import unam.pcic.dominio.*;
-import unam.pcic.io.DivisorArchivo;
 import unam.pcic.io.LectorCSV;
+import unam.pcic.procesamiento.ProcesadorCSV;
 import unam.pcic.utilidades.Opciones;
 import java.io.File;
 import java.util.ArrayList;
@@ -28,6 +28,13 @@ public class ControladorAplicacion {
         // medir el tiempo (lo hace el analizador)
 
         // Ejecutar versión secuencial via ProcesadorCSV
+        ProcesadorCSV procesador = FabricaProcesador.crearProcesador("secuencial");
+        if (procesador == null) {
+            System.err.println("Error al crear ProcesadorCSV");
+            return;
+        }
+
+        procesador.procesa(opciones);
         // El analizador de redimiento guarda los datos medidos.
 
         // Reiniciar el analizador de rendimiento.
@@ -35,19 +42,8 @@ public class ControladorAplicacion {
         // Ejecutar versión concurrente via ProcesadorCSV
 
         // El analizador de redimiento guarda los datos medidos.
-
-        pruebaDivisor(opciones);
     }
 
-    private static void pruebaDivisor(Opciones opciones) {
-        try {
-            File inputFile = new File(opciones.getArchivo());
-            DivisorArchivo divisor = new DivisorArchivo();
-            divisor.divide(inputFile);
-        } catch (Exception e) {
-            System.err.println("Error al dividir archivo: " + e.getMessage());
-        }
-    }
 
     private static void prueba(Opciones opciones) {
         Almacen<RegistroCSV> almacen;
