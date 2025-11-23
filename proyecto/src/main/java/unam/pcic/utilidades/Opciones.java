@@ -2,6 +2,7 @@ package unam.pcic.utilidades;
 
 import java.util.Arrays;
 
+
 public class Opciones {
     /** Indica si se pasaron argumentos al programa. */
     private boolean hayArgumentos;

@@ -3,6 +3,7 @@ package unam.pcic;
 import unam.pcic.utilidades.Configuracion;
 import unam.pcic.utilidades.Opciones;
 
+
 public class Main {
     /**
      * Imprime las instrucciones de uso.
@@ -25,6 +26,11 @@ public class Main {
         }
     }
 
+    /**
+     * Punto de entrada al programa.
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         Main.ayuda(args);
 

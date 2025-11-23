@@ -24,13 +24,25 @@ public class ControladorAplicacion {
      */
     public static void ejecutar(Opciones opciones) {
         System.out.println("Ejecutando app...");
+        // inicializar un AnalizadorRendimiento (posible metodo mideTiempo())
+        // medir el tiempo (lo hace el analizador)
+
+        // Ejecutar versión secuencial via ProcesadorCSV
+        // El analizador de redimiento guarda los datos medidos.
+
+        // Reiniciar el analizador de rendimiento.
+
+        // Ejecutar versión concurrente via ProcesadorCSV
+
+        // El analizador de redimiento guarda los datos medidos.
         pruebaDivisor(opciones);
     }
 
     private static void pruebaDivisor(Opciones opciones) {
         try {
             File inputFile = new File(opciones.getArchivo());
-            DivisorArchivo.divide(inputFile);
+            DivisorArchivo divisor = new DivisorArchivo();
+            divisor.divide(inputFile);
         } catch (Exception e) {
             System.err.println("Error al dividir archivo: " + e.getMessage());
         }
@@ -64,12 +76,12 @@ public class ControladorAplicacion {
             // RegistroCSV para row-oriented
             // ColumnaCSV para column-oriented
 
-            almacen = new AlmacenRenglones(lector.leer());
+            almacen = new AlmacenRenglones(lector.leerTodo());
 
             System.out.println("Total de registros leídos: " + almacen.getLongitud());
 
             for (RegistroCSV registro : almacen) {
-                if (registro.getNumeroColumnas() != 24) {
+                if (registro.getNumeroColumnas() != encabezados.length) {
                     System.out.println("No hay 24 columnas en cada registro");
                     System.out.println("R:" + registro);
                 }
@@ -83,7 +95,6 @@ public class ControladorAplicacion {
             }
 
             // Seleccion de columnas
-
             if (opciones.getColumnas() != null) {
                 CriterioFiltro<RegistroCSV> criterio = CriterioFiltro.paraRegistroCSV();
                 almacen = criterio.seleccionarColumnas(almacen, opciones.getColumnas());
@@ -95,6 +106,7 @@ public class ControladorAplicacion {
                 }
             }
 
+            // Aplicar filtros
             if (opciones.getFiltros() != null) {
                 // Hay que hacer un metodo auxiliar para crear las condiciones
                 String[] filtros = opciones.getFiltros();

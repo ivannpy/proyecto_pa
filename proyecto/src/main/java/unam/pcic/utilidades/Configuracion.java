@@ -43,7 +43,6 @@ public class Configuracion {
                     int limite = Integer.parseInt(limiteStr);
                     opciones.setLimiteImpresion(limite);
                     break;
-
                 case "-f":
                 case "--filtros":
                     if (filtrosRepetido)
@@ -71,9 +70,9 @@ public class Configuracion {
                         try {
                             columnas[j] = Integer.parseInt(listaColumnas[j]);
                             if (columnas[j] < 0)
-                                throw new NumberFormatException("La columna debe ser mayor a cero.");
+                                throw new NumberFormatException("La columna debe ser mayor o igual a cero.");
                         } catch (NumberFormatException e) {
-                            throw new IllegalArgumentException("Las columnas deben ser enteros positivos separados por comas.");
+                            throw new IllegalArgumentException("Las columnas deben ser enteros no negativos separados por comas.");
                         }
                     }
                     opciones.setColumnas(columnas);

@@ -1,8 +1,9 @@
 package unam.pcic.io;
 
 import unam.pcic.dominio.RegistroCSV;
-
 import java.io.File;
+import java.util.List;
+
 
 /**
  * - Divide el archivo en N subarchivos temporales.
@@ -21,21 +22,40 @@ public class DivisorArchivo {
         return cantidadProcesadores;
     }
 
-    public static void divide(File archivo){
+    /**
+     * Divide el archivo de entrada en subarchivos.
+     *
+     * @param archivo el archivo de entrada.
+     */
+    public void divide(File archivo){
         // Divide no hace ningun procesamiento.
         // Solo toma el archivo y lo divide en subarchivos.
         // Luego, cada subarchivo se procesa por separado.
         // Cuando se procesan los subarchivos, se procesan como RegistroCSV
-        // Se aplican los filtros, etc y se escribe en un archivo nuevo.
+        // Se aplican los filtros, etc, se hace limpieza y se escribe en un archivo nuevo.
 
         LectorCSV lector = new LectorCSV(archivo, true);
+
+        // Hacer limpieza de otros archivos temporales
+        List<File> archivosTemporales = AdminArchivosTmp.creaArchivosTemporales(archivo, cantidadProcesadores);
+
+        // Escribe el encabezado en cada subarchivo.
+        try {
+            RegistroCSV encabezado = new RegistroCSV(lector.leerEncabezado(), 0L);
+            for (File archivoTemporal : archivosTemporales) {
+                EscritorCSV.escribeRegistro(encabezado, archivoTemporal);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        int i = 0;
+
         try {
             RegistroCSV registro;
-
             while ((registro = lector.nextRegistro()) != null) {
-                System.out.println("Registro en línea " + registro.getNumeroLinea());
-                // Ejemplo: imprimir primera columna si existe
-                System.out.println(registro);
+                EscritorCSV.escribeRegistro(registro, archivosTemporales.get(i % cantidadProcesadores));
+                i++;
             }
         } catch (Exception e) {
             e.printStackTrace();

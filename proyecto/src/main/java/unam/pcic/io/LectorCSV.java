@@ -49,8 +49,6 @@ public class LectorCSV {
     /** Número de línea correspondiente a la lectura secuencial */
     private long numeroLineaSecuencial = 0L;
 
-
-
     /**
      * Construye un LectorCSV usando el delimitador y la codificación por defecto.
      *
@@ -146,7 +144,7 @@ public class LectorCSV {
      * @return Una lista de registros.
      * @throws Exception Si ocurre un error al leer el archivo.
      */
-    public List<RegistroCSV> leer() throws Exception {
+    public List<RegistroCSV> leerTodo() throws Exception {
         List<RegistroCSV> registros = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(archivo), codificacion))) {
@@ -179,18 +177,16 @@ public class LectorCSV {
         return registros;
     }
 
+    // Lector secuencial, sin leer el csv completo a memoria
 
     /**
      * Inicializa el lector secuencial si aún no ha sido creado.
      * Si el archivo tiene encabezado, lo consume y no lo devuelve en nextLine().
      */
     private void inicializarLectorSecuencial() throws Exception {
-        if (lectorSecuencialInicializado) {
-            return;
-        }
-        lectorSecuencial = new BufferedReader(
-                new InputStreamReader(new FileInputStream(archivo), codificacion)
-        );
+        if (lectorSecuencialInicializado) return;
+
+        lectorSecuencial = new BufferedReader(new InputStreamReader(new FileInputStream(archivo), codificacion));
         numeroLineaSecuencial = 0L;
 
         if (tieneEncabezado) {
@@ -208,33 +204,6 @@ public class LectorCSV {
         lectorSecuencialInicializado = true;
     }
 
-
-    /**
-     * Devuelve la siguiente línea de datos del CSV (como texto crudo),
-     * sin cargar  el archivo completo en memoria.
-     *
-     * @return La siguiente línea de datos, o null si ya no hay más.
-     * @throws Exception Si ocurre un error al leer.
-     */
-    public String nextLine() throws Exception {
-        inicializarLectorSecuencial();
-
-        String linea;
-        while ((linea = lectorSecuencial.readLine()) != null) {
-            numeroLineaSecuencial++;
-
-            // Omitir líneas vacías
-            if (linea.trim().isEmpty()) {
-                continue;
-            }
-            return linea;
-        }
-
-        // Fin de archivo: cerrar el lector
-        cerrarLectorSecuencial();
-        return null;
-    }
-
     public RegistroCSV nextRegistro() throws Exception {
         inicializarLectorSecuencial();
 
@@ -248,12 +217,6 @@ public class LectorCSV {
 
             String[] valores = parsearLinea(linea);
 
-            // Si todavía no tenemos cantidadColumnas (caso sin encabezado),
-            // la inferimos de la primera línea de datos.
-            if (cantidadColumnas == 0) {
-                cantidadColumnas = valores.length;
-            }
-
             if (valores.length != cantidadColumnas) {
                 // Registro inválido: lo saltamos y seguimos
                 continue;
@@ -262,11 +225,9 @@ public class LectorCSV {
             return new RegistroCSV(valores, numeroLineaSecuencial);
         }
 
-        // Fin de archivo: cerrar el lector
         cerrarLectorSecuencial();
         return null;
     }
-
 
     /**
      * Cierra el lector secuencial si está abierto.
@@ -280,6 +241,5 @@ public class LectorCSV {
             lectorSecuencialInicializado = false;
         }
     }
-
 
 }

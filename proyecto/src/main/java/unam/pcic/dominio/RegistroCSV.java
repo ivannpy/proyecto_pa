@@ -1,5 +1,7 @@
 package unam.pcic.dominio;
 
+import java.util.Arrays;
+
 /**
  * - Representa una fila o renglón del CSV.
  * - Sus atributos son los campos del CSV, y son dinámicos.
@@ -99,6 +101,21 @@ public class RegistroCSV {
         }
         sb.append("})");
 
+        return sb.toString();
+    }
+
+    /**
+     * Genera una cadena con los valores del registro para escribirlo en un archivo CSV.
+     *
+     * @return una cadena con los valores del registro.
+     */
+    public String serializa(){
+        StringBuilder sb = new StringBuilder();
+        for(String campo: valores) {
+            sb.append(campo);
+            sb.append(",");
+        }
+        sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
     }
 

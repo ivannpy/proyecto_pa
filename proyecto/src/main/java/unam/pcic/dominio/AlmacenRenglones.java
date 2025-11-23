@@ -91,6 +91,4 @@ public class AlmacenRenglones implements Almacen<RegistroCSV> {
     public Iterator<RegistroCSV> iterator() {
         return registros.iterator();
     }
-
-
 }

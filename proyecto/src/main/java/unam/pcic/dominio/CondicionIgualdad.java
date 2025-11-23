@@ -1,5 +1,8 @@
 package unam.pcic.dominio;
 
+/**
+ * Implementa la condición de igualdad de registro según el valor de una columna.
+ */
 public class CondicionIgualdad implements CondicionFiltro {
     private final int columna;
     private final String valor;

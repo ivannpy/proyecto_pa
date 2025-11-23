@@ -1,10 +1,13 @@
 package unam.pcic.io;
 
-import unam.pcic.dominio.AlmacenRenglones;
 import unam.pcic.dominio.RegistroCSV;
-
 import java.io.File;
-import java.io.Writer;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
+
 
 /**
  * - Escribe los resultados filtrados a un archivo de salida CSV.
@@ -15,10 +18,24 @@ import java.io.Writer;
 public class EscritorCSV {
 
     public static void escribeRegistro(RegistroCSV registro, File archivo) {
-
+        // Aplicar filtros, seleccionar columnas y limpiar los datos.
+        escribeLinea(registro.serializa(), archivo);
     }
 
     public static void escribeLinea(String linea, File archivo) {
-
+        synchronized (EscritorCSV.class) {
+            try (BufferedWriter writer = Files.newBufferedWriter(
+                    archivo.toPath(),
+                    StandardCharsets.UTF_8,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.APPEND
+            )) {
+                writer.write(linea);
+                writer.newLine();
+            } catch (IOException e) {
+                throw new RuntimeException("Error al escribir en el archivo CSV: " + archivo, e);
+            }
+        }
     }
+
 }
