@@ -1,5 +1,6 @@
 package unam.pcic.procesamiento;
 
+import unam.pcic.io.AdminArchivosTmp;
 import unam.pcic.io.DivisorArchivo;
 import unam.pcic.utilidades.Opciones;
 
@@ -28,5 +29,10 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
             System.err.println("Error al dividir archivo: " + e.getMessage());
         }
         // Una vez que se divide el archivo, se puede procesar de forma secuencial.
+
+
+        // Se puede mejorar
+        //File carpetaTemporal = new File(new File(opciones.getArchivo()).getAbsoluteFile() + "tmp");
+        //AdminArchivosTmp.eliminaCarpetaTemporal(carpetaTemporal);
     }
 }

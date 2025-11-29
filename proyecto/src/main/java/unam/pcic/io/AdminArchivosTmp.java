@@ -21,17 +21,30 @@ public class AdminArchivosTmp {
      *
      * @param rutaCarpeta la ruta de la carpeta temporal.
      */
-    public static void creaCarpetaTemporal(String rutaCarpeta) {
+    private static void creaCarpetaTemporal(String rutaCarpeta) {
+        File carpetaTemporal = new File(rutaCarpeta);
+        boolean creada = false;
+        if (!carpetaTemporal.exists()){
+            creada = carpetaTemporal.mkdirs();
+        }
 
+        if (creada) {
+            System.out.println("Carpeta temporal creada: " + carpetaTemporal.getAbsolutePath());
+        }
     }
 
     /**
      * Elimina una carpeta temporal con el nombre dado.
      *
-     * @param rutaCarpeta la ruta de la carpeta temporal.
+     * @param carpetaTemporal la carpeta temporal.
      */
-    public static void eliminaCarpetaTemporal(String rutaCarpeta) {
-
+    public static void eliminaCarpetaTemporal(File carpetaTemporal) {
+        if (carpetaTemporal.exists()) {
+            boolean eliminada = carpetaTemporal.delete();
+            if (eliminada) {
+                System.out.println("Carpeta temporal eliminada: " + carpetaTemporal.getAbsolutePath());
+            }
+        }
     }
 
     /**
@@ -41,7 +54,7 @@ public class AdminArchivosTmp {
      * @param indice La parte del archivo que se escribirá
      * @return Un archivo con el nombre dado con sufijo indicando que es temporal y la parte.
      */
-    public static File creaArchivoTemporal(String nombre, int indice) {
+    private static File creaArchivoTemporal(String nombre, int indice) {
         String nombreArchivoTmp = nombre.replace(".csv", "_tmp_" + indice + ".csv");
         return new File(nombreArchivoTmp);
     }
@@ -57,7 +70,10 @@ public class AdminArchivosTmp {
     public static List<File> creaArchivosTemporales(File archivo, int cantidad) {
         // Si se crean en una carpeta temporal, no necesitamos la ruta absoluta para crear los archivos
         // Solo hay que crear los archivos temporales adentro de la carpeta temporal.
-        String rutaArchivo = archivo.getAbsolutePath();
+        String nombreCarpeta = archivo.getParent() + File.separator + "tmp";
+        creaCarpetaTemporal(nombreCarpeta);
+
+        String rutaArchivo = nombreCarpeta + File.separator + archivo.getName();
 
         List<File> temporales = new ArrayList<>();
         for (int i = 0; i < cantidad; i++) {
