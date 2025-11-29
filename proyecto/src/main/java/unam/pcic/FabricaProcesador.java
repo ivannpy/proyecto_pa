@@ -15,11 +15,11 @@ public class FabricaProcesador {
      * @param tipoProcesamiento El tipo de procesamiento (secuencial o concurrente).
      * @return Una forma de procesamiento.
      */
-    public static ProcesadorCSV crearProcesador(String tipoProcesamiento) {
+    public static ProcesadorCSV crearProcesador(Procesamiento tipoProcesamiento) {
         switch (tipoProcesamiento) {
-            case "secuencial":
+            case SECUENCIAL:
                 return new ProcesadorSecuencial();
-            case "concurrente":
+            case CONCURRENTE:
                 return new ProcesadorConcurrente();
             default:
                 return null;

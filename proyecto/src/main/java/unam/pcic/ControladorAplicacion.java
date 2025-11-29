@@ -28,7 +28,7 @@ public class ControladorAplicacion {
         // medir el tiempo (lo hace el analizador)
 
         // Ejecutar versión secuencial via ProcesadorCSV
-        ProcesadorCSV procesador = FabricaProcesador.crearProcesador("secuencial");
+        ProcesadorCSV procesador = FabricaProcesador.crearProcesador(Procesamiento.SECUENCIAL);
         if (procesador == null) {
             System.err.println("Error al crear ProcesadorCSV");
             return;
