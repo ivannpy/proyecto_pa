@@ -12,16 +12,14 @@ public class Main {
      */
     private static void ayuda(String[] args) {
         if (args.length == 0) {
-            System.out.println("Uso: java -jar proyecto.jar archivo.csv [ banderas ]");
+            System.out.println("Uso: java -jar proyecto.jar archivo.csv");
             System.exit(1);
         }
 
         if (args.length == 1 && (args[0].equals("-h") || args[0].equals("--help"))) {
-            System.out.println("Uso: java -jar proyecto.jar [archivo.csv | banderas]");
+            System.out.println("Uso: java -jar proyecto.jar archivo.csv");
             System.out.println("Banderas:");
             System.out.println("-h, --help: Imprime esta ayuda.");
-            System.out.println("-c --columnas: Lista de columnas separadas por comas.");
-            System.out.println("-f --filtros: Filtro por aplicar.");
             System.exit(1);
         }
     }
@@ -34,7 +32,7 @@ public class Main {
     public static void main(String[] args) {
         Main.ayuda(args);
 
-        Opciones opciones = Configuracion.parsea(args);
+        Opciones opciones = Configuracion.parsea(Configuracion.menuInteractivo(args));
         System.out.println(opciones);
 
         ControladorAplicacion.ejecutar(opciones);

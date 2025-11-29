@@ -1,6 +1,11 @@
 package unam.pcic.utilidades;
 
 
+import unam.pcic.io.LectorCSV;
+
+import java.io.File;
+import java.util.Arrays;
+
 /**
  * - Lee parámetros de entrada del usuario
  * - Valida criterios de búsqueda o filtrado.
@@ -8,10 +13,39 @@ package unam.pcic.utilidades;
  */
 public class Configuracion {
 
-    public static Opciones menuInteractivo() {
-        System.out.println("Ingrese el archivo a procesar...");
-        // TODO: regresar un objeto Opciones con lo que elija el usuario
-        return null;
+    /**
+     * Menú interactivo. Se necesita el archivo a procesar.
+     *
+     * @param args Los argumentos de la linea de comandos
+     * @return Un arreglo con las banderas dadas por el usuario.
+     */
+    public static String[] menuInteractivo(String[] args) {
+        String nombreArchivo = args[0];
+
+        System.out.println("Archivo a procesar: " + nombreArchivo);
+
+        File archivo = new File(nombreArchivo);
+        LectorCSV lector = new LectorCSV(archivo, true);
+        try {
+            String[] encabezados = lector.leerEncabezado();
+            System.out.println("Columnas disponibles:");
+            for (int i = 0; i < encabezados.length; i++) {
+                System.out.println(i +" --- "+ encabezados[i]);
+            }
+        } catch (Exception e) {
+            // TODO: Manejarlo con el Logger.
+            System.out.println("Error al leer encabezado del archivo: " + e.getMessage());
+        }
+
+        // TODO: Hacer validaciones de las entradas del usuario
+        System.out.print("Seleccione las columnas a procesar separadas por comas");
+        System.out.println("o escriba 'todas' para procesar todas las columnas.");
+
+        System.out.print("Escriba los filtros a usar separados por comas: ");
+
+        // El arreglo que se retorna se debe crear con lo que se lea del usuario
+        return new String[]{nombreArchivo, "-c", "2,10,11", "-l", "10"};
+
     }
     /** Parsea los argumentos de la linea de comandos.
      *
@@ -19,8 +53,6 @@ public class Configuracion {
      * @return una instancia de {@link Opciones}.
      */
     public static Opciones parsea(String[] args) {
-        // Aquí se tienen que hacer las validaciones de los argumentos de la linea de comandos
-
         Opciones opciones = new Opciones();
 
         opciones.setHayArgumentos(args.length > 0);

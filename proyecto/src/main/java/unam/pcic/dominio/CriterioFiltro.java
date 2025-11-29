@@ -58,6 +58,17 @@ public class CriterioFiltro<R> {
         return seleccionAlmacen;
     }
 
+    /**
+     * Seleccionar las columnas dadas de un registro.
+     *
+     * @param registro El registro.
+     * @param columnas Las columnas a seleccionar.
+     * @return Un nuevo registro con las columnas seleccionadas.
+     */
+    public R seleccionarColumnas(R registro, int[] columnas) {
+        return this.seleccion.seleccionar(registro, columnas);
+    }
+
     // Aquí se deben aplicar los filtros
 
 }
