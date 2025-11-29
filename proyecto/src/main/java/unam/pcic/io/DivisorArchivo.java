@@ -1,7 +1,6 @@
 package unam.pcic.io;
 
 import unam.pcic.dominio.RegistroCSV;
-
 import java.io.File;
 import java.util.List;
 

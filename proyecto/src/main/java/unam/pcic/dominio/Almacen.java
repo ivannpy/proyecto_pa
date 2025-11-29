@@ -1,6 +1,5 @@
 package unam.pcic.dominio;
 
-import java.util.List;
 
 /**
  * Almacen para almacenar registros.

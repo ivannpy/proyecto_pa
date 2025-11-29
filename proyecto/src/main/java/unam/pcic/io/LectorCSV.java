@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -137,56 +136,6 @@ public class LectorCSV {
         resultado.add(campoActual.toString());
 
         return resultado.toArray(new String[0]);
-    }
-
-    private String[] reacomodarCamposSiEsPosible(String[] valores,
-                                                 int indiceCampoLibre) {
-        if (valores.length <= cantidadColumnas) {
-            // No hay columnas de más, nada que hacer.
-            return valores;
-        }
-        if (indiceCampoLibre < 0 || indiceCampoLibre >= cantidadColumnas) {
-            // Configuración inválida, no intentamos nada.
-            return valores;
-        }
-
-        int columnasDeMas = valores.length - cantidadColumnas;
-
-        // Construimos el nuevo array con el tamaño correcto.
-        String[] reparado = new String[cantidadColumnas];
-
-        // 1) Copiamos las columnas antes del campo libre tal como vienen.
-        for (int i = 0; i < indiceCampoLibre; i++) {
-            reparado[i] = valores[i];
-        }
-
-        // 2) Unimos en una sola string los campos que "reventaron" dentro del campo libre.
-        //    - Tomamos desde indiceCampoLibre hasta indiceCampoLibre + columnasDeMas inclusive.
-        StringBuilder campoLibre = new StringBuilder();
-        int inicioCampoLibre = indiceCampoLibre;
-        int finCampoLibre = indiceCampoLibre + columnasDeMas;
-        for (int i = inicioCampoLibre; i <= finCampoLibre; i++) {
-            if (campoLibre.length() > 0) {
-                campoLibre.append(',');
-            }
-            campoLibre.append(valores[i]);
-        }
-        reparado[indiceCampoLibre] = campoLibre.toString();
-
-        // 3) Copiamos las columnas finales alineándolas desde el final del array original.
-        //    Ejemplo: si esperas 24 columnas y tienes 32, hay 8 de más.
-        //    Copias las últimas (columnasEsperadas - indiceCampoLibre - 1) columnas
-        //    desde el final de valores al final de reparado.
-        int columnasFinales = cantidadColumnas - indiceCampoLibre - 1;
-        for (int i = 0; i < columnasFinales; i++) {
-            // Posición destino, empezando justo después del campo libre.
-            int destino = indiceCampoLibre + 1 + i;
-            // Posición origen desde el final del array original.
-            int origen = valores.length - columnasFinales + i;
-            reparado[destino] = valores[origen];
-        }
-
-        return reparado;
     }
 
 
