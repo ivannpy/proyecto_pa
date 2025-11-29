@@ -109,12 +109,33 @@ public class RegistroCSV {
      */
     public String serializa(){
         StringBuilder sb = new StringBuilder();
-        for(String campo: valores) {
-            sb.append(campo);
-            sb.append(",");
+        for (int i = 0; i < valores.length; i++) {
+            String campo = valores[i];
+
+            if (campo == null) {
+                campo = "";
+            }
+
+            boolean contieneComilla = campo.indexOf('"') >= 0;
+            boolean contieneSeparador = campo.indexOf(',') >= 0;
+            boolean contieneSaltoLinea = campo.indexOf('\n') >= 0 || campo.indexOf('\r') >= 0;
+
+            if (contieneComilla) {
+                campo = campo.replace("\"", "\"\"");
+            }
+
+            if (contieneSeparador || contieneComilla || contieneSaltoLinea) {
+                sb.append('"').append(campo).append('"');
+            } else {
+                sb.append(campo);
+            }
+
+            if (i < valores.length - 1) {
+                sb.append(',');
+            }
         }
-        sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
     }
+
 
 }
