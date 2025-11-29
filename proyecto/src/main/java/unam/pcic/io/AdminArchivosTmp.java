@@ -14,9 +14,7 @@ public class AdminArchivosTmp {
     /**
      * Construtor privado.
      */
-    private AdminArchivosTmp() {
-
-    }
+    private AdminArchivosTmp() {}
 
     /**
      * Crea una carpeta temporal con el nombre dado.
@@ -41,16 +39,21 @@ public class AdminArchivosTmp {
      * @param carpetaTemporal La carpeta temporal a eliminar.
      */
     public static void eliminaCarpetaTemporal(File carpetaTemporal) {
-        System.out.println("carpeta a eliminar");
-        System.out.println(carpetaTemporal.getAbsolutePath());
-
         if (carpetaTemporal.exists()) {
-            System.out.println("La carpeta temporal existe.");
-            boolean eliminada = carpetaTemporal.delete();
-            System.out.println("Eliminada: " + eliminada);
-            if (eliminada) {
-                System.out.println("Carpeta temporal eliminada: " + carpetaTemporal.getAbsolutePath());
+           File[] archivos = carpetaTemporal.listFiles();
+
+           // Si la carpeta no tiene archivos, elimina la carpeta
+           if ( archivos == null || archivos.length == 0) {
+               boolean eliminada = carpetaTemporal.delete();
+               return;
             }
+
+           // Si la carpeta no está vacía, elimina los archivos dentro de ella
+           for (File archivo : archivos) {
+               boolean eliminado = archivo.delete();
+           }
+           // Elimina la carpeta
+           boolean carpetaEliminada = carpetaTemporal.delete();
         }
     }
 
