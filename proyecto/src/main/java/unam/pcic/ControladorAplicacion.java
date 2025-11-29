@@ -28,18 +28,25 @@ public class ControladorAplicacion {
         // medir el tiempo (lo hace el analizador)
 
         // Ejecutar versión secuencial via ProcesadorCSV
-        ProcesadorCSV procesador = FabricaProcesador.crearProcesador(Procesamiento.SECUENCIAL);
-        if (procesador == null) {
+        ProcesadorCSV procesadorSecuencial = FabricaProcesador.crearProcesador(Procesamiento.SECUENCIAL);
+        if (procesadorSecuencial == null) {
             System.err.println("Error al crear ProcesadorCSV");
             return;
         }
 
-        procesador.procesa(opciones);
+        procesadorSecuencial.procesa(opciones);
         // El analizador de redimiento guarda los datos medidos.
 
         // Reiniciar el analizador de rendimiento.
 
         // Ejecutar versión concurrente via ProcesadorCSV
+        ProcesadorCSV procesadorConcurrente = FabricaProcesador.crearProcesador(Procesamiento.CONCURRENTE);
+        if (procesadorConcurrente == null) {
+            System.err.println("Error al crear ProcesadorCSV");
+            return;
+        }
+
+        procesadorConcurrente.procesa(opciones);
 
         // El analizador de redimiento guarda los datos medidos.
     }
