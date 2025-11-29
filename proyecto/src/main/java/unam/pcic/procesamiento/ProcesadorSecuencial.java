@@ -1,5 +1,7 @@
 package unam.pcic.procesamiento;
 
+import unam.pcic.dominio.CondicionFiltro;
+import unam.pcic.dominio.CondicionIgualdad;
 import unam.pcic.dominio.CriterioFiltro;
 import unam.pcic.dominio.RegistroCSV;
 import unam.pcic.io.AdminArchivosTmp;
@@ -7,7 +9,10 @@ import unam.pcic.io.DivisorArchivo;
 import unam.pcic.io.EscritorCSV;
 import unam.pcic.io.LectorCSV;
 import unam.pcic.utilidades.Opciones;
+
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -28,19 +33,45 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
         System.out.println("Procesando archivo: " + archivo.getName());
 
         // TODO: Modificar para que el filtro sepa qué columnas seleccionar, para no pasar las opciones
+        // Seleccionar columnas
         CriterioFiltro<RegistroCSV> filtro = null;
         if (opciones.getColumnas() != null) {
             System.out.println("Se seleccionaran columnas");
             filtro = CriterioFiltro.paraRegistroCSV();
         }
 
+        // Aplicar filtros
+        CondicionFiltro<RegistroCSV> cond = null;
+        if (opciones.getFiltros() != null) {
+            // TODO: Hay que hacer un metodo auxiliar para crear las condiciones
+            String[] filtros = opciones.getFiltros();
+            List<CondicionFiltro<RegistroCSV>> condiciones = new ArrayList<>();
+            for (String filtroStr : filtros) {
+                // TODO: En lugar de usar c1 podemos usar el nombre de la columna
+                String columna = filtroStr.split("=")[0].replace("c", "");
+                String valor = filtroStr.split("=")[1];
+                int columnaInt = Integer.parseInt(columna);
+
+                CondicionFiltro<RegistroCSV> condicion = new CondicionIgualdad(columnaInt, valor);
+                condiciones.add(condicion);
+            }
+            // TODO: Crear una forma de unir condiciones (OR, AND)
+            cond = condiciones.getFirst();
+        }
+
         LectorCSV lector = new LectorCSV(archivo, true);
         try {
             RegistroCSV registro;
             while ((registro = lector.siguienteRegistro()) != null) {
-                // TODO: Aplicar filtros, seleccion de columnas y limpiar datos antes de escribir
+                // Aplicar seleccion de columnas
                 if (filtro != null) {
                     registro = filtro.seleccionarColumnas(registro, opciones.getColumnas());
+                    // TODO: Aplicar filtros y limpiar datos
+                }
+                if (cond != null) {
+                    if (!cond.cumple(registro)) {
+                        continue;
+                    }
                 }
                 EscritorCSV.escribeRegistro(registro, archivoSalida);
             }
@@ -60,6 +91,7 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
 
         // TODO: Escribir el encabezado del archivo de salida
 
+        // TODO: Pasar un CriterioFiltro en lugar de las opciones
         for (int i = 0; i < archivos.length; i++) {
             procesaArchivo(archivos[i], archivoSalida, opciones);
         }

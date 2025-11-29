@@ -44,7 +44,7 @@ public class Configuracion {
         System.out.print("Escriba los filtros a usar separados por comas: ");
 
         // El arreglo que se retorna se debe crear con lo que se lea del usuario
-        return new String[]{nombreArchivo, "-c", "2,10,11", "-l", "10"};
+        return new String[]{nombreArchivo, "-c", "2,10,11", "-l", "10", "-f", "c1=spanish"};
 
     }
     /** Parsea los argumentos de la linea de comandos.
