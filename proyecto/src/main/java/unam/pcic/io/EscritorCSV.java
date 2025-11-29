@@ -24,7 +24,6 @@ public class EscritorCSV {
      * @param archivo El archivo donde se va a escribir el registro.
      */
     public static void escribeRegistro(RegistroCSV registro, File archivo) {
-        // Aplicar filtros, seleccionar columnas y limpiar los datos.
         escribeLinea(registro.serializa(), archivo);
     }
 

@@ -8,6 +8,12 @@ import unam.pcic.dominio.CondicionFiltro;
  * - Configura rutas de entrada y salida.
  */
 public class Configuracion {
+
+    public static Opciones menuInteractivo() {
+        System.out.println("Ingrese el archivo a procesar...");
+        // TODO: regresar un objeto Opciones con lo que elija el usuario
+        return null;
+    }
     /** Parsea los argumentos de la linea de comandos.
      *
      * @param args los argumentos de la linea de comandos.

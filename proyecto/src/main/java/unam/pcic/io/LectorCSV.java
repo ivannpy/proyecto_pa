@@ -234,7 +234,7 @@ public class LectorCSV {
      *
      * @throws Exception Si ocurre un error al cerrar.
      */
-    public void cerrarLectorSecuencial() throws Exception {
+    private void cerrarLectorSecuencial() throws Exception {
         if (lectorSecuencial != null) {
             lectorSecuencial.close();
             lectorSecuencial = null;

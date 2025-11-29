@@ -24,8 +24,8 @@ public class ControladorAplicacion {
      */
     public static void ejecutar(Opciones opciones) {
         System.out.println("Ejecutando app...");
-        // inicializar un AnalizadorRendimiento (posible metodo mideTiempo())
-        // medir el tiempo (lo hace el analizador)
+        // TODO: Inicializar un AnalizadorRendimiento (posible metodo mideTiempo())
+        // TODO: medir el tiempo (lo hace el analizador)
 
         // Ejecutar versión secuencial via ProcesadorCSV
         ProcesadorCSV procesadorSecuencial = FabricaProcesador.crearProcesador(Procesamiento.SECUENCIAL);
@@ -35,9 +35,10 @@ public class ControladorAplicacion {
         }
 
         procesadorSecuencial.procesa(opciones);
-        // El analizador de redimiento guarda los datos medidos.
 
-        // Reiniciar el analizador de rendimiento.
+        // TODO: El analizador de redimiento guarda los datos medidos.
+
+        // TODO: einiciar el analizador de rendimiento.
 
         // Ejecutar versión concurrente via ProcesadorCSV
         ProcesadorCSV procesadorConcurrente = FabricaProcesador.crearProcesador(Procesamiento.CONCURRENTE);
@@ -48,7 +49,7 @@ public class ControladorAplicacion {
 
         procesadorConcurrente.procesa(opciones);
 
-        // El analizador de redimiento guarda los datos medidos.
+        // TODO: El analizador de redimiento guarda los datos medidos.
     }
 
 

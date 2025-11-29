@@ -19,14 +19,23 @@ public class DivisorArchivo {
     /** Cantidad de subarchivos a crear */
     private final int cantidadSubarchivos;
 
+    /** Archivo de entrada */
+    private final File archivoDeEntrada;
+
+    /** Carpeta temporal */
+    private final File carpetaTemporal;
+
     /**
      * Constructor por defecto.
      * El DivisorArchivo sabe cuantos procesadores hay en el sistema.
      */
-    public DivisorArchivo() {
+    public DivisorArchivo(String rutaArchivoDeEntrada) {
         int K = 2;
         this.cantidadProcesadores = Runtime.getRuntime().availableProcessors();
         this.cantidadSubarchivos = cantidadProcesadores * K;
+        this.archivoDeEntrada = new File(rutaArchivoDeEntrada);
+        this.carpetaTemporal = new File(archivoDeEntrada.getParentFile() + File.separator + "tmp");
+
     }
 
     /**
@@ -47,22 +56,24 @@ public class DivisorArchivo {
         return cantidadSubarchivos;
     }
 
+    public File getCarpetaTemporal() {
+        return carpetaTemporal;
+    }
+
     /**
      * Divide el archivo de entrada en tantos subarchivos como procesadores hay en el sistema.
      *
-     * @param archivo el archivo de entrada.
      */
-    public void divide(File archivo) {
+    public void divide() {
         // Divide no hace ningun procesamiento.
         // Solo toma el archivo y lo divide en subarchivos.
         // Luego, cada subarchivo se procesa por separado.
         // Cuando se procesan los subarchivos, se procesan como RegistroCSV
         // Se aplican los filtros, etc, se hace limpieza y se escribe en un archivo nuevo.
 
-        LectorCSV lector = new LectorCSV(archivo, true);
+        LectorCSV lector = new LectorCSV(archivoDeEntrada, true);
 
-        // Hacer limpieza de otros archivos temporales
-        List<File> archivosTemporales = AdminArchivosTmp.creaArchivosTemporales(archivo, cantidadSubarchivos);
+        List<File> archivosTemporales = AdminArchivosTmp.creaArchivosTemporales(archivoDeEntrada, cantidadSubarchivos);
 
         // Escribe el encabezado en cada subarchivo.
         try {
