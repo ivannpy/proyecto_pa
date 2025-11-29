@@ -31,8 +31,6 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
         // Una vez que se divide el archivo, se puede procesar de forma secuencial.
 
 
-        // Se puede mejorar
-        //File carpetaTemporal = new File(new File(opciones.getArchivo()).getAbsoluteFile() + "tmp");
-        //AdminArchivosTmp.eliminaCarpetaTemporal(carpetaTemporal);
+        // AdminArchivosTmp.eliminaCarpetaTemporal(opciones.getArchivo());
     }
 }

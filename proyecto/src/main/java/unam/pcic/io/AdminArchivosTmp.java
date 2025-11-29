@@ -36,9 +36,11 @@ public class AdminArchivosTmp {
     /**
      * Elimina una carpeta temporal con el nombre dado.
      *
-     * @param carpetaTemporal la carpeta temporal.
+     * @param archivoBase El archivo .csv base.
      */
-    public static void eliminaCarpetaTemporal(File carpetaTemporal) {
+    public static void eliminaCarpetaTemporal(String archivoBase) {
+        String rutaCarpetaTemporal = new File(archivoBase).getParentFile() + File.separator + "tmp";
+        File carpetaTemporal = new File(rutaCarpetaTemporal);
         if (carpetaTemporal.exists()) {
             boolean eliminada = carpetaTemporal.delete();
             if (eliminada) {
@@ -68,12 +70,11 @@ public class AdminArchivosTmp {
      * @return una lista de archivos temporales.
      */
     public static List<File> creaArchivosTemporales(File archivo, int cantidad) {
-        // Si se crean en una carpeta temporal, no necesitamos la ruta absoluta para crear los archivos
-        // Solo hay que crear los archivos temporales adentro de la carpeta temporal.
-        String nombreCarpeta = archivo.getParent() + File.separator + "tmp";
-        creaCarpetaTemporal(nombreCarpeta);
+        String nombreCarpetaTemporal = archivo.getParent() + File.separator + "tmp";
+        creaCarpetaTemporal(nombreCarpetaTemporal);
 
-        String rutaArchivo = nombreCarpeta + File.separator + archivo.getName();
+        // Ruta de los archivos temporales adentro de la carpeta temporal
+        String rutaArchivo = nombreCarpetaTemporal + File.separator + archivo.getName();
 
         List<File> temporales = new ArrayList<>();
         for (int i = 0; i < cantidad; i++) {
