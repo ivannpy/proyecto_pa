@@ -33,6 +33,20 @@ public class CondicionMayorIgual implements CondicionFiltro<RegistroCSV> {
      * @return true si el valor del registro dado es mayor o igual al valor buscado, false en caso contrario.
      */
     public boolean cumple(RegistroCSV registro) {
-        return registro.tieneValor(columna) && registro.getValor(columna).compareTo(valor) >= 0;
+        if (!registro.tieneValor(columna)) {
+            return false;
+        }
+
+        String valorRegistro = registro.getValor(columna);
+
+        // Intentar comparación primero
+        try {
+            double numRegistro = Double.parseDouble(valorRegistro);
+            double numFiltro = Double.parseDouble(valor);
+            return numRegistro >= numFiltro;
+        } catch (NumberFormatException e) {
+            // Si no son numéricos, comparar como cadenas
+            return valorRegistro.compareTo(valor) >= 0;
+        }
     }
 }

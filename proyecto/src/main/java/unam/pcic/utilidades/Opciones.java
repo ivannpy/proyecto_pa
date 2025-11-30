@@ -1,6 +1,7 @@
 package unam.pcic.utilidades;
 
 import unam.pcic.dominio.CondicionFiltro;
+import unam.pcic.dominio.CriterioFiltro;
 import unam.pcic.dominio.RegistroCSV;
 
 import java.util.Arrays;
@@ -32,6 +33,8 @@ public class Opciones {
      * Filtros a aplicar a las columnas.
      */
     private List<CondicionFiltro<RegistroCSV>> filtros;
+
+    private CriterioFiltro<RegistroCSV> criterioFiltro;
 
     /**
      * Indica si se seleccionan todas las columnas.
@@ -213,6 +216,15 @@ public class Opciones {
      */
     public int getLimiteImpresion() {
         return limiteImpresion;
+    }
+
+    public void setCriterioFiltro() {
+        this.criterioFiltro = CriterioFiltro.paraRegistroCSV(getColumnas(), getFiltros());
+    }
+
+    public CriterioFiltro<RegistroCSV> getCriterioFiltro() {
+        if (criterioFiltro == null) setCriterioFiltro();
+        return criterioFiltro;
     }
 
     /**

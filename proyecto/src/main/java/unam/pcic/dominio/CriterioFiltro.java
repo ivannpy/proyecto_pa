@@ -1,5 +1,6 @@
 package unam.pcic.dominio;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 
@@ -14,6 +15,13 @@ public class CriterioFiltro<R> {
      */
     private final Seleccion<R> seleccion;
 
+    private final int[] columnasSeleccionadas;
+
+    /**
+     * Lista de filtros que se van a aplicar
+     */
+    private final List<CondicionFiltro<R>> filtros;
+
     /**
      * Proveedor de almacen de registros
      */
@@ -26,9 +34,18 @@ public class CriterioFiltro<R> {
      * @param seleccion        La forma de seleccionar columnas en un almacen de registros.
      * @param proveedorAlmacen El proveedor de almacen de registros.
      */
-    public CriterioFiltro(Seleccion<R> seleccion, Supplier<Almacen<R>> proveedorAlmacen) {
+    public CriterioFiltro(Seleccion<R> seleccion,
+                          int[] columnas,
+                          List<CondicionFiltro<R>> filtros,
+                          Supplier<Almacen<R>> proveedorAlmacen) {
         this.seleccion = seleccion;
+        this.columnasSeleccionadas = columnas;
+        this.filtros = filtros;
         this.proveedorAlmacen = proveedorAlmacen;
+    }
+
+    public List<CondicionFiltro<R>> getFiltros() {
+        return filtros;
     }
 
     /**
@@ -37,9 +54,12 @@ public class CriterioFiltro<R> {
      *
      * @return un filtro y selección para registros row-oriented (RegistroCSV).
      */
-    public static CriterioFiltro<RegistroCSV> paraRegistroCSV() {
+    public static CriterioFiltro<RegistroCSV> paraRegistroCSV(int[] columnas,
+                                                              List<CondicionFiltro<RegistroCSV>> filtros) {
         return new CriterioFiltro<>(
                 new SeleccionRenglon(),
+                columnas,
+                filtros,
                 AlmacenRenglones::new
         );
     }
@@ -48,14 +68,13 @@ public class CriterioFiltro<R> {
      * Selecciona columnas dadas de un almacen de registros.
      *
      * @param almacen  El almacen de registros.
-     * @param columnas Las columnas a seleccionar.
      * @return Un nuevo almacen de registros con las columnas seleccionadas.
      */
-    public Almacen<R> seleccionarColumnas(Almacen<R> almacen, int[] columnas) {
+    public Almacen<R> seleccionarColumnas(Almacen<R> almacen) {
         Almacen<R> seleccionAlmacen = proveedorAlmacen.get();
 
         for (R registro : almacen) {
-            R reducido = this.seleccion.seleccionar(registro, columnas);
+            R reducido = this.seleccion.seleccionar(registro, columnasSeleccionadas);
             seleccionAlmacen.agregar(reducido);
         }
 
@@ -66,13 +85,26 @@ public class CriterioFiltro<R> {
      * Seleccionar las columnas dadas de un registro.
      *
      * @param registro El registro.
-     * @param columnas Las columnas a seleccionar.
      * @return Un nuevo registro con las columnas seleccionadas.
      */
-    public R seleccionarColumnas(R registro, int[] columnas) {
-        return this.seleccion.seleccionar(registro, columnas);
+    public R seleccionarColumnas(R registro) {
+        return this.seleccion.seleccionar(registro, columnasSeleccionadas);
     }
 
-    // Aquí se deben aplicar los filtros usando patron Builder
+
+    public boolean aplicarFiltro(R registro, CondicionFiltro<R> filtro) {
+        return filtro.cumple(registro);
+    }
+
+    public boolean aplicarFiltros(R registro) {
+        boolean noCumpleAlguna = false;
+        for (CondicionFiltro<R> condicion : filtros) {
+            if (!condicion.cumple(registro)) {
+                noCumpleAlguna = true;
+                break;
+            }
+        }
+        return !noCumpleAlguna;
+    }
 
 }
