@@ -4,33 +4,50 @@ import java.util.Arrays;
 
 
 public class Opciones {
-    /** Indica si se pasaron argumentos al programa. */
+    /**
+     * Indica si se pasaron argumentos al programa.
+     */
     private boolean hayArgumentos;
 
-    /** Indica si se puso un archivo csv de entrada. */
+    /**
+     * Indica si se puso un archivo csv de entrada.
+     */
     private boolean hayArchivo;
 
-    /** Ruta del archivo csv de entrada. */
+    /**
+     * Ruta del archivo csv de entrada.
+     */
     private String archivo;
 
-    /** Lista de columnas a procesar. */
+    /**
+     * Lista de columnas a procesar.
+     */
     private int[] columnas;
 
-    /** Filtros a aplicar a las columnas. */
+    /**
+     * Filtros a aplicar a las columnas.
+     */
     private String[] filtros;
 
-    /** Indica si se seleccionan todas las columnas. */
+    /**
+     * Indica si se seleccionan todas las columnas.
+     */
     private boolean todasLasColumnas = false;
 
-    /** Indica cuantos registros se imprimen en la consola */
+    /**
+     * Indica cuantos registros se imprimen en la consola
+     */
     private int limiteImpresion;
 
-    /** Cantidad de procesadores disponibles */
+    /**
+     * Cantidad de procesadores disponibles
+     */
     private final int cantidadProcesadores;
 
-    /** Cantidad de subarchivos a crear */
+    /**
+     * Cantidad de subarchivos a crear
+     */
     private final int cantidadSubarchivos;
-
 
     /**
      * Constructor para fijar la cantidad de subarchivos a crear.
@@ -44,7 +61,7 @@ public class Opciones {
 
     /**
      * Constructor por defecto.
-     *  Por defecto se crean el doble de subarchivos que procesadores disponibles.
+     * Por defecto se crean el doble de subarchivos que procesadores disponibles.
      */
     public Opciones() {
         this(2);
@@ -61,6 +78,7 @@ public class Opciones {
 
     /**
      * Regresa la cantidad de procesadores disponibles.
+     *
      * @return la cantidad de procesadores disponibles.
      */
     public int getCantidadProcesadores() {

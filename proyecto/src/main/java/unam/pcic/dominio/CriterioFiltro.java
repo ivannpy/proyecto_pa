@@ -9,17 +9,21 @@ import java.util.function.Supplier;
  * - Valida y evalúa condiciones contra un RegistroCSV.
  */
 public class CriterioFiltro<R> {
-    /** La forma de seleccionar columnas en un almacen de registros */
+    /**
+     * La forma de seleccionar columnas en un almacen de registros
+     */
     private final Seleccion<R> seleccion;
 
-    /** Proveedor de almacen de registros */
+    /**
+     * Proveedor de almacen de registros
+     */
     private final Supplier<Almacen<R>> proveedorAlmacen;
 
     /**
      * Constructor.
      * ¿Por qué se necesita el proveedor de almacen?
      *
-     * @param seleccion La forma de seleccionar columnas en un almacen de registros.
+     * @param seleccion        La forma de seleccionar columnas en un almacen de registros.
      * @param proveedorAlmacen El proveedor de almacen de registros.
      */
     public CriterioFiltro(Seleccion<R> seleccion, Supplier<Almacen<R>> proveedorAlmacen) {
@@ -29,7 +33,7 @@ public class CriterioFiltro<R> {
 
     /**
      * Fábrica de filtros para registros row-oriented (RegistroCSV).
-     *  Usa SeleccionRenglon y AlmacenRenglones.
+     * Usa SeleccionRenglon y AlmacenRenglones.
      *
      * @return un filtro y selección para registros row-oriented (RegistroCSV).
      */
@@ -43,7 +47,7 @@ public class CriterioFiltro<R> {
     /**
      * Selecciona columnas dadas de un almacen de registros.
      *
-     * @param almacen El almacen de registros.
+     * @param almacen  El almacen de registros.
      * @param columnas Las columnas a seleccionar.
      * @return Un nuevo almacen de registros con las columnas seleccionadas.
      */

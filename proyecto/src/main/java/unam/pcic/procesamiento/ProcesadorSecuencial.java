@@ -9,6 +9,7 @@ import unam.pcic.io.DivisorArchivo;
 import unam.pcic.io.EscritorCSV;
 import unam.pcic.io.LectorCSV;
 import unam.pcic.utilidades.Opciones;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
     /**
      * Procesa un archivo CSV.
      *
-     * @param archivo El archivo a procesar.
+     * @param archivo  El archivo a procesar.
      * @param escritor El escritor para el archivo de salida.
      * @param opciones Las opciones para el procesamiento (se cambiará por un CriterioFiltro)
      */
@@ -86,7 +87,7 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
      * Procesa todos los archivos de la carpeta temporal.
      *
      * @param carpetaTemporal La carpeta temporal con los archivos a procesar.
-     * @param opciones Las opciones para el procesamiento.
+     * @param opciones        Las opciones para el procesamiento.
      */
     private void procesaArchivos(File carpetaTemporal, Opciones opciones) {
         String rutaArchivoFinal = carpetaTemporal.getParent() + File.separator + "resultado.csv";

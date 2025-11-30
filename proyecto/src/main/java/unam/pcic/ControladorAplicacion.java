@@ -5,6 +5,7 @@ import unam.pcic.dominio.*;
 import unam.pcic.io.LectorCSV;
 import unam.pcic.procesamiento.ProcesadorCSV;
 import unam.pcic.utilidades.Opciones;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class ControladorAplicacion {
 
     /**
      * Ejecuta la aplicación según las configuraciones.
-     *  Ejecuta ambos modos de procesamiento.
+     * Ejecuta ambos modos de procesamiento.
      *
      * @param opciones Opciones para ejecutar el programa.
      */
@@ -35,7 +36,7 @@ public class ControladorAplicacion {
      * Ejecuta el flujo completo para un modo de procesamiento.
      *
      * @param opciones Las opciones para ejecutar el programa.
-     * @param modo El modo de procesamiento (Secuencial o Concurrente)
+     * @param modo     El modo de procesamiento (Secuencial o Concurrente)
      */
     private static void ejecutar(Opciones opciones, Procesamiento modo) {
         AnalizadorRendimiento analizador = new AnalizadorRendimiento(opciones);
@@ -57,6 +58,7 @@ public class ControladorAplicacion {
 
     /**
      * Prueba de lectura y aplicación de filtros. Se quitará para la versión final.
+     *
      * @param opciones las opciones de ejecución.
      */
     private static void prueba(Opciones opciones) {

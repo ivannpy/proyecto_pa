@@ -7,19 +7,23 @@ package unam.pcic.dominio;
  * - Solo debe usarlo el procesador secuencial.
  */
 public class RegistroCSV {
-    /** Valores del registro */
+    /**
+     * Valores del registro
+     */
     private final String[] valores;
 
-    /** Posición del registro en el archivo */
+    /**
+     * Posición del registro en el archivo
+     */
     private final Long numeroLinea;
 
     /**
      * Construye un RegistroCSV a partir de una arreglo de valores (Strings) y su posición en el archivo.
      *
-     * @param valores Arreglo de Strings con los valores del registro.
+     * @param valores     Arreglo de Strings con los valores del registro.
      * @param numeroLinea Posición del registro en el archivo.
      */
-    public RegistroCSV(String[] valores, Long numeroLinea){
+    public RegistroCSV(String[] valores, Long numeroLinea) {
         if (valores == null || valores.length == 0) {
             throw new IllegalArgumentException("Los valores no pueden ser null o vacíos");
         }
@@ -32,7 +36,7 @@ public class RegistroCSV {
      *
      * @return Un arreglo de Strings con los valores del registro.
      */
-    public String[] getValores(){
+    public String[] getValores() {
         return valores;
     }
 
@@ -41,7 +45,7 @@ public class RegistroCSV {
      *
      * @return La posición del registro en el archivo.
      */
-    public Long getNumeroLinea(){
+    public Long getNumeroLinea() {
         return numeroLinea;
     }
 
@@ -51,7 +55,7 @@ public class RegistroCSV {
      * @param indiceColumna El indice de la columna.
      * @return El valor del registro para esa columna.
      */
-    public String getValor(int indiceColumna){
+    public String getValor(int indiceColumna) {
         if (indiceColumna < 0 || indiceColumna >= valores.length) {
             throw new IndexOutOfBoundsException("Índice de columna inválido: " + indiceColumna);
         }
@@ -63,7 +67,7 @@ public class RegistroCSV {
      *
      * @return la cantidad de columnas del registro.
      */
-    public int getNumeroColumnas(){
+    public int getNumeroColumnas() {
         return valores.length;
     }
 
@@ -73,7 +77,7 @@ public class RegistroCSV {
      * @param indiceColumna la columna indicada.
      * @return true si el registro tiene un valor para la columna indicada, false en caso contrario.
      */
-    public boolean tieneValor(int indiceColumna){
+    public boolean tieneValor(int indiceColumna) {
         String valor = getValor(indiceColumna);
         return valor != null && !valor.trim().isEmpty();
     }
@@ -93,7 +97,7 @@ public class RegistroCSV {
         sb.append(getNumeroColumnas());
         sb.append(", Valores={");
 
-        for(String campo: valores) {
+        for (String campo : valores) {
             sb.append(campo);
             sb.append(",");
         }
@@ -104,11 +108,11 @@ public class RegistroCSV {
 
     /**
      * Genera una cadena con los valores del registro para escribirlo en un archivo CSV.
-     *  Los cambios entrecomillas (que potencialmente tienen "," intermedias) se serializan entre comillas dobles.
+     * Los cambios entrecomillas (que potencialmente tienen "," intermedias) se serializan entre comillas dobles.
      *
      * @return una cadena con los valores del registro.
      */
-    public String serializa(){
+    public String serializa() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < valores.length; i++) {
             String campo = valores[i];

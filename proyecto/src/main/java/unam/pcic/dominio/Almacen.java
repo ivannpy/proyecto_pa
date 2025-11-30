@@ -3,7 +3,7 @@ package unam.pcic.dominio;
 
 /**
  * Almacen para almacenar registros.
- *  Representa un archivo CSV completo.
+ * Representa un archivo CSV completo.
  *
  * @param <R> Tipo genérico para RegistroCSV o ColumnaCSV.
  */

@@ -9,10 +9,14 @@ import java.util.List;
  * Almacen de renglones de un archivo CSV (RegistroCSV).
  */
 public class AlmacenRenglones implements Almacen<RegistroCSV> {
-    /** Lista de registros almacenados. */
+    /**
+     * Lista de registros almacenados.
+     */
     private List<RegistroCSV> registros;
 
-    /** Cuántos registros hay en el almacen. */
+    /**
+     * Cuántos registros hay en el almacen.
+     */
     private int longitud;
 
     /**
@@ -67,7 +71,7 @@ public class AlmacenRenglones implements Almacen<RegistroCSV> {
      * @return El registro en la posición dada por el índice
      */
     @Override
-    public RegistroCSV get(int indice){
+    public RegistroCSV get(int indice) {
         return registros.get(indice);
     }
 

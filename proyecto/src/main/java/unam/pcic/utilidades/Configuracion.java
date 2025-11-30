@@ -30,7 +30,7 @@ public class Configuracion {
             String[] encabezados = lector.leerEncabezado();
             System.out.println("Columnas disponibles:");
             for (int i = 0; i < encabezados.length; i++) {
-                System.out.println(i +" --- "+ encabezados[i]);
+                System.out.println(i + " --- " + encabezados[i]);
             }
         } catch (Exception e) {
             // TODO: Manejarlo con el Logger.
@@ -48,7 +48,8 @@ public class Configuracion {
 
     }
 
-    /** Parsea los argumentos de la linea de comandos o los dados por el menú interactivo.
+    /**
+     * Parsea los argumentos de la linea de comandos o los dados por el menú interactivo.
      *
      * @param args los argumentos de la linea de comandos o del menú interactivo.
      * @return Una instancia de Opciones con los argumentos.

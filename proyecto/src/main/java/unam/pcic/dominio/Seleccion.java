@@ -11,9 +11,8 @@ public interface Seleccion<R> {
      *
      * @param registro Registro de entrada
      * @param columnas Las columnas seleccionadas
-     *
      * @return Arreglo de Strings con solo las columnas seleccionadas, en el orden definido
-     *         por la implementación.
+     * por la implementación.
      */
     R seleccionar(R registro, int[] columnas);
 

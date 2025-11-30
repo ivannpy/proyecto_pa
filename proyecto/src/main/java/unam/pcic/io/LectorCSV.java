@@ -1,6 +1,7 @@
 package unam.pcic.io;
 
 import unam.pcic.dominio.RegistroCSV;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,43 +17,65 @@ import java.util.List;
  * - Convierte una linea en un array de Strings.
  */
 public class LectorCSV {
-    /** Delimitador por defecto */
+    /**
+     * Delimitador por defecto
+     */
     private static final String DELIMITADOR_POR_DEFECTO = ",";
 
-    /** Codificación por defecto */
+    /**
+     * Codificación por defecto
+     */
     private static final String CODIFICACION_POR_DEFECTO = "utf-8";
 
-    /** Archivo a leer */
+    /**
+     * Archivo a leer
+     */
     private final File archivo;
 
-    /** Delimitador a utilizar */
+    /**
+     * Delimitador a utilizar
+     */
     private final String delimitador;
 
-    /** Codificación a utilizar */
+    /**
+     * Codificación a utilizar
+     */
     private final String codificacion;
 
-    /** Indica si el archivo CSV tiene un encabezado */
+    /**
+     * Indica si el archivo CSV tiene un encabezado
+     */
     private final boolean tieneEncabezado;
 
-    /** El encabezado del archivo CSV */
+    /**
+     * El encabezado del archivo CSV
+     */
     private String[] encabezado;
 
-    /** Cantidad de columnas del archivo CSV */
+    /**
+     * Cantidad de columnas del archivo CSV
+     */
     private int cantidadColumnas;
 
-    /** Lector para lectura secuencial tipo "generador" */
+    /**
+     * Lector para lectura secuencial tipo "generador"
+     */
     private BufferedReader lectorSecuencial;
 
-    /** Indica si el lector secuencial ya fue inicializado */
+    /**
+     * Indica si el lector secuencial ya fue inicializado
+     */
     private boolean lectorSecuencialInicializado = false;
 
-    /** Número de línea correspondiente a la lectura secuencial */
+    /**
+     * Número de línea correspondiente a la lectura secuencial
+     */
     private long numeroLineaSecuencial = 0L;
 
     /**
      * Construye un LectorCSV usando el delimitador y la codificación por defecto.
      *
-     * @param archivo El archivo a leer.
+     * @param archivo         El archivo a leer.
      * @param tieneEncabezado Indica si el archivo tiene encabezado.
      */
     public LectorCSV(File archivo, boolean tieneEncabezado) {
@@ -62,9 +85,9 @@ public class LectorCSV {
     /**
      * Construye un LectorCSV.
      *
-     * @param archivo El archivo a leer.
-     * @param delimitador El delimitador a utilizar.
-     * @param codificacion La codificación a utilizar.
+     * @param archivo         El archivo a leer.
+     * @param delimitador     El delimitador a utilizar.
+     * @param codificacion    La codificación a utilizar.
      * @param tieneEncabezado Indica si el archivo tiene encabezado.
      */
     public LectorCSV(File archivo, String delimitador, String codificacion, boolean tieneEncabezado) {

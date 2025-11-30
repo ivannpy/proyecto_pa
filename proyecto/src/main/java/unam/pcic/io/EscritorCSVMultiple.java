@@ -90,7 +90,7 @@ public class EscritorCSVMultiple implements AutoCloseable {
 
     /**
      * Hace flush a todos los escritores.
-     *  Hacer flush significa que se escriben todos los datos en el buffer.
+     * Hacer flush significa que se escriben todos los datos en el buffer.
      */
     public void flush() {
         for (BufferedWriter escritor : escritores) {

@@ -1,6 +1,7 @@
 package unam.pcic.io;
 
 import unam.pcic.dominio.RegistroCSV;
+
 import java.io.File;
 import java.util.List;
 
@@ -12,13 +13,19 @@ import java.util.List;
  * - Preserva el encabezado de cada subarchivo.
  */
 public class DivisorArchivo {
-    /** Cantidad de subarchivos a crear */
+    /**
+     * Cantidad de subarchivos a crear
+     */
     private final int cantidadSubarchivos;
 
-    /** Archivo de entrada */
+    /**
+     * Archivo de entrada
+     */
     private final File archivoDeEntrada;
 
-    /** Carpeta temporal */
+    /**
+     * Carpeta temporal
+     */
     private final File carpetaTemporal;
 
     /**
@@ -32,16 +39,8 @@ public class DivisorArchivo {
     }
 
     /**
-     * Regresa la cantidad de subarchivos a crear.
-     *
-     * @return la cantidad de subarchivos a crear.
-     */
-    public int getCantidadSubarchivos() {
-        return cantidadSubarchivos;
-    }
-
-    /**
      * Regresa la carpeta temporal.
+     *
      * @return la carpeta temporal.
      */
     public File getCarpetaTemporal() {

@@ -2,9 +2,9 @@ package unam.pcic.dominio;
 
 /**
  * - Debe ser implementado por los filtros
- *  Posibles filtros:
- *      - Filtro por valor constante
- *      - Mayor que, menor que, mayor o igual que, menor o igual que.
+ * Posibles filtros:
+ * - Filtro por valor constante
+ * - Mayor que, menor que, mayor o igual que, menor o igual que.
  */
 public interface CondicionFiltro<R> {
     /**

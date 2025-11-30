@@ -14,7 +14,8 @@ public class AdminArchivosTmp {
     /**
      * Construtor privado.
      */
-    private AdminArchivosTmp() {}
+    private AdminArchivosTmp() {
+    }
 
     /**
      * Crea una carpeta temporal con el nombre dado.
@@ -24,7 +25,7 @@ public class AdminArchivosTmp {
     private static void creaCarpetaTemporal(String rutaCarpeta) {
         File carpetaTemporal = new File(rutaCarpeta);
         boolean creada = false;
-        if (!carpetaTemporal.exists()){
+        if (!carpetaTemporal.exists()) {
             creada = carpetaTemporal.mkdirs();
         }
 
@@ -41,20 +42,20 @@ public class AdminArchivosTmp {
      */
     public static void eliminaCarpetaTemporal(File carpetaTemporal) {
         if (carpetaTemporal.exists()) {
-           File[] archivos = carpetaTemporal.listFiles();
+            File[] archivos = carpetaTemporal.listFiles();
 
-           // Si la carpeta no tiene archivos, elimina la carpeta
-           if ( archivos == null || archivos.length == 0) {
-               boolean eliminada = carpetaTemporal.delete();
-               return;
+            // Si la carpeta no tiene archivos, elimina la carpeta
+            if (archivos == null || archivos.length == 0) {
+                boolean eliminada = carpetaTemporal.delete();
+                return;
             }
 
-           // Si la carpeta no está vacía, eliminamos los archivos dentro de ella
-           for (File archivo : archivos) {
-               boolean eliminado = archivo.delete();
-           }
-           // Elimina la carpeta
-           boolean carpetaEliminada = carpetaTemporal.delete();
+            // Si la carpeta no está vacía, eliminamos los archivos dentro de ella
+            for (File archivo : archivos) {
+                boolean eliminado = archivo.delete();
+            }
+            // Elimina la carpeta
+            boolean carpetaEliminada = carpetaTemporal.delete();
         }
     }
 
@@ -72,9 +73,9 @@ public class AdminArchivosTmp {
 
     /**
      * Crea una lista de archivos temporales para un archivo dado.
-     *  La lista de archivos creada es para escribir las partes del archivo base.
+     * La lista de archivos creada es para escribir las partes del archivo base.
      *
-     * @param archivo el archivo base.
+     * @param archivo  el archivo base.
      * @param cantidad la cantidad de archivos temporales a crear.
      * @return una lista de archivos temporales.
      */
