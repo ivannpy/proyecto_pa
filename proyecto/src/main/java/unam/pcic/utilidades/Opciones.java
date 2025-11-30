@@ -34,6 +34,9 @@ public class Opciones {
      */
     private List<CondicionFiltro<RegistroCSV>> filtros;
 
+    /**
+     * Criterio de filtrado de registros
+     */
     private CriterioFiltro<RegistroCSV> criterioFiltro;
 
     /**
@@ -218,10 +221,18 @@ public class Opciones {
         return limiteImpresion;
     }
 
+    /**
+     * Crea un criterio de filtrado a partir de las columnas y los filtros.
+     */
     public void setCriterioFiltro() {
         this.criterioFiltro = CriterioFiltro.paraRegistroCSV(getColumnas(), getFiltros());
     }
 
+    /**
+     * Regresa el criterio de filtrado.
+     *
+     * @return el criterio de filtrado.
+     */
     public CriterioFiltro<RegistroCSV> getCriterioFiltro() {
         if (criterioFiltro == null) setCriterioFiltro();
         return criterioFiltro;
@@ -240,7 +251,7 @@ public class Opciones {
         sb.append(", columnas=");
         sb.append(Arrays.toString(columnas));
         sb.append(", filtros=");
-        sb.append("");
+        sb.append(filtros);
         sb.append(", todasLasColumnas=");
         sb.append(todasLasColumnas);
         sb.append(", limiteImpresion=");

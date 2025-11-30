@@ -1,5 +1,6 @@
 package unam.pcic.dominio;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -15,6 +16,9 @@ public class CriterioFiltro<R> {
      */
     private final Seleccion<R> seleccion;
 
+    /**
+     * Columnas que se van a seleccionar
+     */
     private final int[] columnasSeleccionadas;
 
     /**
@@ -44,10 +48,6 @@ public class CriterioFiltro<R> {
         this.proveedorAlmacen = proveedorAlmacen;
     }
 
-    public List<CondicionFiltro<R>> getFiltros() {
-        return filtros;
-    }
-
     /**
      * Fábrica de filtros para registros row-oriented (RegistroCSV).
      * Usa SeleccionRenglon y AlmacenRenglones.
@@ -67,14 +67,14 @@ public class CriterioFiltro<R> {
     /**
      * Selecciona columnas dadas de un almacen de registros.
      *
-     * @param almacen  El almacen de registros.
+     * @param almacen El almacen de registros.
      * @return Un nuevo almacen de registros con las columnas seleccionadas.
      */
     public Almacen<R> seleccionarColumnas(Almacen<R> almacen) {
         Almacen<R> seleccionAlmacen = proveedorAlmacen.get();
 
         for (R registro : almacen) {
-            R reducido = this.seleccion.seleccionar(registro, columnasSeleccionadas);
+            R reducido = seleccionarColumnas(registro);
             seleccionAlmacen.agregar(reducido);
         }
 
@@ -91,15 +91,27 @@ public class CriterioFiltro<R> {
         return this.seleccion.seleccionar(registro, columnasSeleccionadas);
     }
 
-
+    /**
+     * Aplica un filtro a un registro.
+     *
+     * @param registro El registro a filtrar.
+     * @param filtro El filtro a aplicar.
+     * @return true si el registro cumple la condición del filtro, false en caso contrario.
+     */
     public boolean aplicarFiltro(R registro, CondicionFiltro<R> filtro) {
         return filtro.cumple(registro);
     }
 
+    /**
+     * Aplica todos los filtros a un registro.
+     *
+     * @param registro El registro a filtrar.
+     * @return true si el registro cumple todas las condiciones de los filtros, false en caso contrario.
+     */
     public boolean aplicarFiltros(R registro) {
         boolean noCumpleAlguna = false;
         for (CondicionFiltro<R> condicion : filtros) {
-            if (!condicion.cumple(registro)) {
+            if (!aplicarFiltro(registro, condicion)) {
                 noCumpleAlguna = true;
                 break;
             }
@@ -107,4 +119,11 @@ public class CriterioFiltro<R> {
         return !noCumpleAlguna;
     }
 
+    @Override
+    public String toString() {
+        return "CriterioFiltro(" +
+                ", columnasSeleccionadas={" + Arrays.toString(columnasSeleccionadas) +
+                "}, filtros={" + filtros.toString() +
+                "}\n)";
+    }
 }

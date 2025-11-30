@@ -59,6 +59,12 @@ public class Configuracion {
         return new String[]{nombreArchivo, "-c", columnas, "-f", filtros,  "-l", "10",};
     }
 
+    /**
+     * Parsea los filtros dados en una cadena y los regresa como una lista de CondicionFiltro.
+     *
+     * @param filtros La cadena con los filtros separados por comas.
+     * @return Una lista de CondicionFiltro.
+     */
     private static List<CondicionFiltro<RegistroCSV>> parseaFiltros(String filtros) {
         String[] filtrosArr = filtros.split(",");
         List<CondicionFiltro<RegistroCSV>> condiciones = new ArrayList<>();
@@ -130,6 +136,12 @@ public class Configuracion {
         return condiciones;
     }
 
+    /**
+     * Parsea una lista de columnas separadas por comas.
+     *
+     * @param columnas La lista de columnas separadas por comas.
+     * @return Un arreglo de enteros con las columnas.
+     */
     private static int[] parseaColumnas(String columnas) {
         String[] listaColumnas = columnas.split(",");
         int[] columnasArr = new int[listaColumnas.length];

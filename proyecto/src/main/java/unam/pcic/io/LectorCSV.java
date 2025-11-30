@@ -161,7 +161,6 @@ public class LectorCSV {
         return resultado.toArray(new String[0]);
     }
 
-
     /**
      * Lee el archivo CSV completo y devuelve una lista de registros.
      *
@@ -200,8 +199,6 @@ public class LectorCSV {
         }
         return registros;
     }
-
-    // ************ Lector secuencial, sin leer el csv completo a memoria ************
 
     /**
      * Inicializa el lector secuencial (solo si no ha sido inicializado anteriormente).

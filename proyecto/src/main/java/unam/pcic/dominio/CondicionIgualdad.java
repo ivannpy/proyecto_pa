@@ -33,6 +33,21 @@ public class CondicionIgualdad implements CondicionFiltro<RegistroCSV> {
      * @return true si el registro dado tiene el valor buscado en la columna indicada, false en caso contrario.
      */
     public boolean cumple(RegistroCSV registro) {
-        return registro.tieneValor(columna) && registro.getValor(columna).equals(valor);
+        if (!registro.tieneValor(columna)) return false;
+
+        String valorRegistro = registro.getValor(columna);
+
+        try {
+            double numRegistro = Double.parseDouble(valorRegistro);
+            double numFiltro = Double.parseDouble(valor);
+            return numRegistro == numFiltro;
+        } catch (NumberFormatException e) {
+            return valorRegistro.compareTo(valor) == 0;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Columna " + columna + " = " + valor;
     }
 }
