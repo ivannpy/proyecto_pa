@@ -1,10 +1,12 @@
 package unam.pcic.utilidades;
 
 
+import unam.pcic.dominio.*;
 import unam.pcic.io.LectorCSV;
-
 import java.io.File;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * - Lee parámetros de entrada del usuario
@@ -26,8 +28,10 @@ public class Configuracion {
 
         File archivo = new File(nombreArchivo);
         LectorCSV lector = new LectorCSV(archivo, true);
+
+        String[] encabezados = new String[0];
         try {
-            String[] encabezados = lector.leerEncabezado();
+            encabezados = lector.leerEncabezado();
             System.out.println("Columnas disponibles:");
             for (int i = 0; i < encabezados.length; i++) {
                 System.out.println(i + " --- " + encabezados[i]);
@@ -38,14 +42,107 @@ public class Configuracion {
         }
 
         // TODO: Hacer validaciones de las entradas del usuario
-        System.out.print("Seleccione las columnas a procesar separadas por comas");
-        System.out.println("o escriba 'todas' para procesar todas las columnas.");
+        System.out.print("Seleccione las columnas a procesar separadas por comas (e.g 2,10,11)");
+        System.out.println(" o escriba '*' para procesar todas las columnas.");
+        String columnas = System.console().readLine();
 
-        System.out.print("Escriba los filtros a usar separados por comas: ");
+        System.out.println("Columnas seleccionadas: ");
 
-        // El arreglo que se retorna se debe crear con lo que se lea del usuario
-        return new String[]{nombreArchivo, "-c", "2,10,11", "-l", "10", "-f", "c1=spanish"};
+        String[] columnasSeleccionadas = columnas.split(",");
+        for (int i = 0; i < columnasSeleccionadas.length; i++) {
+            System.out.println(i + " --- " + encabezados[Integer.parseInt(columnasSeleccionadas[i])]);
+        }
 
+        System.out.println("Escriba los filtros a usar separados por comas (e.g c1=spanish): ");
+        String filtros = System.console().readLine();
+
+        return new String[]{nombreArchivo, "-c", columnas, "-f", filtros,  "-l", "10",};
+    }
+
+    private static List<CondicionFiltro<RegistroCSV>> parseaFiltros(String filtros) {
+        String[] filtrosArr = filtros.split(",");
+        List<CondicionFiltro<RegistroCSV>> condiciones = new ArrayList<>();
+
+        for (String filtroStr : filtrosArr) {
+            String filtro = filtroStr.trim();
+            if (filtro.isEmpty()) continue;
+
+            String operador;
+            int idxOp;
+
+            if ((idxOp = filtro.indexOf(">=")) != -1) {
+                operador = ">=";
+            } else if ((idxOp = filtro.indexOf("<=")) != -1) {
+                operador = "<=";
+            } else if ((idxOp = filtro.indexOf("=")) != -1) {
+                operador = "=";
+            } else if ((idxOp = filtro.indexOf(">")) != -1) {
+                operador = ">";
+            } else if ((idxOp = filtro.indexOf("<")) != -1) {
+                operador = "<";
+            } else {
+                throw new IllegalArgumentException("Filtro inválido: " + filtro);
+            }
+
+            String parteColumna = filtro.substring(0, idxOp).trim();
+            String parteValor = filtro.substring(idxOp + operador.length()).trim();
+
+            if (!parteColumna.startsWith("c")) {
+                throw new IllegalArgumentException("La columna debe empezar con 'c': " + parteColumna);
+            }
+
+            String numeroColumnaStr = parteColumna.substring(1);
+            int columnaInt;
+            try {
+                columnaInt = Integer.parseInt(numeroColumnaStr);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Número de columna inválido en filtro: " + filtro);
+            }
+
+            if (parteValor.isEmpty()) {
+                throw new IllegalArgumentException("Valor vacío en filtro: " + filtro);
+            }
+
+            CondicionFiltro<RegistroCSV> condicion;
+            switch (operador) {
+                case "=":
+                    condicion = new CondicionIgualdad(columnaInt, parteValor);
+                    break;
+                case ">":
+                    condicion = new CondicionMayor(columnaInt, parteValor);
+                    break;
+                case "<":
+                    condicion = new CondicionMenor(columnaInt, parteValor);
+                    break;
+                case ">=":
+                    condicion = new CondicionMayorIgual(columnaInt, parteValor);
+                    break;
+                case "<=":
+                    condicion = new CondicionMenorIgual(columnaInt, parteValor);
+                    break;
+                default:
+                    throw new IllegalStateException("Operador no soportado: " + operador);
+            }
+
+            condiciones.add(condicion);
+        }
+
+        return condiciones;
+    }
+
+    private static int[] parseaColumnas(String columnas) {
+        String[] listaColumnas = columnas.split(",");
+        int[] columnasArr = new int[listaColumnas.length];
+        for (int j = 0; j < listaColumnas.length; j++) {
+            try {
+                columnasArr[j] = Integer.parseInt(listaColumnas[j]);
+                if (columnasArr[j] < 0)
+                    throw new NumberFormatException("La columna debe ser mayor o igual a cero.");
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Las columnas deben ser enteros no negativos separados por comas.");
+            }
+        }
+        return columnasArr;
     }
 
     /**
@@ -81,14 +178,17 @@ public class Configuracion {
                     String limiteStr = args[++i];
                     int limite = Integer.parseInt(limiteStr);
                     opciones.setLimiteImpresion(limite);
+                    limiteRepetido = true;
                     break;
                 case "-f":
                 case "--filtros":
                     if (filtrosRepetido)
                         throw new IllegalArgumentException("La opción filtros se repite.");
                     String filtrosStr = args[++i];
-                    opciones.setFiltros(filtrosStr.split(",", -1));
-                    // TODO: Los filtros se pueden parsear desde aquí.
+
+                    List<CondicionFiltro<RegistroCSV>> filtros = parseaFiltros(filtrosStr);
+                    opciones.setFiltros(filtros);
+
                     filtrosRepetido = true;
                     break;
                 case "-c":
@@ -98,23 +198,15 @@ public class Configuracion {
                     if (i + 1 >= args.length)
                         throw new IllegalArgumentException("La opción columnas requiere una lista de enteros o *");
                     String columnasStr = args[++i];
-                    if (columnasStr.equals("todas") || columnasStr.equals("all")) {
+
+                    if (columnasStr.equals("*")) {
                         opciones.setColumnas(new int[0]);
                         opciones.setTodasLasColumnas(true);
                         columnasRepetido = true;
                         break;
                     }
-                    String[] listaColumnas = columnasStr.split(",");
-                    int[] columnas = new int[listaColumnas.length];
-                    for (int j = 0; j < listaColumnas.length; j++) {
-                        try {
-                            columnas[j] = Integer.parseInt(listaColumnas[j]);
-                            if (columnas[j] < 0)
-                                throw new NumberFormatException("La columna debe ser mayor o igual a cero.");
-                        } catch (NumberFormatException e) {
-                            throw new IllegalArgumentException("Las columnas deben ser enteros no negativos separados por comas.");
-                        }
-                    }
+
+                    int[] columnas = parseaColumnas(columnasStr);
                     opciones.setColumnas(columnas);
                     columnasRepetido = true;
                     break;
