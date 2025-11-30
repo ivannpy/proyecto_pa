@@ -205,6 +205,24 @@ public class LectorCSV {
         lectorSecuencialInicializado = true;
     }
 
+    public String siguienteLinea() throws Exception {
+        inicializarLectorSecuencial();
+
+        String linea;
+        while ((linea = lectorSecuencial.readLine()) != null) {
+            numeroLineaSecuencial++;
+
+            if (linea.trim().isEmpty()) {
+                continue;
+            }
+
+            return linea;
+        }
+
+        cerrarLectorSecuencial();
+        return null;
+    }
+
     public RegistroCSV siguienteRegistro() throws Exception {
         inicializarLectorSecuencial();
 
@@ -220,8 +238,8 @@ public class LectorCSV {
 
             if (valores.length != cantidadColumnas) {
                 // Registro inválido (no se pudo parsear bien)
-                RegistroCSV registroIncorrecto = new RegistroCSV(valores, numeroLineaSecuencial);
-                System.out.println("Registro invalido" + registroIncorrecto);
+                //RegistroCSV registroIncorrecto = new RegistroCSV(valores, numeroLineaSecuencial);
+                //System.out.println("Registro invalido al leerse " + registroIncorrecto);
                 continue;
             }
 

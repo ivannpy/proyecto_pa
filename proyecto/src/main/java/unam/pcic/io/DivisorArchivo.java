@@ -3,7 +3,11 @@ package unam.pcic.io;
 import unam.pcic.dominio.RegistroCSV;
 import java.io.File;
 import java.util.List;
-
+import java.io.BufferedWriter;
+import java.io.Writer;
+import java.io.OutputStreamWriter;
+import java.io.FileOutputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * - Divide el archivo en N subarchivos temporales.
@@ -29,12 +33,11 @@ public class DivisorArchivo {
      * El DivisorArchivo sabe cuantos procesadores hay en el sistema.
      */
     public DivisorArchivo(String rutaArchivoDeEntrada) {
-        int K = 2;
+        int K = 10;
         this.cantidadProcesadores = Runtime.getRuntime().availableProcessors();
         this.cantidadSubarchivos = cantidadProcesadores * K;
         this.archivoDeEntrada = new File(rutaArchivoDeEntrada);
         this.carpetaTemporal = new File(archivoDeEntrada.getParentFile() + File.separator + "tmp");
-
     }
 
     /**
@@ -64,37 +67,35 @@ public class DivisorArchivo {
      *
      */
     public void divide() {
-        // Divide no hace ningun procesamiento.
-        // Solo toma el archivo y lo divide en subarchivos.
-        // Luego, cada subarchivo se procesa por separado.
-        // Cuando se procesan los subarchivos, se procesan como RegistroCSV
-        // Se aplican los filtros, etc, se hace limpieza y se escribe en un archivo nuevo.
 
         LectorCSV lector = new LectorCSV(archivoDeEntrada, true);
 
         List<File> archivosTemporales = AdminArchivosTmp.creaArchivosTemporales(archivoDeEntrada, cantidadSubarchivos);
 
-        // Escribe el encabezado en cada subarchivo.
-        try {
-            RegistroCSV encabezado = new RegistroCSV(lector.leerEncabezado(), 0L);
-            for (File archivoTemporal : archivosTemporales) {
-                EscritorCSV.escribeRegistro(encabezado, archivoTemporal);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         int i = 0;
 
-        try {
-            RegistroCSV registro;
-            while ((registro = lector.siguienteRegistro()) != null) {
-                EscritorCSV.escribeRegistro(registro, archivosTemporales.get(i % cantidadSubarchivos));
-                i++;
+        try (EscritorCSVMultiple escritor = new EscritorCSVMultiple(archivosTemporales)) {
+            String[] encabezadoArr = lector.leerEncabezado();
+            if (encabezadoArr != null) {
+                RegistroCSV encabezadoRegistro = new RegistroCSV(encabezadoArr, 0L);
+                escritor.escribeEncabezadoEnTodos(encabezadoRegistro.serializa());
             }
+
+            String linea;
+            while ((linea = lector.siguienteLinea()) != null) {
+                int idx = i % cantidadSubarchivos;
+                escritor.escribeLineaEn(idx, linea);
+                i++;
+
+                if (i % 100_000 == 0) {
+                    System.out.println("Lineas procesadas: " + i);
+                }
+            }
+            escritor.flush();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al dividir archivo: " + e.getMessage());
         }
     }
+
 
 }

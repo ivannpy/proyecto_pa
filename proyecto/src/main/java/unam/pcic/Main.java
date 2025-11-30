@@ -12,14 +12,7 @@ public class Main {
      */
     private static void ayuda(String[] args) {
         if (args.length == 0) {
-            System.out.println("Uso: java -jar proyecto.jar archivo.csv");
-            System.exit(1);
-        }
-
-        if (args.length == 1 && (args[0].equals("-h") || args[0].equals("--help"))) {
-            System.out.println("Uso: java -jar proyecto.jar archivo.csv");
-            System.out.println("Banderas:");
-            System.out.println("-h, --help: Imprime esta ayuda.");
+            System.out.println("Uso: java -jar proyecto.jar path/archivo.csv");
             System.exit(1);
         }
     }
