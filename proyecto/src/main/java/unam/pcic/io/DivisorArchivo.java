@@ -12,9 +12,6 @@ import java.util.List;
  * - Preserva el encabezado de cada subarchivo.
  */
 public class DivisorArchivo {
-    /** Cantidad de procesadores en el sistema */
-    private final int cantidadProcesadores;
-
     /** Cantidad de subarchivos a crear */
     private final int cantidadSubarchivos;
 
@@ -28,21 +25,10 @@ public class DivisorArchivo {
      * Constructor por defecto.
      * El DivisorArchivo sabe cuantos procesadores hay en el sistema.
      */
-    public DivisorArchivo(String rutaArchivoDeEntrada) {
-        int K = 5;
-        this.cantidadProcesadores = Runtime.getRuntime().availableProcessors();
-        this.cantidadSubarchivos = cantidadProcesadores * K;
+    public DivisorArchivo(String rutaArchivoDeEntrada, int cantidadSubarchivos) {
+        this.cantidadSubarchivos = cantidadSubarchivos;
         this.archivoDeEntrada = new File(rutaArchivoDeEntrada);
         this.carpetaTemporal = new File(archivoDeEntrada.getParentFile() + File.separator + "tmp");
-    }
-
-    /**
-     * Regresa la cantidad de procesadores disponibles.
-     *
-     * @return la cantidad de procesadores disponibles.
-     */
-    public int getCantidadProcesadores() {
-        return cantidadProcesadores;
     }
 
     /**
@@ -84,7 +70,7 @@ public class DivisorArchivo {
             String linea;
             while ((linea = lector.siguienteLinea()) != null) {
                 int indiceArchivoTmp = i % cantidadSubarchivos;
-                escritor.escribeLineaEn(indiceArchivoTmp, linea);
+                escritor.escribeLinea(indiceArchivoTmp, linea);
                 i++;
             }
             escritor.flush();

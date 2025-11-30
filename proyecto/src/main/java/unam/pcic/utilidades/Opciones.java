@@ -25,6 +25,48 @@ public class Opciones {
     /** Indica cuantos registros se imprimen en la consola */
     private int limiteImpresion;
 
+    /** Cantidad de procesadores disponibles */
+    private final int cantidadProcesadores;
+
+    /** Cantidad de subarchivos a crear */
+    private final int cantidadSubarchivos;
+
+
+    /**
+     * Constructor para fijar la cantidad de subarchivos a crear.
+     *
+     * @param multiplo Factor para calcular la cantidad de subarchivos.
+     */
+    public Opciones(int multiplo) {
+        this.cantidadProcesadores = Runtime.getRuntime().availableProcessors();
+        this.cantidadSubarchivos = cantidadProcesadores * multiplo;
+    }
+
+    /**
+     * Constructor por defecto.
+     *  Por defecto se crean el doble de subarchivos que procesadores disponibles.
+     */
+    public Opciones() {
+        this(2);
+    }
+
+    /**
+     * Regresa la cantidad de subarchivos a crear.
+     *
+     * @return la cantidad de subarchivos a crear.
+     */
+    public int getCantidadSubarchivos() {
+        return cantidadSubarchivos;
+    }
+
+    /**
+     * Regresa la cantidad de procesadores disponibles.
+     * @return la cantidad de procesadores disponibles.
+     */
+    public int getCantidadProcesadores() {
+        return cantidadProcesadores;
+    }
+
     /**
      * Regresa si se pasaron argumentos al programa.
      *
