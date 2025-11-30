@@ -72,6 +72,7 @@ public class Opciones {
 
     /**
      * Modifica si hay argumentos al programa.
+     *
      * @param hayArgumentos si hay argumentos al programa.
      */
     public void setHayArgumentos(boolean hayArgumentos) {
@@ -80,6 +81,7 @@ public class Opciones {
 
     /**
      * Modifica la ruta del archivo csv de entrada.
+     *
      * @param archivo la ruta del archivo csv de entrada.
      */
     public void setArchivo(String archivo) {
@@ -88,6 +90,7 @@ public class Opciones {
 
     /**
      * Modifica si hay un archivo csv de entrada.
+     *
      * @param hayArchivo si hay un archivo csv de entrada.
      */
     public void setHayArchivo(boolean hayArchivo) {
@@ -103,16 +106,27 @@ public class Opciones {
         this.columnas = columnas;
     }
 
+    /**
+     * Modifica si se seleccionan todas las columnas.
+     *
+     * @param todasLasColumnas Si se seleccionan todas las columnas.
+     */
     public void setTodasLasColumnas(boolean todasLasColumnas) {
         this.todasLasColumnas = todasLasColumnas;
     }
 
+    /**
+     * Regresa si se seleccionan todas las columnas.
+     *
+     * @return si se seleccionan todas las columnas.
+     */
     public boolean getTodasLasColumnas() {
         return todasLasColumnas;
     }
 
     /**
      * Modifica los filtros a aplicar a las columnas.
+     *
      * @param filtros los filtros a aplicar a las columnas.
      */
     public void setFiltros(String[] filtros) {
@@ -138,7 +152,7 @@ public class Opciones {
     }
 
     /**
-     * {@inheritDoc}
+     * Representación en cadena de las opciones.
      */
     @Override
     public String toString() {

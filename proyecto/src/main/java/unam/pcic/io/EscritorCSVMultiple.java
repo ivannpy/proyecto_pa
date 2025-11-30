@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
- * - Escribe líneas en múltiples archivos CSV de forma eficiente.
+ * - Escribe líneas en múltiples archivos CSV.
  * - Mantiene un BufferedWriter abierto por cada archivo.
  * - Se encarga de abrir, hacer flush y cerrar todos los writers.
  */
@@ -17,103 +17,111 @@ public class EscritorCSVMultiple implements AutoCloseable {
     /**
      * Tamaño del buffer de escritura
      */
-    private static final int WRITE_BUFFER_SIZE = 2 * 1024 * 1024;
+    private static final int LONGITUD_BUFFER_ESCRITURA = 2 * 1024 * 1024;
 
     /**
-     * Writers asociados a cada archivo temporal
+     * Arreglo de escritores asociados a cada archivo temporal
      */
-    private final BufferedWriter[] writers;
+    private final BufferedWriter[] escritores;
 
     /**
-     * Archivos temporales administrados por este escritor
+     * Archivos temporales en los que se escribirá
      */
     private final List<File> archivos;
 
     /**
+     * Constructor.
      * Crea un escritor para múltiples archivos.
      *
      * @param archivos Lista de archivos en los que se escribirá.
      */
     public EscritorCSVMultiple(List<File> archivos) {
         this.archivos = archivos;
-        this.writers = new BufferedWriter[archivos.size()];
-        inicializarWriters();
+        this.escritores = new BufferedWriter[archivos.size()];
+        inicializarEscritores();
     }
 
-    private void inicializarWriters() {
+    /**
+     * Inicializa los escritores.
+     * Para cada archivo temporal, crea un BufferedWriter para el archivo.
+     */
+    private void inicializarEscritores() {
         try {
             for (int i = 0; i < archivos.size(); i++) {
                 File archivo = archivos.get(i);
-                this.writers[i] = new BufferedWriter(
-                                        new OutputStreamWriter(
-                                                new FileOutputStream(archivo, false),
-                                                StandardCharsets.UTF_8),
-                                        WRITE_BUFFER_SIZE);
+                this.escritores[i] = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(archivo, false), StandardCharsets.UTF_8),
+                        LONGITUD_BUFFER_ESCRITURA);
             }
         } catch (IOException e) {
+            // TODO: Manejar con el Logger
             cerrar();
-            throw new RuntimeException("Error al inicializar writers para archivos temporales", e);
+            throw new RuntimeException("Error al inicializar escritores para archivos temporales", e);
         }
     }
 
     /**
      * Escribe una línea en el archivo correspondiente al índice.
      *
-     * @param indiceArchivo Índice del archivo (0 <= indice < archivos.size()).
-     * @param linea         Línea CSV a escribir (sin salto de línea).
+     * @param indiceArchivo Índice del archivo en el que se va a escribir.
+     * @param linea         Línea a escribir.
      */
-    public void escribeLineaEn(int indiceArchivo, String linea) {
-        if (indiceArchivo < 0 || indiceArchivo >= writers.length) {
-            throw new IndexOutOfBoundsException("Índice de archivo inválido: " + indiceArchivo);
-        }
-        BufferedWriter writer = writers[indiceArchivo];
+    public void escribeLinea(int indiceArchivo, String linea) {
+        BufferedWriter escritor = escritores[indiceArchivo];
         try {
-            writer.write(linea);
-            writer.newLine();
+            escritor.write(linea);
+            escritor.newLine();
         } catch (IOException e) {
+            // TODO: Manejar con el Logger
             throw new RuntimeException("Error al escribir en archivo: " + archivos.get(indiceArchivo), e);
         }
     }
 
     /**
-     * Escribe la misma línea (por ejemplo, encabezado) en todos los archivos.
+     * Escribe la misma línea en todos los archivos administrados por este escritor.
      *
-     * @param lineaEncabezado Línea de encabezado (sin salto de línea).
+     * @param linea La linea a escribir.
      */
-    public void escribeEncabezadoEnTodos(String lineaEncabezado) {
-        for (int i = 0; i < writers.length; i++) {
-            escribeLineaEn(i, lineaEncabezado);
+    public void escribeEnTodos(String linea) {
+        for (int i = 0; i < escritores.length; i++) {
+            escribeLinea(i, linea);
         }
     }
 
     /**
-     * Fuerza el flush de todos los writers.
+     * Hace flush a todos los escritores.
+     *  Hacer flush significa que se escriben todos los datos en el buffer.
      */
     public void flush() {
-        for (BufferedWriter writer : writers) {
-            if (writer != null) {
+        for (BufferedWriter escritor : escritores) {
+            if (escritor != null) {
                 try {
-                    writer.flush();
+                    escritor.flush();
                 } catch (IOException e) {
+                    // TODO: Manejar con el Logger
                     throw new RuntimeException("Error al hacer flush de un writer CSV", e);
                 }
             }
         }
     }
 
+    /**
+     * Cierra todos los escritores.
+     */
     private void cerrar() {
-        for (BufferedWriter writer : writers) {
-            if (writer != null) {
+        for (BufferedWriter escritor : escritores) {
+            if (escritor != null) {
                 try {
-                    writer.close();
+                    escritor.close();
                 } catch (IOException ignore) {
+                    // TODO: Manejar con el Logger
                 }
             }
         }
     }
 
     /**
-     * Cierra todos los writers.
+     * Sobreescribe el metodo de AutoCloseable.
      */
     @Override
     public void close() {

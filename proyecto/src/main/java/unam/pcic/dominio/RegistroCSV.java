@@ -104,6 +104,7 @@ public class RegistroCSV {
 
     /**
      * Genera una cadena con los valores del registro para escribirlo en un archivo CSV.
+     *  Los cambios entrecomillas (que potencialmente tienen "," intermedias) se serializan entre comillas dobles.
      *
      * @return una cadena con los valores del registro.
      */

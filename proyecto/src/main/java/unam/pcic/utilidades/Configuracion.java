@@ -14,9 +14,9 @@ import java.util.Arrays;
 public class Configuracion {
 
     /**
-     * Menú interactivo. Se necesita el archivo a procesar.
+     * Menú interactivo.
      *
-     * @param args Los argumentos de la linea de comandos
+     * @param args Se espera que args[0] sea el nombre del archivo a procesar.
      * @return Un arreglo con las banderas dadas por el usuario.
      */
     public static String[] menuInteractivo(String[] args) {
@@ -47,10 +47,11 @@ public class Configuracion {
         return new String[]{nombreArchivo, "-c", "2,10,11", "-l", "10", "-f", "c1=spanish"};
 
     }
-    /** Parsea los argumentos de la linea de comandos.
+
+    /** Parsea los argumentos de la linea de comandos o los dados por el menú interactivo.
      *
-     * @param args los argumentos de la linea de comandos.
-     * @return una instancia de {@link Opciones}.
+     * @param args los argumentos de la linea de comandos o del menú interactivo.
+     * @return Una instancia de Opciones con los argumentos.
      */
     public static Opciones parsea(String[] args) {
         Opciones opciones = new Opciones();

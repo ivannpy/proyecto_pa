@@ -69,6 +69,6 @@ public class CriterioFiltro<R> {
         return this.seleccion.seleccionar(registro, columnas);
     }
 
-    // Aquí se deben aplicar los filtros
+    // Aquí se deben aplicar los filtros usando patron Builder
 
 }

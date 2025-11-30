@@ -181,8 +181,9 @@ public class LectorCSV {
     // ************ Lector secuencial, sin leer el csv completo a memoria ************
 
     /**
-     * Inicializa el lector secuencial si aún no ha sido creado.
-     * Si el archivo tiene encabezado, lo consume y no lo devuelve en nextLine().
+     * Inicializa el lector secuencial (solo si no ha sido inicializado anteriormente).
+     *
+     * @throws Exception Si ocurre un error al inicializar el lector secuencial.
      */
     private void inicializarLectorSecuencial() throws Exception {
         if (lectorSecuencialInicializado) return;
@@ -194,7 +195,6 @@ public class LectorCSV {
             String lineaEncabezado = lectorSecuencial.readLine();
             if (lineaEncabezado != null) {
                 numeroLineaSecuencial++;
-                // Si aún no tenemos encabezado/cantidadColumnas, las calculamos aquí
                 if (encabezado == null) {
                     encabezado = parsearLinea(lineaEncabezado);
                     cantidadColumnas = encabezado.length;
@@ -205,6 +205,12 @@ public class LectorCSV {
         lectorSecuencialInicializado = true;
     }
 
+    /**
+     * Regresa la siguiente linea del archivo CSV.
+     *
+     * @return La siguiente linea del archivo CSV.
+     * @throws Exception Si ocurre un error al leer la siguiente linea.
+     */
     public String siguienteLinea() throws Exception {
         inicializarLectorSecuencial();
 
@@ -223,6 +229,12 @@ public class LectorCSV {
         return null;
     }
 
+    /**
+     * Regresa el siguiente registro del archivo CSV.
+     *
+     * @return El siguiente registro del archivo CSV.
+     * @throws Exception Si ocurre un error al leer el siguiente registro.
+     */
     public RegistroCSV siguienteRegistro() throws Exception {
         inicializarLectorSecuencial();
 
@@ -237,9 +249,6 @@ public class LectorCSV {
             String[] valores = parsearLinea(linea);
 
             if (valores.length != cantidadColumnas) {
-                // Registro inválido (no se pudo parsear bien)
-                //RegistroCSV registroIncorrecto = new RegistroCSV(valores, numeroLineaSecuencial);
-                //System.out.println("Registro invalido al leerse " + registroIncorrecto);
                 continue;
             }
 

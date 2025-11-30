@@ -3,11 +3,7 @@ package unam.pcic.io;
 import unam.pcic.dominio.RegistroCSV;
 import java.io.File;
 import java.util.List;
-import java.io.BufferedWriter;
-import java.io.Writer;
-import java.io.OutputStreamWriter;
-import java.io.FileOutputStream;
-import java.nio.charset.StandardCharsets;
+
 
 /**
  * - Divide el archivo en N subarchivos temporales.
@@ -33,7 +29,7 @@ public class DivisorArchivo {
      * El DivisorArchivo sabe cuantos procesadores hay en el sistema.
      */
     public DivisorArchivo(String rutaArchivoDeEntrada) {
-        int K = 10;
+        int K = 5;
         this.cantidadProcesadores = Runtime.getRuntime().availableProcessors();
         this.cantidadSubarchivos = cantidadProcesadores * K;
         this.archivoDeEntrada = new File(rutaArchivoDeEntrada);
@@ -58,6 +54,10 @@ public class DivisorArchivo {
         return cantidadSubarchivos;
     }
 
+    /**
+     * Regresa la carpeta temporal.
+     * @return la carpeta temporal.
+     */
     public File getCarpetaTemporal() {
         return carpetaTemporal;
     }
@@ -67,7 +67,7 @@ public class DivisorArchivo {
      *
      */
     public void divide() {
-
+        // TODO: Permitir opcion sin encabezados (leerlo de Opciones)
         LectorCSV lector = new LectorCSV(archivoDeEntrada, true);
 
         List<File> archivosTemporales = AdminArchivosTmp.creaArchivosTemporales(archivoDeEntrada, cantidadSubarchivos);
@@ -75,25 +75,22 @@ public class DivisorArchivo {
         int i = 0;
 
         try (EscritorCSVMultiple escritor = new EscritorCSVMultiple(archivosTemporales)) {
-            String[] encabezadoArr = lector.leerEncabezado();
-            if (encabezadoArr != null) {
-                RegistroCSV encabezadoRegistro = new RegistroCSV(encabezadoArr, 0L);
-                escritor.escribeEncabezadoEnTodos(encabezadoRegistro.serializa());
+            String[] valoresEncabezado = lector.leerEncabezado();
+            if (valoresEncabezado != null) {
+                RegistroCSV registroEncabezado = new RegistroCSV(valoresEncabezado, 0L);
+                escritor.escribeEnTodos(registroEncabezado.serializa());
             }
 
             String linea;
             while ((linea = lector.siguienteLinea()) != null) {
-                int idx = i % cantidadSubarchivos;
-                escritor.escribeLineaEn(idx, linea);
+                int indiceArchivoTmp = i % cantidadSubarchivos;
+                escritor.escribeLineaEn(indiceArchivoTmp, linea);
                 i++;
-
-                if (i % 100_000 == 0) {
-                    System.out.println("Lineas procesadas: " + i);
-                }
             }
             escritor.flush();
         } catch (Exception e) {
-            System.err.println("Error al dividir archivo: " + e.getMessage());
+            // TODO: Manejar con el Logger
+            System.out.println("Error al dividir archivo: " + archivoDeEntrada.getName());
         }
     }
 

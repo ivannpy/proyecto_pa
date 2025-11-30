@@ -29,6 +29,7 @@ public class AdminArchivosTmp {
         }
 
         if (creada) {
+            // TODO: Manejarlo con el Logger
             System.out.println("Carpeta temporal creada: " + carpetaTemporal.getAbsolutePath());
         }
     }
@@ -48,7 +49,7 @@ public class AdminArchivosTmp {
                return;
             }
 
-           // Si la carpeta no está vacía, elimina los archivos dentro de ella
+           // Si la carpeta no está vacía, eliminamos los archivos dentro de ella
            for (File archivo : archivos) {
                boolean eliminado = archivo.delete();
            }

@@ -52,7 +52,10 @@ public class ControladorAplicacion {
         // TODO: El analizador de redimiento guarda los datos medidos.
     }
 
-
+    /**
+     * Prueba de lectura y aplicación de filtros. Se quitará para la versión final.
+     * @param opciones las opciones de ejecución.
+     */
     private static void prueba(Opciones opciones) {
         Almacen<RegistroCSV> almacen;
 
