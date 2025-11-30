@@ -20,8 +20,9 @@ public class ControladorAplicacion {
 
     /**
      * Ejecuta la aplicación según las configuraciones.
+     *  Ejecuta ambos modos de procesamiento.
      *
-     * @param opciones Configuraciones para ejecutar el programa.
+     * @param opciones Opciones para ejecutar el programa.
      */
     public static void ejecutar(Opciones opciones) {
         System.out.println("Ejecutando app...");
@@ -30,6 +31,12 @@ public class ControladorAplicacion {
         ControladorAplicacion.ejecutar(opciones, Procesamiento.CONCURRENTE);
     }
 
+    /**
+     * Ejecuta el flujo completo para un modo de procesamiento.
+     *
+     * @param opciones Las opciones para ejecutar el programa.
+     * @param modo El modo de procesamiento (Secuencial o Concurrente)
+     */
     private static void ejecutar(Opciones opciones, Procesamiento modo) {
         AnalizadorRendimiento analizador = new AnalizadorRendimiento(opciones);
         analizador.iniciar();
@@ -44,7 +51,6 @@ public class ControladorAplicacion {
         analizador.finalizar();
 
         String modoStr = (modo == Procesamiento.SECUENCIAL) ? "Secuencial" : "Concurrente";
-
         System.out.println("Tiempo que tomó el procesamiento " + modoStr + ": " + analizador.getTiempoTranscurrido());
     }
 

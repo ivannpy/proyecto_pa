@@ -72,6 +72,7 @@ public class DivisorArchivo {
                 int indiceArchivoTmp = i % cantidadSubarchivos;
                 escritor.escribeLinea(indiceArchivoTmp, linea);
                 i++;
+                if (i % 1_000_000 == 0) System.out.println("Registros procesados (DivisorArchivo): " + i);
             }
             escritor.flush();
         } catch (Exception e) {
