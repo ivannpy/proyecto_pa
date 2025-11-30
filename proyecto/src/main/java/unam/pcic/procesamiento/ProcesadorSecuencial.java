@@ -116,7 +116,8 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
      * @param opciones Configuraciones para ejecutar el programa.
      */
     public void procesa(Opciones opciones) {
-        DivisorArchivo divisor = new DivisorArchivo(opciones.getArchivo());
+        int cantidadSubarchivos = opciones.getCantidadSubarchivos();
+        DivisorArchivo divisor = new DivisorArchivo(opciones.getArchivo(), cantidadSubarchivos);
 
         try {
             System.out.println("Dividiendo archivo en subarchivos...");

@@ -1,5 +1,6 @@
 package unam.pcic;
 
+import unam.pcic.analisis.AnalizadorRendimiento;
 import unam.pcic.dominio.*;
 import unam.pcic.io.LectorCSV;
 import unam.pcic.procesamiento.ProcesadorCSV;
@@ -24,33 +25,29 @@ public class ControladorAplicacion {
      */
     public static void ejecutar(Opciones opciones) {
         System.out.println("Ejecutando app...");
-        // TODO: Inicializar un AnalizadorRendimiento (posible metodo mideTiempo())
-        // TODO: medir el tiempo (lo hace el analizador)
 
-        // Ejecutar versión secuencial via ProcesadorCSV
-        ProcesadorCSV procesadorSecuencial = FabricaProcesador.crearProcesador(Procesamiento.SECUENCIAL);
-        if (procesadorSecuencial == null) {
-            System.err.println("Error al crear ProcesadorCSV");
-            return;
-        }
-
-        procesadorSecuencial.procesa(opciones);
-
-        // TODO: El analizador de redimiento guarda los datos medidos.
-
-        // TODO: einiciar el analizador de rendimiento.
-
-        // Ejecutar versión concurrente via ProcesadorCSV
-        ProcesadorCSV procesadorConcurrente = FabricaProcesador.crearProcesador(Procesamiento.CONCURRENTE);
-        if (procesadorConcurrente == null) {
-            System.err.println("Error al crear ProcesadorCSV");
-            return;
-        }
-
-        procesadorConcurrente.procesa(opciones);
-
-        // TODO: El analizador de redimiento guarda los datos medidos.
+        ControladorAplicacion.ejecutar(opciones, Procesamiento.SECUENCIAL);
+        ControladorAplicacion.ejecutar(opciones, Procesamiento.CONCURRENTE);
     }
+
+    private static void ejecutar(Opciones opciones, Procesamiento modo) {
+        AnalizadorRendimiento analizador = new AnalizadorRendimiento(opciones);
+        analizador.iniciar();
+
+        ProcesadorCSV procesador = FabricaProcesador.crearProcesador(modo);
+        if (procesador == null) {
+            System.err.println("Error al crear ProcesadorCSV");
+            return;
+        }
+
+        procesador.procesa(opciones);
+        analizador.finalizar();
+
+        String modoStr = (modo == Procesamiento.SECUENCIAL) ? "Secuencial" : "Concurrente";
+
+        System.out.println("Tiempo que tomó el procesamiento " + modoStr + ": " + analizador.getTiempoTranscurrido());
+    }
+
 
     /**
      * Prueba de lectura y aplicación de filtros. Se quitará para la versión final.
