@@ -109,6 +109,8 @@ public class CriterioFiltro<R> {
      * @return true si el registro cumple todas las condiciones de los filtros, false en caso contrario.
      */
     public boolean aplicarFiltros(R registro) {
+        if (filtros.isEmpty()) return true;
+
         boolean noCumpleAlguna = false;
         for (CondicionFiltro<R> condicion : filtros) {
             if (!aplicarFiltro(registro, condicion)) {
@@ -121,9 +123,7 @@ public class CriterioFiltro<R> {
 
     @Override
     public String toString() {
-        return "CriterioFiltro(" +
-                ", columnasSeleccionadas={" + Arrays.toString(columnasSeleccionadas) +
-                "}, filtros={" + filtros.toString() +
-                "}\n)";
+        return "CriterioFiltro(" + ", columnasSeleccionadas={"
+                + Arrays.toString(columnasSeleccionadas) + "}, filtros={" + filtros.toString() + "})";
     }
 }

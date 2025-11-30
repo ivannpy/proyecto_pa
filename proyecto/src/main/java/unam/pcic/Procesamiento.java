@@ -7,10 +7,28 @@ public enum Procesamiento {
     /**
      * Para el procesamiento secuencial
      */
-    SECUENCIAL,
+    SECUENCIAL {
+        /**
+         * Regresa el nombre del tipo de procesamiento
+         *
+         * @return el nombre del tipo de procesamiento
+         */
+        public String toString() {
+            return "Secuencial";
+        }
+    },
 
     /**
      * Para el procesamiento concurrente
      */
-    CONCURRENTE
+    CONCURRENTE{
+        /**
+         * Regresa el nombre del tipo de procesamiento
+         *
+         * @return el nombre del tipo de procesamiento
+         */
+        public String toString() {
+            return "Concurrente";
+        }
+    }
 }

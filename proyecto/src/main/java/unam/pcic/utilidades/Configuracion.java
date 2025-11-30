@@ -48,11 +48,20 @@ public class Configuracion {
 
         System.out.println("Columnas seleccionadas: ");
 
-        String[] columnasSeleccionadas = columnas.split(",");
-        for (int i = 0; i < columnasSeleccionadas.length; i++) {
-            System.out.println(i + " --- " + encabezados[Integer.parseInt(columnasSeleccionadas[i])]);
+        if (columnas.equals("*")) {
+            System.out.println("Procesando todas las columnas.");
+            StringBuilder columnasTodas = new StringBuilder();
+            for (int i = 0; i < encabezados.length; i++) {
+                columnasTodas.append(i).append(",");
+            }
+            columnas = columnasTodas.toString();
+            columnas = columnas.substring(0, columnas.length() - 1);
+        } else {
+            String[] columnasSeleccionadas = columnas.split(",");
+            for (int i = 0; i < columnasSeleccionadas.length; i++) {
+                System.out.println(i + " --- " + encabezados[Integer.parseInt(columnasSeleccionadas[i])]);
+            }
         }
-
         System.out.println("Escriba los filtros a usar separados por comas (e.g c1=spanish): ");
         String filtros = System.console().readLine();
 
@@ -66,6 +75,8 @@ public class Configuracion {
      * @return Una lista de CondicionFiltro.
      */
     private static List<CondicionFiltro<RegistroCSV>> parseaFiltros(String filtros) {
+        if (filtros.isEmpty()) return List.of();
+
         String[] filtrosArr = filtros.split(",");
         List<CondicionFiltro<RegistroCSV>> condiciones = new ArrayList<>();
 
@@ -210,13 +221,6 @@ public class Configuracion {
                     if (i + 1 >= args.length)
                         throw new IllegalArgumentException("La opción columnas requiere una lista de enteros o *");
                     String columnasStr = args[++i];
-
-                    if (columnasStr.equals("*")) {
-                        opciones.setColumnas(new int[0]);
-                        opciones.setTodasLasColumnas(true);
-                        columnasRepetido = true;
-                        break;
-                    }
 
                     int[] columnas = parseaColumnas(columnasStr);
                     opciones.setColumnas(columnas);

@@ -51,7 +51,7 @@ public class ControladorAplicacion {
         procesador.procesa(opciones);
         analizador.finalizar();
 
-        String modoStr = (modo == Procesamiento.SECUENCIAL) ? "Secuencial" : "Concurrente";
+        String modoStr = modo.toString();
         System.out.println("Tiempo que tomó el procesamiento " + modoStr + ": " + analizador.getTiempoTranscurrido());
     }
 
