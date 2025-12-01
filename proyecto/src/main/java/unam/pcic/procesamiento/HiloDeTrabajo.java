@@ -7,9 +7,6 @@ import unam.pcic.io.LectorCSV;
 import unam.pcic.io.Logger;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 
 /**
@@ -21,7 +18,6 @@ import java.util.Objects;
  */
 public class HiloDeTrabajo extends Thread {
 
-    private List<RegistroCSV> resultadoParcial;
     private final File archivoParcial;
     private final CriterioFiltro<RegistroCSV> filtro;
     private final EscritorCSV escritor;
@@ -34,13 +30,8 @@ public class HiloDeTrabajo extends Thread {
         this.escritor = escritor;
     }
 
-    public List<RegistroCSV> getResultadoParcial() {
-        return resultadoParcial;
-    }
-
     @Override
     public void run() {
-        resultadoParcial = new ArrayList<>();
         Logger logger = Logger.getInstancia();
 
         logger.info("Inicia el thread con archivo parcial " + archivoParcial.getAbsolutePath());
@@ -60,22 +51,11 @@ public class HiloDeTrabajo extends Thread {
 
                 if (!cumple) continue;
 
-                logger.debug("El registro pasa los filtros");
-                // TODO: Escribir el registro directamente en el archivo de salida
-                resultadoParcial.add(registro);
+                escritor.escribeRegistro(registro);
             }
-            escribirResultados();
-
         } catch (Exception e) {
             logger.error("Error al cargar archivo parcial" + archivoParcial.getAbsolutePath(), e);
             System.exit(1);
         }
     }
-
-    private void escribirResultados() {
-        for (RegistroCSV registro : resultadoParcial) {
-            escritor.escribeRegistro(registro);
-        }
-    }
-
 }

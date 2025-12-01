@@ -33,7 +33,6 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
         try {
             RegistroCSV registro;
             while ((registro = lector.siguienteRegistro()) != null) {
-                // Aplicar seleccion de columnas
                 boolean cumpleFiltros = true;
                 if (filtro != null) {
                     registro = filtro.seleccionarColumnas(registro);
