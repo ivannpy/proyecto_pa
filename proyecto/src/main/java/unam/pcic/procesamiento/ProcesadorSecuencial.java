@@ -2,10 +2,7 @@ package unam.pcic.procesamiento;
 
 import unam.pcic.dominio.CriterioFiltro;
 import unam.pcic.dominio.RegistroCSV;
-import unam.pcic.io.AdminArchivosTmp;
-import unam.pcic.io.DivisorArchivo;
-import unam.pcic.io.EscritorCSV;
-import unam.pcic.io.LectorCSV;
+import unam.pcic.io.*;
 import unam.pcic.utilidades.Opciones;
 import java.io.File;
 
@@ -27,7 +24,9 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
      * @param filtro El criterio de filtrado.
      */
     private void procesaArchivo(File archivo, EscritorCSV escritor, CriterioFiltro<RegistroCSV> filtro) {
-        System.out.println("Procesando archivo: " + archivo.getName());
+        Logger logger = Logger.getInstancia();
+
+        logger.info("Procesando archivo: " + archivo.getName());
 
         LectorCSV lector = new LectorCSV(archivo, true);
 
@@ -46,8 +45,8 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
                 escritor.escribeRegistro(registro);
             }
         } catch (Exception e) {
-            // TODO: Manejar con el Logger
-            System.out.println("Error al procesar archivo: " + archivo.getName());
+            logger.error("Error al procesar archivo: " + archivo.getName() + " - " + e.getMessage());
+            System.exit(1);
         }
     }
 
@@ -58,8 +57,12 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
      * @param filtro        El criterio de filtrado.
      */
     private void procesaArchivos(File carpetaTemporal, CriterioFiltro<RegistroCSV> filtro) {
+        Logger logger = Logger.getInstancia();
+
         String rutaArchivoFinal = carpetaTemporal.getParent() + File.separator + "resultado.csv";
+
         File archivoSalida = new File(rutaArchivoFinal);
+        logger.info("Archivo de salida: " + archivoSalida.getAbsolutePath());
 
         File[] archivos = carpetaTemporal.listFiles();
 
@@ -68,13 +71,13 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
         // TODO: Escribir el encabezado del archivo de salida
 
         try (EscritorCSV escritorSalida = new EscritorCSV(archivoSalida, true)) {
-            // TODO: Pasar un CriterioFiltro en lugar de las opciones
             for (int i = 0; i < archivos.length; i++) {
                 procesaArchivo(archivos[i], escritorSalida, filtro);
             }
             escritorSalida.flush();
         } catch (Exception e) {
-            System.out.println("Error al procesar archivos temporales: " + e.getMessage());
+            logger.error("Error al procesar archivos temporales: " + e.getMessage());
+            System.exit(1);
         }
 
     }
@@ -85,13 +88,15 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
      * @param opciones Configuraciones para ejecutar el programa.
      */
     public void procesa(Opciones opciones) {
+        Logger logger = Logger.getInstancia();
         DivisorArchivo divisor = new DivisorArchivo(opciones.getArchivo(), opciones.getCantidadSubarchivos());
 
         try {
-            System.out.println("Dividiendo archivo en subarchivos...");
+            logger.debug("Dividiendo archivo en subarchivos...");
             divisor.divide();
         } catch (Exception e) {
-            System.out.println("Error al dividir archivo: " + e.getMessage());
+            logger.error("Error al dividir archivo: " + e.getMessage());
+            System.exit(1);
         }
 
         CriterioFiltro<RegistroCSV> filtro = opciones.getCriterioFiltro();

@@ -23,6 +23,8 @@ public class AdminArchivosTmp {
      * @param rutaCarpeta la ruta de la carpeta temporal.
      */
     private static void creaCarpetaTemporal(String rutaCarpeta) {
+        Logger logger = Logger.getInstancia();
+
         File carpetaTemporal = new File(rutaCarpeta);
         boolean creada = false;
         if (!carpetaTemporal.exists()) {
@@ -30,8 +32,7 @@ public class AdminArchivosTmp {
         }
 
         if (creada) {
-            // TODO: Manejarlo con el Logger
-            System.out.println("Carpeta temporal creada: " + carpetaTemporal.getAbsolutePath());
+            logger.debug("Carpeta temporal creada: " + carpetaTemporal.getAbsolutePath());
         }
     }
 
@@ -41,21 +42,26 @@ public class AdminArchivosTmp {
      * @param carpetaTemporal La carpeta temporal a eliminar.
      */
     public static void eliminaCarpetaTemporal(File carpetaTemporal) {
+        Logger logger = Logger.getInstancia();
+
         if (carpetaTemporal.exists()) {
             File[] archivos = carpetaTemporal.listFiles();
 
             // Si la carpeta no tiene archivos, elimina la carpeta
             if (archivos == null || archivos.length == 0) {
                 boolean eliminada = carpetaTemporal.delete();
+                if (eliminada) logger.debug("Carpeta temporal eliminada: " + carpetaTemporal.getAbsolutePath());
                 return;
             }
 
             // Si la carpeta no está vacía, eliminamos los archivos dentro de ella
             for (File archivo : archivos) {
                 boolean eliminado = archivo.delete();
+                if (eliminado) logger.debug("Archivo temporal eliminado: " + archivo.getAbsolutePath());
             }
             // Elimina la carpeta
             boolean carpetaEliminada = carpetaTemporal.delete();
+            if (carpetaEliminada) logger.debug("Carpeta temporal eliminada: " + carpetaTemporal.getAbsolutePath());
         }
     }
 
@@ -68,6 +74,7 @@ public class AdminArchivosTmp {
      */
     private static File creaArchivoTemporal(String nombre, int indice) {
         String nombreArchivoTmp = nombre.replace(".csv", "_tmp_" + indice + ".csv");
+        Logger.getInstancia().debug("Creando archivo temporal: " + nombreArchivoTmp);
         return new File(nombreArchivoTmp);
     }
 

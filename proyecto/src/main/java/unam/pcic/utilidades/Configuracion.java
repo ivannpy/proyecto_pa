@@ -30,7 +30,7 @@ public class Configuracion {
 
         try {
             nombreArchivo = args[0];
-            logger.info("Archivo csv: " + nombreArchivo);
+            logger.debug("Archivo csv: " + nombreArchivo);
         } catch (IndexOutOfBoundsException e) {
             logger.error("No se ha proporcionado el nombre del archivo csv.");
             System.exit(1);
@@ -80,8 +80,8 @@ public class Configuracion {
         System.out.println("Escriba los filtros a usar separados por comas (e.g c1=spanish): ");
         String filtros = System.console().readLine();
 
-        logger.info("Columnas seleccionadas por usuario: " + columnas);
-        logger.info("Filtros seleccionados por usuario: " + filtros);
+        logger.debug("Columnas seleccionadas por usuario: " + columnas);
+        logger.debug("Filtros seleccionados por usuario: " + filtros);
 
         return new String[]{nombreArchivo, "-c", columnas, "-f", filtros,  "-l", "10",};
     }

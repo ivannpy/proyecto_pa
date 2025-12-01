@@ -32,7 +32,7 @@ public class ControladorAplicacion {
         logger.debug("Inicia la ejecución secuencial");
         ControladorAplicacion.ejecutar(opciones, Procesamiento.SECUENCIAL);
 
-        logger.debug("Inicia la ejecución secuencial");
+        logger.debug("Inicia la ejecución concurrente");
         ControladorAplicacion.ejecutar(opciones, Procesamiento.CONCURRENTE);
     }
 

@@ -84,7 +84,7 @@ public class Logger {
      * @param mensaje Contenido del mensaje
      */
     public void log(Nivel nivel, String mensaje) {
-        escribirLog(formatearMensaje(nivel, mensaje, null));
+        escribirLog(formatearMensaje(nivel, mensaje, null), nivel);
     }
 
     /**
@@ -95,7 +95,7 @@ public class Logger {
      * @param arrojable Excepción arrojada
      */
     public void log(Nivel nivel, String mensaje, Throwable arrojable) {
-        escribirLog(formatearMensaje(nivel, mensaje, arrojable));
+        escribirLog(formatearMensaje(nivel, mensaje, arrojable), nivel);
     }
 
     /**
@@ -229,12 +229,13 @@ public class Logger {
      *
      * @param mensaje Mensaje formateado para escribir
      */
-    private void escribirLog(String mensaje) {
+    private void escribirLog(String mensaje, Nivel nivel) {
         lock.lock();
         try (PrintWriter escritor = new PrintWriter(new FileWriter(rutaArchivo, true))) {
             escritor.println(mensaje);
 
-            System.out.println(mensaje);
+            if (nivel == Nivel.INFO || nivel == Nivel.ERROR) System.out.println(mensaje);
+
         } catch (IOException e) {
             System.err.println("Error al escribir en el archivo de log: " + e.getMessage());
         } finally {
