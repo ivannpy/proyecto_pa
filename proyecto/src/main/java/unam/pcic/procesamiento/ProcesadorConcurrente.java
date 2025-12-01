@@ -2,18 +2,10 @@ package unam.pcic.procesamiento;
 
 import unam.pcic.dominio.CriterioFiltro;
 import unam.pcic.dominio.RegistroCSV;
-import unam.pcic.io.AdminArchivosTmp;
-import unam.pcic.utilidades.Opciones;
-import unam.pcic.dominio.CriterioFiltro;
-import unam.pcic.dominio.RegistroCSV;
-import unam.pcic.io.DivisorArchivo;
 import unam.pcic.utilidades.Opciones;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
-import java.io.File;
 
 /**
  * - Usa el DividorArchivo para dividir el archivo en subarchivos de entrada.

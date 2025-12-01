@@ -47,7 +47,7 @@ public class ControladorAplicacion {
         ControladorAplicacion.ejecutar(opciones, Procesamiento.SECUENCIAL);
 
         // TODO: Que solo la versión concurrente tome los subarchivos
-        logger.debug("Inicia la ejecución concurrente");
+        logger.debug("Inicia la ejecución secuencial");
         ControladorAplicacion.ejecutar(opciones, Procesamiento.CONCURRENTE);
 
         AdminArchivosTmp.eliminaCarpetaTemporal(opciones.getCarpetaTemporal());

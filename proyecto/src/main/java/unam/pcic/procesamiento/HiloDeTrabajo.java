@@ -9,6 +9,7 @@ import unam.pcic.io.Logger;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -20,23 +21,31 @@ import java.util.List;
  */
 public class HiloDeTrabajo extends Thread {
 
-    private final List<RegistroCSV> resultadoParcial = new ArrayList<>();
+    private List<RegistroCSV> resultadoParcial;
     private final File archivoParcial;
+    private final File archivoSalida;
     private final CriterioFiltro<RegistroCSV> filtro;
+    private final Object lock;
 
     public HiloDeTrabajo(File archivoParcial,
-                         CriterioFiltro<RegistroCSV> filtro) {
+                         CriterioFiltro<RegistroCSV> filtro,
+                         File archivoSalida,
+                         Object lock) {
         this.archivoParcial = archivoParcial;
         this.filtro = filtro;
+        this.archivoSalida = archivoSalida;
+        this.lock = lock;
+
     }
 
     @Override
     public void run() {
+        resultadoParcial = new ArrayList<>();
         Logger logger = Logger.getInstancia();
 
-        logger.debug("Inicia el thread con archivo parcial " + archivoParcial.getAbsolutePath());
+        logger.info("Inicia el thread con archivo parcial " + archivoParcial.getAbsolutePath());
 
-        LectorCSV lector = new LectorCSV(archivoParcial, true);
+        LectorCSV lector = new LectorCSV(archivoParcial, false);
 
         try {
             RegistroCSV registro;
@@ -51,6 +60,8 @@ public class HiloDeTrabajo extends Thread {
 
                 if (!cumple) continue;
 
+                logger.debug("El registro pasa los filtros");
+                // TODO: Escribir el registro directamente en el archivo de salida
                 resultadoParcial.add(registro);
             }
 
@@ -60,13 +71,15 @@ public class HiloDeTrabajo extends Thread {
         }
     }
 
-    public void escribirResultadoParcial(File archivo) {
-        try (EscritorCSV escritor = new EscritorCSV(archivo, true)) {
+
+    public void escribirResultadoParcial(EscritorCSV escritor, File archivo) {
+        //Logger logger = Logger.getInstancia();
+        //logger.info("Se intenta escribir en " + archivo.getParent());
+        synchronized (lock) {
             for (RegistroCSV registro : resultadoParcial) {
+                //logger.info("Escribiendo registro: " + registro.toString());
                 escritor.escribeRegistro(registro);
             }
         }
-
-
     }
 }

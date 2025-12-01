@@ -59,7 +59,7 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
     private void procesaArchivos(File carpetaTemporal, CriterioFiltro<RegistroCSV> filtro) {
         Logger logger = Logger.getInstancia();
 
-        String rutaArchivoFinal = carpetaTemporal.getParent() + File.separator + "resultado.csv";
+        String rutaArchivoFinal = carpetaTemporal.getParent() + File.separator + "resultado_secuencial.csv";
 
         File archivoSalida = new File(rutaArchivoFinal);
         logger.info("Archivo de salida: " + archivoSalida.getAbsolutePath());
