@@ -3,6 +3,7 @@ package unam.pcic.procesamiento;
 import unam.pcic.dominio.CriterioFiltro;
 import unam.pcic.dominio.RegistroCSV;
 import unam.pcic.io.EscritorCSV;
+import unam.pcic.io.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,9 +19,7 @@ public class AdministradorTrabajo {
 
     private final File carpetaTemporal;
     private final CriterioFiltro<RegistroCSV> filtro;
-    private List<RegistroCSV> registrosFinales;
     private final File archivoSalida;
-    private final Object lockEscritura = new Object();
 
 
     public AdministradorTrabajo(File carpetaTemporal, CriterioFiltro<RegistroCSV> filtro, File archivoSalida) {
@@ -29,41 +28,36 @@ public class AdministradorTrabajo {
         this.archivoSalida = archivoSalida;
     }
 
-    public List<RegistroCSV> getRegistrosFinales() {
-        return registrosFinales;
-    }
-
-    public void coordinaHilos(){
+    public void coordinaHilos() {
+        Logger logger = Logger.getInstancia();
         File[] archivosTemporales = carpetaTemporal.listFiles();
 
+        if (archivosTemporales == null || archivosTemporales.length == 0) {
+            logger.error("No hay archivos temporales para procesar");
+            return;
+        }
+
         List<HiloDeTrabajo> hilos = new ArrayList<>();
-        try (EscritorCSV escritor = new EscritorCSV(archivoSalida, true)){
+
+        try (EscritorCSV escritorCompartido = new EscritorCSV(archivoSalida, false)) {
             for (File archivoTmp : archivosTemporales) {
-                HiloDeTrabajo hilo = new HiloDeTrabajo(archivoTmp, filtro, archivoSalida, lockEscritura);
+                HiloDeTrabajo hilo = new HiloDeTrabajo(archivoTmp, filtro, escritorCompartido);
                 hilos.add(hilo);
             }
 
-            // 4) Arrancamos todos los hilos
-            for (HiloDeTrabajo hilo : hilos) {
-                hilo.start();
-            }
+            for (HiloDeTrabajo hilo : hilos) hilo.start();
 
-            // 5) SINCRONIZACIÓN: esperamos a que terminen (join)
             for (HiloDeTrabajo hilo : hilos) {
                 try {
                     hilo.join();
                 } catch (InterruptedException e) {
-                    System.err.println("Hilo interrumpido: " + e.getMessage());
+                    logger.error("Hilo interrumpido: " + e.getMessage());
                 }
             }
-
-            for (HiloDeTrabajo hilo : hilos) {
-                hilo.escribirResultadoParcial(escritor, archivoSalida);
-            }
-
+        } catch (Exception e) {
+            logger.error("Error al coordinar hilos", e);
         }
 
-        // validar que archivosTemporales no sea vacio o null
-
     }
+
 }

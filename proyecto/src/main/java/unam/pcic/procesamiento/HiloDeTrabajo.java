@@ -23,19 +23,19 @@ public class HiloDeTrabajo extends Thread {
 
     private List<RegistroCSV> resultadoParcial;
     private final File archivoParcial;
-    private final File archivoSalida;
     private final CriterioFiltro<RegistroCSV> filtro;
-    private final Object lock;
+    private final EscritorCSV escritor;
 
     public HiloDeTrabajo(File archivoParcial,
                          CriterioFiltro<RegistroCSV> filtro,
-                         File archivoSalida,
-                         Object lock) {
+                         EscritorCSV escritor) {
         this.archivoParcial = archivoParcial;
         this.filtro = filtro;
-        this.archivoSalida = archivoSalida;
-        this.lock = lock;
+        this.escritor = escritor;
+    }
 
+    public List<RegistroCSV> getResultadoParcial() {
+        return resultadoParcial;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class HiloDeTrabajo extends Thread {
 
         logger.info("Inicia el thread con archivo parcial " + archivoParcial.getAbsolutePath());
 
-        LectorCSV lector = new LectorCSV(archivoParcial, false);
+        LectorCSV lector = new LectorCSV(archivoParcial, true);
 
         try {
             RegistroCSV registro;
@@ -64,6 +64,7 @@ public class HiloDeTrabajo extends Thread {
                 // TODO: Escribir el registro directamente en el archivo de salida
                 resultadoParcial.add(registro);
             }
+            escribirResultados();
 
         } catch (Exception e) {
             logger.error("Error al cargar archivo parcial" + archivoParcial.getAbsolutePath(), e);
@@ -71,15 +72,10 @@ public class HiloDeTrabajo extends Thread {
         }
     }
 
-
-    public void escribirResultadoParcial(EscritorCSV escritor, File archivo) {
-        //Logger logger = Logger.getInstancia();
-        //logger.info("Se intenta escribir en " + archivo.getParent());
-        synchronized (lock) {
-            for (RegistroCSV registro : resultadoParcial) {
-                //logger.info("Escribiendo registro: " + registro.toString());
-                escritor.escribeRegistro(registro);
-            }
+    private void escribirResultados() {
+        for (RegistroCSV registro : resultadoParcial) {
+            escritor.escribeRegistro(registro);
         }
     }
+
 }
