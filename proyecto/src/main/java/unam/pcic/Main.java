@@ -30,7 +30,7 @@ public class Main {
         logger.debug("Inicia la aplicación");
 
         Opciones opciones = Configuracion.parsea(Configuracion.menuInteractivo(args));
-        System.out.println(opciones);
+        logger.info("Opciones de ejecución:" + opciones);
 
         ControladorAplicacion.ejecutar(opciones);
     }

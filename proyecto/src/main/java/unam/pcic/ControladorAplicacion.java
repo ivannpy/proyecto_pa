@@ -3,6 +3,7 @@ package unam.pcic;
 import unam.pcic.analisis.AnalizadorRendimiento;
 import unam.pcic.dominio.*;
 import unam.pcic.io.LectorCSV;
+import unam.pcic.io.Logger;
 import unam.pcic.procesamiento.ProcesadorCSV;
 import unam.pcic.utilidades.Opciones;
 
@@ -26,9 +27,12 @@ public class ControladorAplicacion {
      * @param opciones Opciones para ejecutar el programa.
      */
     public static void ejecutar(Opciones opciones) {
-        System.out.println("Ejecutando app...");
+        Logger logger = Logger.getInstancia();
 
+        logger.debug("Inicia la ejecución secuencial");
         ControladorAplicacion.ejecutar(opciones, Procesamiento.SECUENCIAL);
+
+        logger.debug("Inicia la ejecución secuencial");
         ControladorAplicacion.ejecutar(opciones, Procesamiento.CONCURRENTE);
     }
 
@@ -39,20 +43,21 @@ public class ControladorAplicacion {
      * @param modo     El modo de procesamiento (Secuencial o Concurrente)
      */
     private static void ejecutar(Opciones opciones, Procesamiento modo) {
+        Logger logger = Logger.getInstancia();
+
         AnalizadorRendimiento analizador = new AnalizadorRendimiento(opciones);
         analizador.iniciar();
 
         ProcesadorCSV procesador = FabricaProcesador.crearProcesador(modo);
         if (procesador == null) {
-            System.err.println("Error al crear ProcesadorCSV");
+            logger.error("No se pudo crear el procesador para el modo " + modo);
             return;
         }
 
         procesador.procesa(opciones);
         analizador.finalizar();
 
-        String modoStr = modo.toString();
-        System.out.println("Tiempo que tomó el procesamiento " + modoStr + ": " + analizador.getTiempoTranscurrido());
+        logger.info("Tiempo que tomó el procesamiento " + modo + ": " + analizador.getTiempoTranscurrido());
     }
 
 }

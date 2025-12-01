@@ -69,14 +69,19 @@ public class Configuracion {
         } else {
             String[] columnasSeleccionadas = columnas.split(",");
             for (int i = 0; i < columnasSeleccionadas.length; i++) {
-                System.out.println(i + " --- " + encabezados[Integer.parseInt(columnasSeleccionadas[i])]);
+                try {
+                    System.out.println(i + " --- " + encabezados[Integer.parseInt(columnasSeleccionadas[i])]);
+                } catch (NumberFormatException e) {
+                    logger.error("Las columnas deben ser enteros no negativos separados por comas.");
+                    System.exit(1);
+                }
             }
         }
         System.out.println("Escriba los filtros a usar separados por comas (e.g c1=spanish): ");
         String filtros = System.console().readLine();
 
-        logger.info("Columnas seleccionadas: " + columnas);
-        logger.info("Filtros seleccionados: " + filtros);
+        logger.info("Columnas seleccionadas por usuario: " + columnas);
+        logger.info("Filtros seleccionados por usuario: " + filtros);
 
         return new String[]{nombreArchivo, "-c", columnas, "-f", filtros,  "-l", "10",};
     }
@@ -89,6 +94,8 @@ public class Configuracion {
      */
     private static List<CondicionFiltro<RegistroCSV>> parseaFiltros(String filtros) {
         if (filtros.isEmpty()) return List.of();
+
+        Logger logger = Logger.getInstancia();
 
         String[] filtrosArr = filtros.split(",");
         List<CondicionFiltro<RegistroCSV>> condiciones = new ArrayList<>();
@@ -118,22 +125,25 @@ public class Configuracion {
             String parteValor = filtro.substring(idxOp + operador.length()).trim();
 
             if (!parteColumna.startsWith("c")) {
-                throw new IllegalArgumentException("La columna debe empezar con 'c': " + parteColumna);
+                logger.error("La columna debe empezar con 'c': " + parteColumna);
+                System.exit(1);
             }
 
             String numeroColumnaStr = parteColumna.substring(1);
-            int columnaInt;
+            int columnaInt = 0;
             try {
                 columnaInt = Integer.parseInt(numeroColumnaStr);
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Número de columna inválido en filtro: " + filtro);
+                logger.error("Número de columna inválido en filtro: " + filtro);
+                System.exit(1);
             }
 
             if (parteValor.isEmpty()) {
-                throw new IllegalArgumentException("Valor vacío en filtro: " + filtro);
+                logger.error("Valor vacío en filtro: " + filtro);
+                System.exit(1);
             }
 
-            CondicionFiltro<RegistroCSV> condicion;
+            CondicionFiltro<RegistroCSV> condicion = null;
             switch (operador) {
                 case "=":
                     condicion = new CondicionIgualdad(columnaInt, parteValor);
@@ -151,7 +161,8 @@ public class Configuracion {
                     condicion = new CondicionMenorIgual(columnaInt, parteValor);
                     break;
                 default:
-                    throw new IllegalStateException("Operador no soportado: " + operador);
+                    logger.error("Operador no soportado: " + operador);
+                    System.exit(1);
             }
 
             condiciones.add(condicion);
@@ -167,15 +178,19 @@ public class Configuracion {
      * @return Un arreglo de enteros con las columnas.
      */
     private static int[] parseaColumnas(String columnas) {
+        Logger logger = Logger.getInstancia();
+
         String[] listaColumnas = columnas.split(",");
         int[] columnasArr = new int[listaColumnas.length];
         for (int j = 0; j < listaColumnas.length; j++) {
             try {
                 columnasArr[j] = Integer.parseInt(listaColumnas[j]);
-                if (columnasArr[j] < 0)
-                    throw new NumberFormatException("La columna debe ser mayor o igual a cero.");
+                if (columnasArr[j] < 0) {
+                    throw new NumberFormatException("Las columnas deben ser no negativas.");
+                }
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Las columnas deben ser enteros no negativos separados por comas.");
+                logger.error("Las columnas deben ser enteros no negativos separados por comas.");
+                throw e;
             }
         }
         return columnasArr;
@@ -188,6 +203,8 @@ public class Configuracion {
      * @return Una instancia de Opciones con los argumentos.
      */
     public static Opciones parsea(String[] args) {
+        Logger logger = Logger.getInstancia();
+
         Opciones opciones = new Opciones();
 
         opciones.setHayArgumentos(args.length > 0);
@@ -207,10 +224,13 @@ public class Configuracion {
             switch (arg) {
                 case "-l":
                 case "--limite":
-                    if (limiteRepetido)
-                        throw new IllegalArgumentException("La opción filtros se repite.");
-                    if (i + 1 >= args.length)
-                        throw new IllegalArgumentException("La opción limite requiere numero entero");
+                    if (limiteRepetido) {
+                        logger.warn("La opción filtros se repite.");
+                    }
+                    if (i + 1 >= args.length) {
+                        logger.error("La opción limite requiere numero entero");
+                        System.exit(1);
+                    }
                     String limiteStr = args[++i];
                     int limite = Integer.parseInt(limiteStr);
                     opciones.setLimiteImpresion(limite);
@@ -218,8 +238,9 @@ public class Configuracion {
                     break;
                 case "-f":
                 case "--filtros":
-                    if (filtrosRepetido)
-                        throw new IllegalArgumentException("La opción filtros se repite.");
+                    if (filtrosRepetido) {
+                        logger.warn("La opción filtros se repite.");
+                    }
                     String filtrosStr = args[++i];
 
                     List<CondicionFiltro<RegistroCSV>> filtros = parseaFiltros(filtrosStr);
@@ -229,13 +250,24 @@ public class Configuracion {
                     break;
                 case "-c":
                 case "--columnas":
-                    if (columnasRepetido)
-                        throw new IllegalArgumentException("La opción columnas se repite.");
-                    if (i + 1 >= args.length)
-                        throw new IllegalArgumentException("La opción columnas requiere una lista de enteros o *");
+                    if (columnasRepetido) {
+                        logger.warn("La opción columnas se repite.");
+                    }
+                    if (i + 1 >= args.length) {
+                        logger.error("La opción columnas requiere una lista de enteros o *");
+                        System.exit(1);
+                    }
                     String columnasStr = args[++i];
 
-                    int[] columnas = parseaColumnas(columnasStr);
+                    int[] columnas = new int[0];
+                    try {
+                        columnas = parseaColumnas(columnasStr);
+                    } catch (NumberFormatException e ) {
+                        logger.error("Las columnas deben ser enteros no negativos separados por comas.", e);
+                        System.out.println("Las columnas deben ser enteros no negativos separados por comas.");
+                        System.exit(1);
+                    }
+
                     opciones.setColumnas(columnas);
                     columnasRepetido = true;
                     break;
