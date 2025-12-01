@@ -53,6 +53,8 @@ public class DivisorArchivo {
      */
     public void divide() {
         // TODO: Permitir opcion sin encabezados (leerlo de Opciones)
+
+        Logger logger = Logger.getInstancia();
         LectorCSV lector = new LectorCSV(archivoDeEntrada, true);
 
         List<File> archivosTemporales = AdminArchivosTmp.creaArchivosTemporales(archivoDeEntrada, cantidadSubarchivos);
@@ -71,12 +73,12 @@ public class DivisorArchivo {
                 int indiceArchivoTmp = i % cantidadSubarchivos;
                 escritor.escribeLinea(indiceArchivoTmp, linea);
                 i++;
-                if (i % 1_000_000 == 0) System.out.println("Registros procesados (DivisorArchivo): " + i);
+                if (i % 1_000_000 == 0) logger.debug("Registros procesados (DivisorArchivo): " + i);
             }
             escritor.flush();
         } catch (Exception e) {
-            // TODO: Manejar con el Logger
-            System.out.println("Error al dividir archivo: " + archivoDeEntrada.getName());
+            logger.error("Error al dividir archivo: " + archivoDeEntrada.getName() + " - " + e.getMessage());
+            System.exit(1);
         }
     }
 
