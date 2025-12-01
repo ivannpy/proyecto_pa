@@ -42,9 +42,11 @@ public class ControladorAplicacion {
             System.exit(1);
         }
 
+        // TODO: Que la versión secuencial no tome los subarchivos
         logger.debug("Inicia la ejecución secuencial");
         ControladorAplicacion.ejecutar(opciones, Procesamiento.SECUENCIAL);
 
+        // TODO: Que solo la versión concurrente tome los subarchivos
         logger.debug("Inicia la ejecución concurrente");
         ControladorAplicacion.ejecutar(opciones, Procesamiento.CONCURRENTE);
 
