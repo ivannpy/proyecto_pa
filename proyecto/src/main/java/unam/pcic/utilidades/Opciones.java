@@ -4,6 +4,7 @@ import unam.pcic.dominio.CondicionFiltro;
 import unam.pcic.dominio.CriterioFiltro;
 import unam.pcic.dominio.RegistroCSV;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,6 +60,10 @@ public class Opciones {
      */
     private final int cantidadSubarchivos;
 
+    private File carpetaTemporal;
+
+    private File archivoDeEntrada;
+
     /**
      * Constructor para fijar la cantidad de subarchivos a crear.
      *
@@ -75,6 +80,22 @@ public class Opciones {
      */
     public Opciones() {
         this(2);
+    }
+
+    public File getCarpetaTemporal() {
+        return carpetaTemporal;
+    }
+
+    public File getArchivoDeEntrada() {
+        return archivoDeEntrada;
+    }
+
+    public void setArchivoDeEntrada() {
+        archivoDeEntrada = new File(getArchivo());
+    }
+
+    public void setCarpetaTemporal() {
+        carpetaTemporal = new File(getArchivoDeEntrada().getParentFile() + File.separator + "tmp");
     }
 
     /**
@@ -154,7 +175,7 @@ public class Opciones {
      *
      * @param archivo la ruta del archivo csv de entrada.
      */
-    public void setArchivo(String archivo) {
+    public void setRutaArchivo(String archivo) {
         this.archivo = archivo;
     }
 

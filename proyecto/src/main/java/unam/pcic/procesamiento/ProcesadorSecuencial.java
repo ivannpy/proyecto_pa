@@ -88,20 +88,6 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
      * @param opciones Configuraciones para ejecutar el programa.
      */
     public void procesa(Opciones opciones) {
-        Logger logger = Logger.getInstancia();
-        DivisorArchivo divisor = new DivisorArchivo(opciones.getArchivo(), opciones.getCantidadSubarchivos());
-
-        try {
-            logger.debug("Dividiendo archivo en subarchivos...");
-            divisor.divide();
-        } catch (Exception e) {
-            logger.error("Error al dividir archivo: " + e.getMessage());
-            System.exit(1);
-        }
-
-        CriterioFiltro<RegistroCSV> filtro = opciones.getCriterioFiltro();
-        procesaArchivos(divisor.getCarpetaTemporal(), filtro);
-
-        AdminArchivosTmp.eliminaCarpetaTemporal(divisor.getCarpetaTemporal());
+        procesaArchivos(opciones.getCarpetaTemporal(), opciones.getCriterioFiltro());
     }
 }

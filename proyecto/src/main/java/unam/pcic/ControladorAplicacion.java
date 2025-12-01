@@ -2,6 +2,8 @@ package unam.pcic;
 
 import unam.pcic.analisis.AnalizadorRendimiento;
 import unam.pcic.dominio.*;
+import unam.pcic.io.AdminArchivosTmp;
+import unam.pcic.io.DivisorArchivo;
 import unam.pcic.io.LectorCSV;
 import unam.pcic.io.Logger;
 import unam.pcic.procesamiento.ProcesadorCSV;
@@ -29,11 +31,24 @@ public class ControladorAplicacion {
     public static void ejecutar(Opciones opciones) {
         Logger logger = Logger.getInstancia();
 
+        // Dividir archivo en subarchivos
+        DivisorArchivo divisor = new DivisorArchivo(opciones);
+
+        try {
+            logger.debug("Dividiendo archivo en subarchivos...");
+            divisor.divide();
+        } catch (Exception e) {
+            logger.error("Error al dividir archivo: " + e.getMessage());
+            System.exit(1);
+        }
+
         logger.debug("Inicia la ejecución secuencial");
         ControladorAplicacion.ejecutar(opciones, Procesamiento.SECUENCIAL);
 
         logger.debug("Inicia la ejecución concurrente");
         ControladorAplicacion.ejecutar(opciones, Procesamiento.CONCURRENTE);
+
+        AdminArchivosTmp.eliminaCarpetaTemporal(opciones.getCarpetaTemporal());
     }
 
     /**
@@ -57,7 +72,7 @@ public class ControladorAplicacion {
         procesador.procesa(opciones);
         analizador.finalizar();
 
-        logger.info("Tiempo que tomó el procesamiento " + modo + ": " + analizador.getTiempoTranscurrido());
+        logger.info("Tiempo con procesamiento " + modo + ": " + analizador.getTiempoTranscurrido() + " s.");
     }
 
 }

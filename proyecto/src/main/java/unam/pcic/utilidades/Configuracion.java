@@ -211,7 +211,9 @@ public class Configuracion {
         opciones.setHayArchivo(opciones.getHayArgumentos() && args[0].endsWith(".csv"));
 
         if (opciones.getHayArchivo()) {
-            opciones.setArchivo(args[0]);
+            opciones.setRutaArchivo(args[0]);
+            opciones.setArchivoDeEntrada();
+            opciones.setCarpetaTemporal();
         }
 
         boolean columnasRepetido = false;

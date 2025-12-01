@@ -1,6 +1,7 @@
 package unam.pcic.io;
 
 import unam.pcic.dominio.RegistroCSV;
+import unam.pcic.utilidades.Opciones;
 
 import java.io.File;
 import java.util.List;
@@ -18,34 +19,18 @@ public class DivisorArchivo {
      */
     private final int cantidadSubarchivos;
 
-    /**
-     * Archivo de entrada
-     */
     private final File archivoDeEntrada;
 
-    /**
-     * Carpeta temporal
-     */
-    private final File carpetaTemporal;
 
     /**
      * Constructor por defecto.
      * El DivisorArchivo sabe cuantos procesadores hay en el sistema.
      */
-    public DivisorArchivo(String rutaArchivoDeEntrada, int cantidadSubarchivos) {
-        this.cantidadSubarchivos = cantidadSubarchivos;
-        this.archivoDeEntrada = new File(rutaArchivoDeEntrada);
-        this.carpetaTemporal = new File(archivoDeEntrada.getParentFile() + File.separator + "tmp");
+    public DivisorArchivo(Opciones opciones) {
+        this.cantidadSubarchivos = opciones.getCantidadSubarchivos();
+        this.archivoDeEntrada = opciones.getArchivoDeEntrada();
     }
 
-    /**
-     * Regresa la carpeta temporal.
-     *
-     * @return la carpeta temporal.
-     */
-    public File getCarpetaTemporal() {
-        return carpetaTemporal;
-    }
 
     /**
      * Divide el archivo de entrada en tantos subarchivos como procesadores hay en el sistema.
