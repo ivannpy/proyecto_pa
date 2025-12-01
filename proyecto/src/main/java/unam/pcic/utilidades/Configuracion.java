@@ -3,6 +3,8 @@ package unam.pcic.utilidades;
 
 import unam.pcic.dominio.*;
 import unam.pcic.io.LectorCSV;
+import unam.pcic.io.Logger;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +24,17 @@ public class Configuracion {
      * @return Un arreglo con las banderas dadas por el usuario.
      */
     public static String[] menuInteractivo(String[] args) {
-        String nombreArchivo = args[0];
+        Logger logger = Logger.getInstancia();
 
-        System.out.println("Archivo a procesar: " + nombreArchivo);
+        String nombreArchivo = "";
+
+        try {
+            nombreArchivo = args[0];
+            logger.info("Archivo csv: " + nombreArchivo);
+        } catch (IndexOutOfBoundsException e) {
+            logger.error("No se ha proporcionado el nombre del archivo csv.");
+            System.exit(1);
+        }
 
         File archivo = new File(nombreArchivo);
         LectorCSV lector = new LectorCSV(archivo, true);
@@ -37,8 +47,8 @@ public class Configuracion {
                 System.out.println(i + " --- " + encabezados[i]);
             }
         } catch (Exception e) {
-            // TODO: Manejarlo con el Logger.
-            System.out.println("Error al leer encabezado del archivo: " + e.getMessage());
+            logger.error("Error al leer encabezado del archivo: " + e.getMessage());
+            System.exit(1);
         }
 
         // TODO: Hacer validaciones de las entradas del usuario
@@ -64,6 +74,9 @@ public class Configuracion {
         }
         System.out.println("Escriba los filtros a usar separados por comas (e.g c1=spanish): ");
         String filtros = System.console().readLine();
+
+        logger.info("Columnas seleccionadas: " + columnas);
+        logger.info("Filtros seleccionados: " + filtros);
 
         return new String[]{nombreArchivo, "-c", columnas, "-f", filtros,  "-l", "10",};
     }
