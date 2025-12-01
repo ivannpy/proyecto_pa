@@ -83,7 +83,7 @@ public class Configuracion {
         logger.debug("Columnas seleccionadas por usuario: " + columnas);
         logger.debug("Filtros seleccionados por usuario: " + filtros);
 
-        return new String[]{nombreArchivo, "-c", columnas, "-f", filtros,  "-l", "10",};
+        return new String[]{nombreArchivo, "-c", columnas, "-f", filtros, "-l", "10",};
     }
 
     /**
@@ -264,7 +264,7 @@ public class Configuracion {
                     int[] columnas = new int[0];
                     try {
                         columnas = parseaColumnas(columnasStr);
-                    } catch (NumberFormatException e ) {
+                    } catch (NumberFormatException e) {
                         logger.error("Las columnas deben ser enteros no negativos separados por comas.", e);
                         System.out.println("Las columnas deben ser enteros no negativos separados por comas.");
                         System.exit(1);
