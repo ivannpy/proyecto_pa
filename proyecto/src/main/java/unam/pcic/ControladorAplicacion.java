@@ -35,7 +35,7 @@ public class ControladorAplicacion {
         DivisorArchivo divisor = new DivisorArchivo(opciones);
 
         try {
-            logger.debug("Dividiendo archivo en subarchivos...");
+            logger.info("Dividiendo archivo en subarchivos...");
             divisor.divide();
         } catch (Exception e) {
             logger.error("Error al dividir archivo: " + e.getMessage());
