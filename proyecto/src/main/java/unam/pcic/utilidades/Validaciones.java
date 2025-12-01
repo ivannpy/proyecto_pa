@@ -9,7 +9,12 @@ import java.io.File;
  * - En caso de que algo no sea correcto, usar el Logger para registrar el error.
  */
 public class Validaciones {
-
+    /**
+     * Verifica si existe una carpeta.
+     *
+     * @param carpeta la carpeta a verificar.
+     * @return true si existe la carpeta, false en caso contrario.
+     */
     public static boolean existeCarpeta(File carpeta) {
         return carpeta.exists();
     }

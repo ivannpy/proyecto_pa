@@ -15,7 +15,12 @@ import java.io.File;
  * - Usa la implementación orientada a columnas.
  */
 public class ProcesadorConcurrente implements ProcesadorCSV {
-
+    /**
+     * Procesa todos los archivos de la carpeta temporal usando un AdministradorTrabajo.
+     *
+     * @param carpetaTemporal La carpeta temporal con los archivos a procesar.
+     * @param filtro          El criterio de filtrado a aplicar a cada registro.
+     */
     private void procesaArchivos(File carpetaTemporal, CriterioFiltro<RegistroCSV> filtro) {
         String rutaArchivoFinal = carpetaTemporal.getParent() + File.separator + "resultado_concurrente.csv";
         File archivoSalida = new File(rutaArchivoFinal);

@@ -21,7 +21,7 @@ public enum Procesamiento {
     /**
      * Para el procesamiento concurrente
      */
-    CONCURRENTE{
+    CONCURRENTE {
         /**
          * Regresa el nombre del tipo de procesamiento
          *

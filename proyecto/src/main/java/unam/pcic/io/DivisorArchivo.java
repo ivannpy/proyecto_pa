@@ -19,8 +19,10 @@ public class DivisorArchivo {
      */
     private final int cantidadSubarchivos;
 
+    /**
+     * El archivo de entrada
+     */
     private final File archivoDeEntrada;
-
 
     /**
      * Constructor por defecto.
@@ -30,7 +32,6 @@ public class DivisorArchivo {
         this.cantidadSubarchivos = opciones.getCantidadSubarchivos();
         this.archivoDeEntrada = opciones.getArchivoDeEntrada();
     }
-
 
     /**
      * Divide el archivo de entrada en tantos subarchivos como procesadores hay en el sistema.
@@ -66,6 +67,4 @@ public class DivisorArchivo {
             System.exit(1);
         }
     }
-
-
 }

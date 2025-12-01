@@ -95,15 +95,16 @@ public class CriterioFiltro<R> {
      * Aplica un filtro a un registro.
      *
      * @param registro El registro a filtrar.
-     * @param filtro El filtro a aplicar.
+     * @param filtro   El filtro a aplicar.
      * @return true si el registro cumple la condición del filtro, false en caso contrario.
      */
-    public boolean aplicarFiltro(R registro, CondicionFiltro<R> filtro) {
+    private boolean aplicarFiltro(R registro, CondicionFiltro<R> filtro) {
         return filtro.cumple(registro);
     }
 
     /**
      * Aplica todos los filtros a un registro.
+     * Son condiciones AND entre filtros.
      *
      * @param registro El registro a filtrar.
      * @return true si el registro cumple todas las condiciones de los filtros, false en caso contrario.
@@ -121,6 +122,11 @@ public class CriterioFiltro<R> {
         return !noCumpleAlguna;
     }
 
+    /**
+     * Representación en cadena del Criterio de Filtrado.
+     *
+     * @return Una representación en cadena del Criterio de Filtrado.
+     */
     @Override
     public String toString() {
         return "CriterioFiltro(" + ", columnasSeleccionadas={"

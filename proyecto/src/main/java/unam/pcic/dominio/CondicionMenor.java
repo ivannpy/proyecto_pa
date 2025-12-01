@@ -46,8 +46,13 @@ public class CondicionMenor implements CondicionFiltro<RegistroCSV> {
         }
     }
 
+    /**
+     * Representación en cadena de la Condición Menor
+     *
+     * @return una representación en cadena de la Condición Menor.
+     */
     @Override
     public String toString() {
-        return "Columna " + columna + " = " + valor;
+        return "Columna " + columna + " < " + valor;
     }
 }

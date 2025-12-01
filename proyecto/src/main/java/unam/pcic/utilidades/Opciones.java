@@ -60,8 +60,14 @@ public class Opciones {
      */
     private final int cantidadSubarchivos;
 
+    /**
+     * La carpeta temporal
+     */
     private File carpetaTemporal;
 
+    /**
+     * El archivo de entrada
+     */
     private File archivoDeEntrada;
 
     /**
@@ -82,18 +88,34 @@ public class Opciones {
         this(2);
     }
 
+    /**
+     * Regresa la carpeta temporal.
+     *
+     * @return la carpeta temporal.
+     */
     public File getCarpetaTemporal() {
         return carpetaTemporal;
     }
 
+    /**
+     * Regresa el archivo de entrada.
+     *
+     * @return el archivo de entrada.
+     */
     public File getArchivoDeEntrada() {
         return archivoDeEntrada;
     }
 
+    /**
+     * Crea el archivo de entrada a partir de la ruta del archivo de entrada.
+     */
     public void setArchivoDeEntrada() {
         archivoDeEntrada = new File(getArchivo());
     }
 
+    /**
+     * Crea la carpeta temporal a partir de la ruta del archivo de entrada.
+     */
     public void setCarpetaTemporal() {
         carpetaTemporal = new File(getArchivoDeEntrada().getParentFile() + File.separator + "tmp");
     }

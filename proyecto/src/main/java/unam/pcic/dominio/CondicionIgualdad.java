@@ -46,6 +46,11 @@ public class CondicionIgualdad implements CondicionFiltro<RegistroCSV> {
         }
     }
 
+    /**
+     * Representación en cadena de la Condición Igual
+     *
+     * @return una representación en cadena de la Condición Igual.
+     */
     @Override
     public String toString() {
         return "Columna " + columna + " = " + valor;

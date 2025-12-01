@@ -16,18 +16,38 @@ import java.util.List;
  * - Sincroniza la escritura de resultados.
  */
 public class AdministradorTrabajo {
-
+    /**
+     * Carpeta temporal donde se encuentran los subarchivos.
+     */
     private final File carpetaTemporal;
+
+    /**
+     * El criterio de filtrado que aplicará cada hilo sobre los Registros.
+     */
     private final CriterioFiltro<RegistroCSV> filtro;
+
+    /**
+     * El archivo final.
+     */
     private final File archivoSalida;
 
-
+    /**
+     * Constructor.
+     * Inicializa un AdministradorTrabajo que coordinar los hilos de trabajo.
+     *
+     * @param carpetaTemporal Carpeta temporal con los subarchivos que procesará cada hilo.
+     * @param filtro          El criterio de filtrado a aplicar a cada registro.
+     * @param archivoSalida   El archivo final donde se escriben los resultados.
+     */
     public AdministradorTrabajo(File carpetaTemporal, CriterioFiltro<RegistroCSV> filtro, File archivoSalida) {
         this.carpetaTemporal = carpetaTemporal;
         this.filtro = filtro;
         this.archivoSalida = archivoSalida;
     }
 
+    /**
+     * Coordina la creación de hilos de trabajo.
+     */
     public void coordinaHilos() {
         Logger logger = Logger.getInstancia();
         File[] archivosTemporales = carpetaTemporal.listFiles();
@@ -57,7 +77,5 @@ public class AdministradorTrabajo {
         } catch (Exception e) {
             logger.error("Error al coordinar hilos", e);
         }
-
     }
-
 }

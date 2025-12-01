@@ -291,5 +291,4 @@ public class LectorCSV {
             lectorSecuencialInicializado = false;
         }
     }
-
 }
