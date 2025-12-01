@@ -2,10 +2,10 @@ package unam.pcic.procesamiento;
 
 import unam.pcic.dominio.CriterioFiltro;
 import unam.pcic.dominio.RegistroCSV;
-import unam.pcic.io.AdminArchivosTmp;
 import unam.pcic.utilidades.Opciones;
 
 import java.io.File;
+
 
 /**
  * - Usa el DividorArchivo para dividir el archivo en subarchivos de entrada.
@@ -17,8 +17,11 @@ import java.io.File;
 public class ProcesadorConcurrente implements ProcesadorCSV {
 
     private void procesaArchivos(File carpetaTemporal, CriterioFiltro<RegistroCSV> filtro) {
-        // Usar AdministradorTrabajo para procesar los archivos
+        String rutaArchivoFinal = carpetaTemporal.getParent() + File.separator + "resultado_concurrente.csv";
+        File archivoSalida = new File(rutaArchivoFinal);
 
+        AdministradorTrabajo administrador = new AdministradorTrabajo(carpetaTemporal, filtro, archivoSalida);
+        administrador.coordinaHilos();
     }
 
     /**
@@ -26,6 +29,7 @@ public class ProcesadorConcurrente implements ProcesadorCSV {
      *
      * @param opciones Configuraciones para ejecutar el programa.
      */
+    @Override
     public void procesa(Opciones opciones) {
         procesaArchivos(opciones.getCarpetaTemporal(), opciones.getCriterioFiltro());
     }
