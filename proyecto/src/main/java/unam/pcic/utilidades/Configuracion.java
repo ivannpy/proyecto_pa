@@ -63,6 +63,7 @@ public class Configuracion {
             for (int i = 0; i < encabezado.length; i++) {
                 System.out.println(i + " - " + encabezado[i]);
             }
+            lector.cerrarLectorSecuencial();
         } catch (Exception e) {
             logger.error("Error al leer encabezado del archivo: " + e.getMessage());
             System.out.println("Error al leer encabezado del archivo: " + e.getMessage());

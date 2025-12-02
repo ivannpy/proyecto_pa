@@ -13,7 +13,9 @@ public class TestCompleto {
 
     @Test
     public void testCompletoSeleccionFiltro() {
-        String[] args = new String[]{".\\data\\sample.csv",
+        String archivoParcial = ".\\data\\sample.csv";
+        String archivoCompleto = "C:\\Users\\jivan\\Descargas\\Steam reviews\\all_reviews\\all_reviews.csv";
+        String[] args = new String[]{archivoParcial,
                 "-c", "2,10,11",
                 "-f", "c1=spanish",
                 "-l", "10",
@@ -26,7 +28,10 @@ public class TestCompleto {
 
     @Test
     public void testCompletoSeleccion() {
-        String[] args = new String[]{".\\data\\sample.csv",
+        String archivoParcial = ".\\data\\sample.csv";
+        String archivoCompleto = "C:\\Users\\jivan\\Descargas\\Steam reviews\\all_reviews\\all_reviews.csv";
+
+        String[] args = new String[]{archivoParcial,
                 "-c", "2,10,11",
                 "-l", "10",
                 "-m", "both"};

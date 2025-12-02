@@ -15,13 +15,15 @@ public class TestEstadisticas {
 
     @Test
     public void testNubeDePalabras() {
-        String[] juegos = new String[]{"Counter-Strike","Halo: The Master Chief Collection"};
+        String[] juegos = new String[]{"Among Us"};
 
-        String[] args = new String[]{".\\data\\sample.csv",
+        String archivoParcial = ".\\data\\sample.csv";
+        String archivoCompleto = "C:\\Users\\jivan\\Descargas\\Steam reviews\\all_reviews\\all_reviews.csv";
+        String[] args = new String[]{archivoParcial,
                                     "-c", "2,10,11",
                                     "-f", "c1=spanish",
                                     "-l", "10",
-                                    "-m", "both"};
+                                    "-m", "conc"};
 
         Opciones opciones = Configuracion.parsea(args);
 

@@ -69,7 +69,7 @@ public class Logger {
 
     /**
      * Obtiene la instancia del Logger
-     * Como se usa el patrón Singleton, solo se puede acceder al Log con este método.
+     * Como se usa el patrón Singleton, solo se puede acceder al Log con getInstancia
      *
      * @return La instancia del Logger
      */

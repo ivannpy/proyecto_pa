@@ -49,7 +49,7 @@ public class HiloDeTrabajo extends Thread {
     }
 
     /**
-     * Método que se ejecuta en cada hilo.
+     * El job que se ejecuta en cada hilo.
      */
     @Override
     public void run() {
@@ -74,6 +74,7 @@ public class HiloDeTrabajo extends Thread {
 
                 escritor.escribeRegistro(registro);
             }
+            lector.cerrarLectorSecuencial();
         } catch (Exception e) {
             logger.error("Error al cargar archivo parcial" + subarchivo.getAbsolutePath(), e);
             System.exit(1);

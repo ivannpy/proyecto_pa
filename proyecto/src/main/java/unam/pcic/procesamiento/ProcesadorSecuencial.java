@@ -16,6 +16,7 @@ import java.io.File;
  * - Usa la implementación orientada a renglones (RegistroCSV).
  */
 public class ProcesadorSecuencial implements ProcesadorCSV {
+    private boolean encabezadoEscrito = false;
 
     /**
      * Procesa un archivo CSV.
@@ -31,13 +32,19 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
 
         LectorCSV lector = new LectorCSV(archivo, true);
 
-        boolean encabezadoEscrito = true;
-        try {
-            if (lector.leerEncabezado() == null) {
-                encabezadoEscrito = false;
+        if (!encabezadoEscrito) {
+            try {
+                String[] encabezadoArr = lector.leerEncabezado();
+                RegistroCSV encabezado = new RegistroCSV(encabezadoArr, 0L);
+                if (filtro != null) {
+                    encabezado = filtro.seleccionarColumnas(encabezado);
+                }
+                escritor.escribeRegistro(encabezado);
+                encabezadoEscrito = true;
+            } catch (Exception e) {
+                logger.error("Error al leer encabezado del archivo: " + archivo.getName() + " - " + e.getMessage());
+                System.exit(1);
             }
-        } catch (Exception e) {
-            System.err.println("Error al leer encabezado del archivo: " + archivo.getName());
         }
 
         try {
@@ -56,6 +63,7 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
                 }
                 escritor.escribeRegistro(registro);
             }
+            lector.cerrarLectorSecuencial();
         } catch (Exception e) {
             logger.error("Error al procesar archivo: " + archivo.getName() + " - " + e.getMessage());
             System.exit(1);
@@ -79,8 +87,6 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
         File[] archivos = carpetaTemporal.listFiles();
 
         try (EscritorCSV escritorSalida = new EscritorCSV(archivoSalida, true)) {
-            //escritorSalida.escribeRegistro(encabezado);
-
             for (int i = 0; i < archivos.length; i++) {
                 procesaArchivo(archivos[i], escritorSalida, filtro);
             }

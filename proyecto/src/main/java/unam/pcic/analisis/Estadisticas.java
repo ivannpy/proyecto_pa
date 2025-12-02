@@ -53,8 +53,6 @@ public class Estadisticas {
     public static void generaNubesDePalabras(Opciones opciones, String[] juegos, String idioma) {
         File archivo = opciones.getArchivoDeSalida();
 
-        System.out.println("Archivo de salida: " + archivo.getAbsolutePath());
-
         LectorCSV lector = new LectorCSV(archivo, true);
 
         try {
@@ -62,6 +60,7 @@ public class Estadisticas {
             for (String juego : juegos) {
                 generaNubeDePalabras(tabla, juego, idioma);
             }
+            lector.cerrarLectorSecuencial();
         } catch (Exception e) {
             System.err.println("Error al leer archivo: " + e.getMessage());
         }
@@ -74,15 +73,13 @@ public class Estadisticas {
         int indiceGame = -1;
         int indiceReview = -1;
         int indiceLanguage = -1;
-        for (int i = 1; i < columnas.length; i++) {
+        for (int i = 0; i < columnas.length; i++) {
             if (columnas[i].equals("game")) indiceGame = i;
             if (columnas[i].equals("review")) indiceReview = i;
             if (columnas[i].equals("language")) indiceLanguage = i;
         }
 
-        assert indiceGame != -1;
-        assert indiceReview != -1;
-        assert indiceLanguage != -1;
+        System.out.println("Indice de columnas: game=" + indiceGame + ", review=" + indiceReview + ", language=" + indiceLanguage);
 
         CondicionFiltro<RegistroCSV> condicionJuego = new CondicionIgualdad(indiceGame, juego);
         CondicionFiltro<RegistroCSV> condicionIdioma = new CondicionIgualdad(indiceLanguage, idioma);
@@ -90,16 +87,16 @@ public class Estadisticas {
         Map<String, Integer> unigramas = new HashMap<>();
         Map<String, Integer> bigramas = new HashMap<>();
 
-
+        System.out.println("Procesando juego: " + juego);
         for (RegistroCSV registro : tabla.getRegistros()) {
             if (!condicionJuego.cumple(registro) || !condicionIdioma.cumple(registro)) continue;
 
             idioma = idioma.toLowerCase(Locale.ROOT);
 
             String comentario = registro.getValor(indiceReview);
+
             if (comentario == null || comentario.isBlank()) continue;
 
-            // Tokenización básica: separar por cualquier carácter que NO sea letra
             String[] tokensCrudos = comentario.toLowerCase(Locale.ROOT).split("\\P{L}+");
 
             List<String> tokensLimpios = new ArrayList<>();
@@ -112,12 +109,10 @@ public class Estadisticas {
 
             if (tokensLimpios.isEmpty()) continue;
 
-            // Contar unigramas
             for (String token : tokensLimpios) {
                 unigramas.merge(token, 1, Integer::sum);
             }
 
-            // Contar bigramas
             String prev = null;
             for (String token : tokensLimpios) {
                 if (prev != null) {
@@ -126,11 +121,10 @@ public class Estadisticas {
                 }
                 prev = token;
             }
-
-            System.out.println("=== Nube de palabras para juego: " + juego + "===");
-            imprimirTopFrecuencias(unigramas, "Unigramas", 20);
-            imprimirTopFrecuencias(bigramas, "Bigramas", 20);
         }
+        System.out.println("=== Nube de palabras para juego: " + juego + "===");
+        imprimirTopFrecuencias(unigramas, "Unigramas", 20);
+        imprimirTopFrecuencias(bigramas, "Bigramas", 20);
 
     }
 

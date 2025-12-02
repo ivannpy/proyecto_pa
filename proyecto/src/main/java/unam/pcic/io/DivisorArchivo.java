@@ -38,8 +38,6 @@ public class DivisorArchivo {
      *
      */
     public void divide() {
-        // TODO: Permitir opcion sin encabezados (leerlo de Opciones)
-
         Logger logger = Logger.getInstancia();
         LectorCSV lector = new LectorCSV(archivoDeEntrada, true);
 
@@ -62,6 +60,7 @@ public class DivisorArchivo {
                 if (i % 1_000_000 == 0) logger.debug("Registros procesados (DivisorArchivo): " + i);
             }
             escritor.flush();
+            lector.cerrarLectorSecuencial();
         } catch (Exception e) {
             logger.error("Error al dividir archivo: " + archivoDeEntrada.getName() + " - " + e.getMessage());
             System.exit(1);

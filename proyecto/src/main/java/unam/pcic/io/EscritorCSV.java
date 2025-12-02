@@ -50,7 +50,8 @@ public class EscritorCSV implements AutoCloseable {
                             StandardCharsets.UTF_8),
                     LONGITUD_BUFFER_ESCRITURA);
         } catch (IOException e) {
-            // TODO: Manejar con el Logger
+            Logger logger = Logger.getInstancia();
+            logger.error("Error al abrir el archivo de salida: " + archivoDestino);
             throw new RuntimeException("No se pudo abrir el archivo de salida: " + archivoDestino, e);
         }
     }
@@ -76,7 +77,8 @@ public class EscritorCSV implements AutoCloseable {
             escritor.write(linea);
             escritor.newLine();
         } catch (IOException e) {
-            // TODO: Manejar con el Logger
+            Logger logger = Logger.getInstancia();
+            logger.error("Error al escribir en archivo final: " + archivoDestino);
             throw new RuntimeException("Error al escribir en archivo final: " + archivoDestino, e);
         }
     }
@@ -90,7 +92,8 @@ public class EscritorCSV implements AutoCloseable {
         try {
             escritor.flush();
         } catch (IOException e) {
-            // TODO: Manejar con el Logger
+            Logger logger = Logger.getInstancia();
+            logger.error("Error al hacer flush en archivo final: " + archivoDestino);
             throw new RuntimeException("Error al hacer flush en archivo final: " + archivoDestino, e);
         }
     }
@@ -105,7 +108,8 @@ public class EscritorCSV implements AutoCloseable {
         try {
             escritor.close();
         } catch (IOException e) {
-            // TODO: Manejar con el Logger
+            Logger logger = Logger.getInstancia();
+            logger.error("Error al cerrar el archivo de salida: " + archivoDestino);
             System.err.println("Error al cerrar el archivo de salida: " + archivoDestino);
         }
     }

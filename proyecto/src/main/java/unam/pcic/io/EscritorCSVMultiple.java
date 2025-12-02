@@ -46,6 +46,7 @@ public class EscritorCSVMultiple implements AutoCloseable {
      * Para cada archivo temporal, crea un BufferedWriter para el archivo.
      */
     private void inicializarEscritores() {
+        Logger logger = Logger.getInstancia();
         try {
             for (int i = 0; i < archivos.size(); i++) {
                 File archivo = archivos.get(i);
@@ -54,7 +55,7 @@ public class EscritorCSVMultiple implements AutoCloseable {
                         LONGITUD_BUFFER_ESCRITURA);
             }
         } catch (IOException e) {
-            // TODO: Manejar con el Logger
+            logger.error("Error al inicializar escritores para archivos temporales: " + e.getMessage());
             cerrar();
             throw new RuntimeException("Error al inicializar escritores para archivos temporales", e);
         }
@@ -72,7 +73,8 @@ public class EscritorCSVMultiple implements AutoCloseable {
             escritor.write(linea);
             escritor.newLine();
         } catch (IOException e) {
-            // TODO: Manejar con el Logger
+            Logger logger = Logger.getInstancia();
+            logger.error("Error al escribir en archivo: " + archivos.get(indiceArchivo) + " - " + e.getMessage());
             throw new RuntimeException("Error al escribir en archivo: " + archivos.get(indiceArchivo), e);
         }
     }
@@ -98,7 +100,8 @@ public class EscritorCSVMultiple implements AutoCloseable {
                 try {
                     escritor.flush();
                 } catch (IOException e) {
-                    // TODO: Manejar con el Logger
+                    Logger logger = Logger.getInstancia();
+                    logger.error("Error al hacer flush de un writer CSV: " + e.getMessage());
                     throw new RuntimeException("Error al hacer flush de un writer CSV", e);
                 }
             }
@@ -114,7 +117,8 @@ public class EscritorCSVMultiple implements AutoCloseable {
                 try {
                     escritor.close();
                 } catch (IOException ignore) {
-                    // TODO: Manejar con el Logger
+                    Logger logger = Logger.getInstancia();
+                    logger.error("Error al cerrar un writer CSV: " + ignore.getMessage());
                 }
             }
         }

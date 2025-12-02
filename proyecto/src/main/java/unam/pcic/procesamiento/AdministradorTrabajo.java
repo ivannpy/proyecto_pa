@@ -3,6 +3,7 @@ package unam.pcic.procesamiento;
 import unam.pcic.dominio.CriterioFiltro;
 import unam.pcic.dominio.RegistroCSV;
 import unam.pcic.io.EscritorCSV;
+import unam.pcic.io.LectorCSV;
 import unam.pcic.io.Logger;
 
 import java.io.File;
@@ -30,6 +31,8 @@ public class AdministradorTrabajo {
      * El archivo final.
      */
     private final File archivoSalida;
+
+    private boolean encabezadoEscrito = false;
 
     /**
      * Constructor.
@@ -60,6 +63,24 @@ public class AdministradorTrabajo {
         List<HiloDeTrabajo> hilos = new ArrayList<>();
 
         try (EscritorCSV escritorCompartido = new EscritorCSV(archivoSalida, false)) {
+            File archivoParaEncabezado = archivosTemporales[0];
+            LectorCSV lector = new LectorCSV(archivoParaEncabezado, true);
+            if (!encabezadoEscrito) {
+                try {
+                    String[] encabezadoArr = lector.leerEncabezado();
+                    RegistroCSV encabezado = new RegistroCSV(encabezadoArr, 0L);
+                    if (filtro != null) {
+                        encabezado = filtro.seleccionarColumnas(encabezado);
+                    }
+                    escritorCompartido.escribeRegistro(encabezado);
+                    encabezadoEscrito = true;
+                } catch (Exception e) {
+                    logger.error("Error al leer encabezado del archivo: " + archivoParaEncabezado.getName() + " - " + e.getMessage());
+                    System.exit(1);
+                }
+            }
+            lector.cerrarLectorSecuencial();
+
             for (File archivoTmp : archivosTemporales) {
                 HiloDeTrabajo hilo = new HiloDeTrabajo(archivoTmp, filtro, escritorCompartido);
                 hilos.add(hilo);

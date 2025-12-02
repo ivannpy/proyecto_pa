@@ -178,6 +178,7 @@ public class LectorCSV {
             if (tieneEncabezado) {
                 String encabezadoLinea = br.readLine();
                 String[] valoresEncabezado = parsearLinea(encabezadoLinea);
+                cantidadColumnas = valoresEncabezado.length;
                 RegistroCSV encabezado = new RegistroCSV(valoresEncabezado, 0L);
                 almacen.setEncabezado(encabezado);
                 numeroLinea++;
@@ -192,6 +193,8 @@ public class LectorCSV {
                 String[] valores = parsearLinea(linea);
 
                 if (valores.length != cantidadColumnas) {
+                    System.out.println("No coinciden las columnas");
+                    System.out.println(valores.length + " - " + cantidadColumnas);
                     numeroLinea++;
                     continue;
                 }
@@ -288,7 +291,7 @@ public class LectorCSV {
      *
      * @throws Exception Si ocurre un error al cerrar.
      */
-    private void cerrarLectorSecuencial() throws Exception {
+    public void cerrarLectorSecuencial() throws Exception {
         if (lectorSecuencial != null) {
             lectorSecuencial.close();
             lectorSecuencial = null;

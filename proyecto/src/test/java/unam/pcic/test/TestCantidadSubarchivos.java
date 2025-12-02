@@ -13,7 +13,9 @@ public class TestCantidadSubarchivos {
     @Test
     public void testRendimientoConcurrente() {
         // Las pruebas se hacen sobre el archivo de 39.5 GB
-        String[] args = new String[]{"C:\\Users\\jivan\\Descargas\\Steam reviews\\all_reviews\\all_reviews.csv",
+        String archivoParcial = ".\\data\\sample.csv";
+        String archivoCompleto = "C:\\Users\\jivan\\Descargas\\Steam reviews\\all_reviews\\all_reviews.csv";
+        String[] args = new String[]{archivoParcial,
                 "-c", "2,10,11",
                 "-f", "c1=spanish",
                 "-l", "10",
@@ -36,7 +38,9 @@ public class TestCantidadSubarchivos {
     @Test
     public void testRendimientoSecuencial() {
         // Las pruebas se hacen sobre el archivo de 39.5 GB
-        String[] args = new String[]{"C:\\Users\\jivan\\Descargas\\Steam reviews\\all_reviews\\all_reviews.csv",
+        String archivoParcial = ".\\data\\sample.csv";
+        String archivoCompleto = "C:\\Users\\jivan\\Descargas\\Steam reviews\\all_reviews\\all_reviews.csv";
+        String[] args = new String[]{archivoParcial,
                 "-c", "2,10,11",
                 "-f", "c1=spanish",
                 "-l", "10",
