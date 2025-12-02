@@ -15,22 +15,25 @@ public class TestEstadisticas {
 
     @Test
     public void testNubeDePalabras() {
-        String[] juegos = new String[]{"Among Us"};
+        String[] juegos = new String[]{"Among Us",
+                "Halo: The Master Chief Collection",
+                "PUBG: BATTLEGROUNDS",
+                "Grand Theft Auto V"};
 
         String archivoParcial = ".\\data\\sample.csv";
         String archivoCompleto = "C:\\Users\\jivan\\Descargas\\Steam reviews\\all_reviews\\all_reviews.csv";
-        String[] args = new String[]{archivoCompleto,
-                                    "-c", "2,10,11",
-                                    "-f", "c1=spanish",
-                                    "-l", "10",
-                                    "-m", "conc"};
+        String[] args = new String[]{archivoParcial,
+                "-c", "2,10,11",
+                "-f", "c1=spanish",
+                "-l", "10",
+                "-m", "conc"};
 
         Opciones opciones = Configuracion.parsea(args);
 
         ControladorAplicacion.ejecutar(opciones);
 
         boolean quitarStopWords = true;
-        Estadisticas.generaNubesDePalabras(opciones, juegos,"spanish", quitarStopWords);
+        Estadisticas.generaNubesDePalabras(opciones, juegos, "spanish", quitarStopWords);
 
     }
 }

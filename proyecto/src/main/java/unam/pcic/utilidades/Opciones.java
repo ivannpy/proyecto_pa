@@ -54,7 +54,7 @@ public class Opciones {
     /**
      * Cantidad de procesadores disponibles
      */
-    private final int cantidadProcesadores;
+    private int cantidadProcesadores;
 
     /**
      * Cantidad de subarchivos a crear
@@ -111,6 +111,10 @@ public class Opciones {
      */
     public void setCantidadSubarchivos(int multiplo) {
         this.cantidadSubarchivos = cantidadProcesadores * multiplo;
+    }
+
+    public void setCantidadProcesadores(int cantidadProcesadores) {
+        this.cantidadProcesadores = cantidadProcesadores;
     }
 
     /**

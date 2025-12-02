@@ -4,7 +4,10 @@ import unam.pcic.dominio.*;
 import unam.pcic.io.LectorCSV;
 import unam.pcic.utilidades.Opciones;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 
@@ -38,6 +41,14 @@ public class Estadisticas {
             "your", "his", "their"
     );
 
+    private static void calculaPromedios(AlmacenRenglones tabla,
+                                         String columna,
+                                         String[] juegos) {
+        // Dada una columna numérica, calcula el promedio de los valores de cada juego.
+    }
+
+
+    // STOP WORDS para nubes de palabras
 
     private static boolean esStopWord(String palabra, String idioma) {
         if (palabra == null || palabra.isEmpty()) return true;
@@ -49,15 +60,24 @@ public class Estadisticas {
         };
     }
 
-    public static void generaNubesDePalabras(Opciones opciones, String[] juegos, String idioma, boolean quitarStopWords) {
+    public static void generaNubesDePalabras(Opciones opciones,
+                                             String[] juegos,
+                                             String idioma,
+                                             boolean quitarStopWords) {
+
         File archivo = opciones.getArchivoDeSalida();
 
         LectorCSV lector = new LectorCSV(archivo, true);
 
+        String carpeta = archivo.getParent();
+        String stopWords = quitarStopWords ? "ssw" : "csw";
+
         try {
             AlmacenRenglones tabla = lector.leerTodo();
             for (String juego : juegos) {
-                generaNubeDePalabras(tabla, juego, idioma, quitarStopWords);
+                String nombreSeguro = juego.replaceAll("\\W+", "_");
+                File archivoSalida = new File(carpeta, nombreSeguro + "_n_gramas_" + stopWords + ".txt");
+                generaNubeDePalabras(tabla, juego, idioma, quitarStopWords, archivoSalida);
             }
             lector.cerrarLectorSecuencial();
         } catch (Exception e) {
@@ -65,9 +85,13 @@ public class Estadisticas {
         }
     }
 
-    private static void generaNubeDePalabras(AlmacenRenglones tabla, String juego, String idioma, boolean quitarStopWords) {
+    private static void generaNubeDePalabras(AlmacenRenglones tabla,
+                                             String juego,
+                                             String idioma,
+                                             boolean quitarStopWords,
+                                             File archivoSalida) {
+
         String[] columnas = tabla.getEncabezado().getValores();
-        System.out.println("Columnas del archivo: " + Arrays.toString(columnas));
 
         int indiceGame = -1;
         int indiceReview = -1;
@@ -78,7 +102,9 @@ public class Estadisticas {
             if (columnas[i].equals("language")) indiceLanguage = i;
         }
 
-        System.out.println("Indice de columnas: game=" + indiceGame + ", review=" + indiceReview + ", language=" + indiceLanguage);
+        assert indiceGame >= 0;
+        assert indiceReview >= 0;
+        assert indiceLanguage >= 0;
 
         CondicionFiltro<RegistroCSV> condicionJuego = new CondicionIgualdad(indiceGame, juego);
         CondicionFiltro<RegistroCSV> condicionIdioma = new CondicionIgualdad(indiceLanguage, idioma);
@@ -147,26 +173,67 @@ public class Estadisticas {
             }
 
         }
-        System.out.println("=== Nube de palabras para juego: " + juego + "===");
-        imprimirTopFrecuencias(unigramas, "Unigramas", 20);
-        imprimirTopFrecuencias(bigramas, "Bigramas", 20);
-        imprimirTopFrecuencias(trigramas, "Trigramas", 20);
-        imprimirTopFrecuencias(cuatrogramas, "4-gramas", 20);
+        try {
+            escribirNGramasEnArchivo(archivoSalida, juego, idioma,
+                    unigramas, bigramas, trigramas, cuatrogramas, 20);
+        } catch (Exception e) {
+            System.err.println("Error al escribir n-gramas para " + juego + ": " + e.getMessage());
+        }
     }
 
-    private static void imprimirTopFrecuencias(Map<String, Integer> mapa,
-                                               String titulo,
-                                               int topN) {
+    private static void escribirNGramasEnArchivo(File archivoSalida,
+                                                 String juego,
+                                                 String idioma,
+                                                 Map<String, Integer> unigramas,
+                                                 Map<String, Integer> bigramas,
+                                                 Map<String, Integer> trigramas,
+                                                 Map<String, Integer> cuatrogramas,
+                                                 int topN) throws IOException {
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoSalida, false))) {
+            // Metadatos
+            writer.write("Juego: " + juego);
+            writer.newLine();
+            writer.write("Idioma: " + idioma);
+            writer.newLine();
+            writer.write("Con stop words: No");
+            writer.newLine();
+            writer.newLine();
+
+            // Secciones de n-gramas
+            escribirTopFrecuenciasEnWriter(unigramas, "1-gramas", topN, writer);
+            writer.newLine();
+            escribirTopFrecuenciasEnWriter(bigramas, "2-gramas", topN, writer);
+            writer.newLine();
+            escribirTopFrecuenciasEnWriter(trigramas, "3-gramas", topN, writer);
+            writer.newLine();
+            escribirTopFrecuenciasEnWriter(cuatrogramas, "4-gramas", topN, writer);
+        }
+    }
+
+    private static void escribirTopFrecuenciasEnWriter(Map<String, Integer> mapa,
+                                                       String titulo,
+                                                       int topN,
+                                                       BufferedWriter writer) throws IOException {
+        writer.write(titulo + ":");
+        writer.newLine();
+
         if (mapa.isEmpty()) {
-            System.out.println(titulo + ": (sin datos)");
+            writer.write("(sin datos)");
+            writer.newLine();
             return;
         }
 
-        System.out.println(">> " + titulo);
-        mapa.entrySet().stream()
-                .sorted((e1, e2) -> Integer.compare(e2.getValue(), e1.getValue()))
-                .limit(topN)
-                .forEach(e -> System.out.println(e.getKey() + " -> " + e.getValue()));
-        System.out.println();
+        List<Map.Entry<String, Integer>> entradas = new ArrayList<>(mapa.entrySet());
+        entradas.sort((e1, e2) -> Integer.compare(e2.getValue(), e1.getValue()));
+
+        int contador = 0;
+        for (Map.Entry<String, Integer> e : entradas) {
+            if (contador >= topN) break;
+            writer.write(e.getKey() + " -> " + e.getValue());
+            writer.newLine();
+            contador++;
+        }
     }
+
 }
