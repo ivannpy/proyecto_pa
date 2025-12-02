@@ -19,6 +19,8 @@ public class AlmacenRenglones implements Almacen<RegistroCSV> {
      */
     private int longitud;
 
+    private RegistroCSV encabezado;
+
     /**
      * Constructor por defecto (almacen vacío).
      */
@@ -32,6 +34,17 @@ public class AlmacenRenglones implements Almacen<RegistroCSV> {
      * @param registros La lista de registros que conforman al almacen.
      */
     public AlmacenRenglones(List<RegistroCSV> registros) {
+        this.registros = registros;
+        this.longitud = registros.size();
+    }
+
+    /**
+     * Constructor para una lista de registros (RegistroCSV) dada.
+     *
+     * @param registros La lista de registros que conforman al almacen.
+     */
+    public AlmacenRenglones(RegistroCSV encabezado, List<RegistroCSV> registros) {
+        this.encabezado = encabezado;
         this.registros = registros;
         this.longitud = registros.size();
     }
@@ -84,6 +97,14 @@ public class AlmacenRenglones implements Almacen<RegistroCSV> {
     public void agregar(RegistroCSV registro) {
         registros.add(registro);
         longitud++;
+    }
+
+    public RegistroCSV getEncabezado() {
+        return encabezado;
+    }
+
+    public void setEncabezado(RegistroCSV encabezado) {
+        this.encabezado = encabezado;
     }
 
     /**

@@ -30,6 +30,15 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
 
         LectorCSV lector = new LectorCSV(archivo, true);
 
+        boolean encabezadoEscrito = true;
+        try {
+            if (lector.leerEncabezado() == null) {
+                encabezadoEscrito = false;
+            }
+        } catch (Exception e) {
+            System.err.println("Error al leer encabezado del archivo: " + archivo.getName());
+        }
+
         try {
             RegistroCSV registro;
             while ((registro = lector.siguienteRegistro()) != null) {
@@ -41,6 +50,9 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
 
                 if (!cumpleFiltros) continue;
 
+                if (!encabezadoEscrito) {
+                    escritor.escribeRegistro(new RegistroCSV(lector.leerEncabezado(), 0L));
+                }
                 escritor.escribeRegistro(registro);
             }
         } catch (Exception e) {
@@ -65,11 +77,9 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
 
         File[] archivos = carpetaTemporal.listFiles();
 
-        if (archivos == null || archivos.length == 0) return;
-
-        // TODO: Escribir el encabezado del archivo de salida
-
         try (EscritorCSV escritorSalida = new EscritorCSV(archivoSalida, true)) {
+            //escritorSalida.escribeRegistro(encabezado);
+
             for (int i = 0; i < archivos.length; i++) {
                 procesaArchivo(archivos[i], escritorSalida, filtro);
             }
