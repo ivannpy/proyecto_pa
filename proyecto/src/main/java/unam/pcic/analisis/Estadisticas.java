@@ -13,7 +13,6 @@ import java.util.*;
  * - Calcula las estadísticas
  */
 public class Estadisticas {
-
     private static final Set<String> STOPWORDS_ES = Set.of(
             "a", "acá", "ahí", "al", "algo", "algunas", "algunos", "allá", "alli", "allí",
             "ante", "antes", "como", "con", "contra", "cual", "cuales", "cuando", "de",
@@ -50,7 +49,7 @@ public class Estadisticas {
         };
     }
 
-    public static void generaNubesDePalabras(Opciones opciones, String[] juegos, String idioma) {
+    public static void generaNubesDePalabras(Opciones opciones, String[] juegos, String idioma, boolean quitarStopWords) {
         File archivo = opciones.getArchivoDeSalida();
 
         LectorCSV lector = new LectorCSV(archivo, true);
@@ -58,7 +57,7 @@ public class Estadisticas {
         try {
             AlmacenRenglones tabla = lector.leerTodo();
             for (String juego : juegos) {
-                generaNubeDePalabras(tabla, juego, idioma);
+                generaNubeDePalabras(tabla, juego, idioma, quitarStopWords);
             }
             lector.cerrarLectorSecuencial();
         } catch (Exception e) {
@@ -66,7 +65,7 @@ public class Estadisticas {
         }
     }
 
-    private static void generaNubeDePalabras(AlmacenRenglones tabla, String juego, String idioma) {
+    private static void generaNubeDePalabras(AlmacenRenglones tabla, String juego, String idioma, boolean quitarStopWords) {
         String[] columnas = tabla.getEncabezado().getValores();
         System.out.println("Columnas del archivo: " + Arrays.toString(columnas));
 
@@ -86,6 +85,8 @@ public class Estadisticas {
 
         Map<String, Integer> unigramas = new HashMap<>();
         Map<String, Integer> bigramas = new HashMap<>();
+        Map<String, Integer> trigramas = new HashMap<>();
+        Map<String, Integer> cuatrogramas = new HashMap<>();
 
         System.out.println("Procesando juego: " + juego);
         for (RegistroCSV registro : tabla.getRegistros()) {
@@ -103,16 +104,18 @@ public class Estadisticas {
 
             for (String token : tokensCrudos) {
                 if (token == null || token.isBlank()) continue;
-                if (esStopWord(token, idioma)) continue;
+                if (esStopWord(token, idioma) && quitarStopWords) continue;
                 tokensLimpios.add(token);
             }
 
             if (tokensLimpios.isEmpty()) continue;
 
+            // Unigramas
             for (String token : tokensLimpios) {
                 unigramas.merge(token, 1, Integer::sum);
             }
 
+            // Bigramas
             String prev = null;
             for (String token : tokensLimpios) {
                 if (prev != null) {
@@ -121,11 +124,34 @@ public class Estadisticas {
                 }
                 prev = token;
             }
+
+            // Trigramas
+            if (tokensLimpios.size() >= 3) {
+                for (int i = 0; i <= tokensLimpios.size() - 3; i++) {
+                    String trig = tokensLimpios.get(i) + " " +
+                            tokensLimpios.get(i + 1) + " " +
+                            tokensLimpios.get(i + 2);
+                    trigramas.merge(trig, 1, Integer::sum);
+                }
+            }
+
+            // 4-gramas
+            if (tokensLimpios.size() >= 4) {
+                for (int i = 0; i <= tokensLimpios.size() - 4; i++) {
+                    String cuatro = tokensLimpios.get(i) + " " +
+                            tokensLimpios.get(i + 1) + " " +
+                            tokensLimpios.get(i + 2) + " " +
+                            tokensLimpios.get(i + 3);
+                    cuatrogramas.merge(cuatro, 1, Integer::sum);
+                }
+            }
+
         }
         System.out.println("=== Nube de palabras para juego: " + juego + "===");
         imprimirTopFrecuencias(unigramas, "Unigramas", 20);
         imprimirTopFrecuencias(bigramas, "Bigramas", 20);
-
+        imprimirTopFrecuencias(trigramas, "Trigramas", 20);
+        imprimirTopFrecuencias(cuatrogramas, "4-gramas", 20);
     }
 
     private static void imprimirTopFrecuencias(Map<String, Integer> mapa,

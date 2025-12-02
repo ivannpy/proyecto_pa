@@ -19,7 +19,7 @@ public class TestEstadisticas {
 
         String archivoParcial = ".\\data\\sample.csv";
         String archivoCompleto = "C:\\Users\\jivan\\Descargas\\Steam reviews\\all_reviews\\all_reviews.csv";
-        String[] args = new String[]{archivoParcial,
+        String[] args = new String[]{archivoCompleto,
                                     "-c", "2,10,11",
                                     "-f", "c1=spanish",
                                     "-l", "10",
@@ -29,7 +29,8 @@ public class TestEstadisticas {
 
         ControladorAplicacion.ejecutar(opciones);
 
-        Estadisticas.generaNubesDePalabras(opciones, juegos,"spanish");
+        boolean quitarStopWords = true;
+        Estadisticas.generaNubesDePalabras(opciones, juegos,"spanish", quitarStopWords);
 
     }
 }
