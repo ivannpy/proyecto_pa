@@ -76,6 +76,8 @@ unam.pcic/
     └── ...
 ```
 
+---
+
 ## 🚀 Ejecución
 
 1. Clonar el repositorio
@@ -103,3 +105,11 @@ Al iniciar, el sistema solicitará:
 - Columnas a procesar.
 - Filtros deseados.
 - Modo de procesamiento: Secuencial o Concurrente.
+
+---
+
+## 👥 Autores
+
+- Iván Reyes-Hernández, PCIC, UNAM
+- 
+- 
