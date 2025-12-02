@@ -55,7 +55,7 @@ public class HiloDeTrabajo extends Thread {
     public void run() {
         Logger logger = Logger.getInstancia();
 
-        logger.info("Inicia el thread con archivo parcial " + subarchivo.getAbsolutePath());
+        logger.debug("Inicia el thread con archivo parcial " + subarchivo.getAbsolutePath());
 
         LectorCSV lector = new LectorCSV(subarchivo, true);
 

@@ -22,7 +22,7 @@ public class ProcesadorConcurrente implements ProcesadorCSV {
      * @param filtro          El criterio de filtrado a aplicar a cada registro.
      */
     private void procesaArchivos(File carpetaTemporal, CriterioFiltro<RegistroCSV> filtro) {
-        String rutaArchivoFinal = carpetaTemporal.getParent() + File.separator + "resultado.csv";
+        String rutaArchivoFinal = carpetaTemporal.getParent() + File.separator + "resultado_concurrente.csv";
         File archivoSalida = new File(rutaArchivoFinal);
 
         AdministradorTrabajo administrador = new AdministradorTrabajo(carpetaTemporal, filtro, archivoSalida);

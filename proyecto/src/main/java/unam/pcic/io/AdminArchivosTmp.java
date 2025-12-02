@@ -1,5 +1,8 @@
 package unam.pcic.io;
 
+import unam.pcic.Procesamiento;
+import unam.pcic.utilidades.Opciones;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,17 @@ public class AdminArchivosTmp {
      * Construtor privado.
      */
     private AdminArchivosTmp() {
+    }
+
+    public static void limpiaResultadosAnteriores(Opciones opciones) {
+        Procesamiento modo = opciones.getModoProcesamiento();
+
+        if (modo == Procesamiento.SECUENCIAL || modo == Procesamiento.CONCURRENTE) {
+            File archivoSalida = opciones.getArchivoDeSalida();
+            if (archivoSalida.exists()) archivoSalida.delete();
+        } else if (opciones.isEjecutarAmbos()) {
+            // Borrar resultado_secuencial.csv y resultado_concurrente.csv
+        }
     }
 
     /**

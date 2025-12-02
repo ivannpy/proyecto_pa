@@ -19,10 +19,10 @@ public class ControladorAplicacion {
 
     /**
      * Ejecuta la aplicación según las configuraciones.
-     *  Respeta el modo elegido por el usuario:
-     *  - SECUENCIAL
-     *  - CONCURRENTE
-     *  - AMBOS (primero secuencial y luego concurrente)
+     * Respeta el modo elegido por el usuario:
+     * - SECUENCIAL
+     * - CONCURRENTE
+     * - AMBOS (primero secuencial y luego concurrente)
      *
      * @param opciones Opciones para ejecutar el programa.
      */
@@ -34,7 +34,7 @@ public class ControladorAplicacion {
         DivisorArchivo divisor = new DivisorArchivo(opciones);
         analizador.iniciar();
         try {
-            logger.info("Dividiendo archivo en subarchivos...");
+            logger.info("Dividiendo archivo en " + opciones.getCantidadSubarchivos() + " subarchivos...");
             divisor.divide();
         } catch (Exception e) {
             logger.error("Error al dividir archivo: " + e.getMessage());
@@ -42,7 +42,7 @@ public class ControladorAplicacion {
         }
 
         analizador.finalizar();
-        logger.info("Tiempo que tomo dividir archivo :" + analizador.getTiempoTranscurrido() + " s.");
+        logger.info("Tiempo que tomo dividir archivo: " + analizador.getTiempoTranscurrido() + " s.");
 
         if (opciones.isEjecutarAmbos()) {
             logger.debug("Modo seleccionado: AMBOS (SECUENCIAL y CONCURRENTE)");

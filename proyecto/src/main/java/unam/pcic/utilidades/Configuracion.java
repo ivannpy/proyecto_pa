@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Scanner;
 
 
-
 /**
  * - Lee parámetros de entrada del usuario
  * - Valida criterios de búsqueda o filtrado.

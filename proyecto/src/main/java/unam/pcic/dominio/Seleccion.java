@@ -15,5 +15,4 @@ public interface Seleccion<R> {
      * por la implementación.
      */
     R seleccionar(R registro, int[] columnas);
-
 }

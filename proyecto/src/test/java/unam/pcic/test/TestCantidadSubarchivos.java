@@ -11,7 +11,8 @@ public class TestCantidadSubarchivos {
     }
 
     @Test
-    public void testRendimiento() {
+    public void testRendimientoConcurrente() {
+        // Las pruebas se hacen sobre el archivo de 39.5 GB
         String[] args = new String[]{"C:\\Users\\jivan\\Descargas\\Steam reviews\\all_reviews\\all_reviews.csv",
                 "-c", "2,10,11",
                 "-f", "c1=spanish",
@@ -30,6 +31,28 @@ public class TestCantidadSubarchivos {
 
         opciones.setCantidadSubarchivos(8);
         ControladorAplicacion.ejecutar(opciones);
+    }
 
+    @Test
+    public void testRendimientoSecuencial() {
+        // Las pruebas se hacen sobre el archivo de 39.5 GB
+        String[] args = new String[]{"C:\\Users\\jivan\\Descargas\\Steam reviews\\all_reviews\\all_reviews.csv",
+                "-c", "2,10,11",
+                "-f", "c1=spanish",
+                "-l", "10",
+                "-m", "sec"};
+
+        Opciones opciones = Configuracion.parsea(args);
+        opciones.setCantidadSubarchivos(1);
+        ControladorAplicacion.ejecutar(opciones);
+
+        opciones.setCantidadSubarchivos(2);
+        ControladorAplicacion.ejecutar(opciones);
+
+        opciones.setCantidadSubarchivos(4);
+        ControladorAplicacion.ejecutar(opciones);
+
+        opciones.setCantidadSubarchivos(8);
+        ControladorAplicacion.ejecutar(opciones);
     }
 }

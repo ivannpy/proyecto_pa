@@ -4,6 +4,7 @@ import unam.pcic.dominio.CriterioFiltro;
 import unam.pcic.dominio.RegistroCSV;
 import unam.pcic.io.*;
 import unam.pcic.utilidades.Opciones;
+
 import java.io.File;
 
 
@@ -21,7 +22,7 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
      *
      * @param archivo  El archivo a procesar.
      * @param escritor El escritor para el archivo de salida.
-     * @param filtro El criterio de filtrado.
+     * @param filtro   El criterio de filtrado.
      */
     private void procesaArchivo(File archivo, EscritorCSV escritor, CriterioFiltro<RegistroCSV> filtro) {
         Logger logger = Logger.getInstancia();
@@ -65,7 +66,7 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
      * Procesa todos los archivos de la carpeta temporal.
      *
      * @param carpetaTemporal La carpeta temporal con los archivos a procesar.
-     * @param filtro        El criterio de filtrado.
+     * @param filtro          El criterio de filtrado.
      */
     private void procesaArchivos(File carpetaTemporal, CriterioFiltro<RegistroCSV> filtro) {
         Logger logger = Logger.getInstancia();
