@@ -25,7 +25,30 @@ public class Estadisticas {
             "mi", "mis", "mucho", "muy", "no", "nos", "nosotros", "o", "otra", "otro",
             "para", "pero", "poco", "por", "porque", "que", "qué", "se", "si", "sí",
             "sin", "sobre", "su", "sus", "te", "tu", "tus", "un", "una", "unas", "unos",
-            "ya", "y"
+            "ya", "y",
+
+            // --- Extensión ---
+            "aún", "además", "adrede", "ahora", "alrededor", "ambos", "apenas",
+            "aproximadamente", "aquel", "aquella", "aquellas", "aquello", "aquellos",
+            "aquí", "arriba", " abajo", "bajo", "bastante", "bien", "casi", "cerca",
+            "cierta", "ciertas", "cierto", "ciertos", "cómo", "conmigo",
+            "contigo", "consigo", "cuándo", "cuánto", "cuántos", "cuántas", "cuya",
+            "cuyas", "cuyo", "cuyos", "debe", "deben", "debido", "demás", "demasiado",
+            "dentro", "después", "detrás", "durante", "ésta", "éste", "éstos",
+            "éstas", "estaba", "estaban", "estado", "estados", "estamos", "estar",
+            "estará", "estoy", "etc", "etc.", "finalmente",
+            "fuera", "hacia", "hasta", "incluso", "jamás", "juntos", "junto",
+            "le", "les", "luego", "mal", "menos", "mientras", "mismo",
+            "misma", "mismas", "mismos", "nada", "nadie", "ninguna", "ningunas",
+            "ninguno", "ningunos", "nunca", "otras", "otros", "parece",
+            "pronto", "próximo", "puede", "pueden", "pues",
+            "quizá", "quizás", "sé", "según", "ser", "siempre", "sino",
+            "solamente", "solo", "solos", "solas", "tal", "tales", "también",
+            "tampoco", "tan", "tanto", "tanta", "tantas", "tantos", "tendrá",
+            "tendrán", "tenemos", "tener", "tengo", "ti", "todavía", "todo",
+            "toda", "todas", "todos", "tras", "través", "tuya", "tuyas", "tuyo",
+            "tuyos", "usted", "ustedes", "varias", "varios", "veces", "vez",
+            "vos", "vosotros", "vuestra", "vuestras", "vuestro", "vuestros"
     );
 
     private static final Set<String> STOPWORDS_EN = Set.of(
@@ -38,7 +61,30 @@ public class Estadisticas {
             "should've", "now", "is", "am", "are", "was", "were", "be", "been", "being",
             "have", "has", "had", "having", "do", "does", "did", "doing", "i", "you",
             "he", "she", "it", "we", "they", "me", "him", "her", "us", "them", "my",
-            "your", "his", "their"
+            "your", "his", "their",
+
+            "as", "because", "while", "if", "until", "afterwards", "against", "between",
+            "without", "within", "along", "across", "behind", "beyond", "beside",
+            "unless", "where", "when", "why", "how",
+
+            "aren't", "isn't", "wasn't", "weren't", "can't", "couldn't", "didn't",
+            "doesn't", "hadn't", "hasn't", "haven't", "mustn't", "shouldn't",
+            "won't", "wouldn't", "i'm", "you're", "we're", "they're", "i've",
+            "you've", "we've", "they've", "i'll", "you'll", "he'll", "she'll",
+            "we'll", "they'll", "i'd", "you'd", "he'd", "she'd", "we'd", "they'd",
+
+            "mine", "yours", "ours", "theirs", "anyone", "anything", "everyone",
+            "everything", "someone", "something", "noone", "nobody",
+
+            "might", "may", "must", "shall", "would", "could", "ought",
+
+            "almost", "already", "also", "quite", "really", "perhaps", "maybe",
+
+            "this", "that", "these", "those", "another", "enough", "several",
+            "many", "much", "least", "less",
+
+            "etc", "etc.", "via", "per", "therefore", "thus", "hence",
+            "although", "however", "meanwhile"
     );
 
     private static void calculaPromedios(AlmacenRenglones tabla,
@@ -71,12 +117,13 @@ public class Estadisticas {
 
         String carpeta = archivo.getParent();
         String stopWords = quitarStopWords ? "ssw" : "csw";
+        String idiomaStr = idioma.equals("english") ? "_eng_": "_esp_";
 
         try {
             AlmacenRenglones tabla = lector.leerTodo();
             for (String juego : juegos) {
                 String nombreSeguro = juego.replaceAll("\\W+", "_");
-                File archivoSalida = new File(carpeta, nombreSeguro + "_n_gramas_" + stopWords + ".txt");
+                File archivoSalida = new File(carpeta, nombreSeguro + "_n_gramas_" + stopWords + idiomaStr + ".txt");
                 generaNubeDePalabras(tabla, juego, idioma, quitarStopWords, archivoSalida);
             }
             lector.cerrarLectorSecuencial();

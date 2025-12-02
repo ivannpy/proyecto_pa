@@ -15,17 +15,21 @@ public class TestEstadisticas {
 
     @Test
     public void testNubeDePalabras() {
-        String[] juegos = new String[]{
-                "Among Us",
-                "Halo: The Master Chief Collection",
-                "PUBG: BATTLEGROUNDS",
-                "Grand Theft Auto V"};
+        String[] juegos = new String[]{"PUBG: BATTLEGROUNDS"};
+
+        // "Halo: The Master Chief Collection",
+        //                "PUBG: BATTLEGROUNDS",
+        //                "Grand Theft Auto V"
+
+        String idioma = "english";
 
         String archivoParcial = ".\\data\\sample.csv";
         String archivoCompleto = "C:\\Users\\jivan\\Descargas\\Steam reviews\\all_reviews\\all_reviews.csv";
+
         String[] args = new String[]{archivoCompleto,
                 "-c", "2,10,11",
-                "-f", "c1=spanish",
+                //"-f", "c1=spanish",
+                "-f", "c0=" + "PUBG: BATTLEGROUNDS",
                 "-l", "10",
                 "-m", "conc"};
 
@@ -34,9 +38,12 @@ public class TestEstadisticas {
         ControladorAplicacion.ejecutar(opciones);
 
         boolean quitarStopWords = true;
+
         AnalizadorRendimiento analizadorRendimiento = new AnalizadorRendimiento(opciones);
         analizadorRendimiento.iniciar();
-        Estadisticas.generaNubesDePalabras(opciones, juegos, "spanish", quitarStopWords);
+
+        Estadisticas.generaNubesDePalabras(opciones, juegos, idioma, quitarStopWords);
+
         analizadorRendimiento.finalizar();
         System.out.println("Tiempo en generar n-gramas: " + analizadorRendimiento.getTiempoTranscurrido() + " s.");
     }

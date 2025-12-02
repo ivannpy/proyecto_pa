@@ -22,9 +22,15 @@ public class TestCantidadSubarchivos {
                 "-m", "conc"};
 
         Opciones opciones = Configuracion.parsea(args);
+        // 2 hilos
+        opciones.setCantidadProcesadores(2);
+        // subarchivos = hilos x multiplo = 2 * 1 = 2
         opciones.setCantidadSubarchivos(1);
         ControladorAplicacion.ejecutar(opciones);
 
+        // 2 hilos
+        opciones.setCantidadProcesadores(2);
+        // subarchivos = hilos x multiplo = 2 * 2 = 4
         opciones.setCantidadSubarchivos(2);
         ControladorAplicacion.ejecutar(opciones);
 
