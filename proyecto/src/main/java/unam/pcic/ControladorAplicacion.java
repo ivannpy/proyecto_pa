@@ -50,7 +50,7 @@ public class ControladorAplicacion {
         logger.debug("Inicia la ejecución secuencial");
         ControladorAplicacion.ejecutar(opciones, Procesamiento.CONCURRENTE);
 
-        AdminArchivosTmp.eliminaCarpetaTemporal(opciones.getCarpetaTemporal());
+        //AdminArchivosTmp.eliminaCarpetaTemporal(opciones.getCarpetaTemporal());
     }
 
     /**

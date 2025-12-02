@@ -1,5 +1,6 @@
 package unam.pcic.io;
 
+import unam.pcic.dominio.AlmacenRenglones;
 import unam.pcic.dominio.RegistroCSV;
 
 import java.io.BufferedReader;
@@ -167,15 +168,18 @@ public class LectorCSV {
      * @return Una lista de registros.
      * @throws Exception Si ocurre un error al leer el archivo.
      */
-    public List<RegistroCSV> leerTodo() throws Exception {
-        List<RegistroCSV> registros = new ArrayList<>();
+    public AlmacenRenglones leerTodo() throws Exception {
+        AlmacenRenglones almacen = new AlmacenRenglones();
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(archivo), codificacion))) {
             String linea;
             Long numeroLinea = 0L;
 
             if (tieneEncabezado) {
-                br.readLine();
+                String encabezadoLinea = br.readLine();
+                String[] valoresEncabezado = parsearLinea(encabezadoLinea);
+                RegistroCSV encabezado = new RegistroCSV(valoresEncabezado, 0L);
+                almacen.setEncabezado(encabezado);
                 numeroLinea++;
             }
 
@@ -192,12 +196,12 @@ public class LectorCSV {
                     continue;
                 }
 
-                registros.add(new RegistroCSV(valores, numeroLinea));
+                almacen.agregar(new RegistroCSV(valores, numeroLinea));
                 numeroLinea++;
 
             }
         }
-        return registros;
+        return almacen;
     }
 
     /**

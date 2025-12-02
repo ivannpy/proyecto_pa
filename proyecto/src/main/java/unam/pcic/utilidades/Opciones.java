@@ -71,6 +71,11 @@ public class Opciones {
     private File archivoDeEntrada;
 
     /**
+     * El archivo de salida
+     */
+    private File archivoDeSalida;
+
+    /**
      * Constructor para fijar la cantidad de subarchivos a crear.
      *
      * @param multiplo Factor para calcular la cantidad de subarchivos.
@@ -98,6 +103,13 @@ public class Opciones {
     }
 
     /**
+     * Crea la carpeta temporal a partir de la ruta del archivo de entrada.
+     */
+    public void setCarpetaTemporal() {
+        carpetaTemporal = new File(getArchivoDeEntrada().getParentFile() + File.separator + "tmp");
+    }
+
+    /**
      * Regresa el archivo de entrada.
      *
      * @return el archivo de entrada.
@@ -111,13 +123,6 @@ public class Opciones {
      */
     public void setArchivoDeEntrada() {
         archivoDeEntrada = new File(getArchivo());
-    }
-
-    /**
-     * Crea la carpeta temporal a partir de la ruta del archivo de entrada.
-     */
-    public void setCarpetaTemporal() {
-        carpetaTemporal = new File(getArchivoDeEntrada().getParentFile() + File.separator + "tmp");
     }
 
     /**
@@ -148,12 +153,25 @@ public class Opciones {
     }
 
     /**
+     * Modifica si hay argumentos al programa.
+     *
+     * @param hayArgumentos si hay argumentos al programa.
+     */
+    public void setHayArgumentos(boolean hayArgumentos) {
+        this.hayArgumentos = hayArgumentos;
+    }
+
+    /**
      * Regresa la ruta del archivo csv de entrada.
      *
      * @return la ruta del archivo csv de entrada.
      */
     public String getArchivo() {
         return archivo;
+    }
+
+    public void setArchivo(String archivo) {
+        this.archivo = archivo;
     }
 
     /**
@@ -166,12 +184,30 @@ public class Opciones {
     }
 
     /**
+     * Modifica si hay un archivo csv de entrada.
+     *
+     * @param hayArchivo si hay un archivo csv de entrada.
+     */
+    public void setHayArchivo(boolean hayArchivo) {
+        this.hayArchivo = hayArchivo;
+    }
+
+    /**
      * Regresa las columnas a procesar.
      *
      * @return las columnas a procesar.
      */
     public int[] getColumnas() {
         return columnas;
+    }
+
+    /**
+     * Modifica las columnas a procesar.
+     *
+     * @param columnas las columnas a procesar.
+     */
+    public void setColumnas(int[] columnas) {
+        this.columnas = columnas;
     }
 
     /**
@@ -184,12 +220,12 @@ public class Opciones {
     }
 
     /**
-     * Modifica si hay argumentos al programa.
+     * Modifica los filtros a aplicar a las columnas.
      *
-     * @param hayArgumentos si hay argumentos al programa.
+     * @param filtros los filtros a aplicar a las columnas.
      */
-    public void setHayArgumentos(boolean hayArgumentos) {
-        this.hayArgumentos = hayArgumentos;
+    public void setFiltros(List<CondicionFiltro<RegistroCSV>> filtros) {
+        this.filtros = filtros;
     }
 
     /**
@@ -201,22 +237,8 @@ public class Opciones {
         this.archivo = archivo;
     }
 
-    /**
-     * Modifica si hay un archivo csv de entrada.
-     *
-     * @param hayArchivo si hay un archivo csv de entrada.
-     */
-    public void setHayArchivo(boolean hayArchivo) {
-        this.hayArchivo = hayArchivo;
-    }
-
-    /**
-     * Modifica las columnas a procesar.
-     *
-     * @param columnas las columnas a procesar.
-     */
-    public void setColumnas(int[] columnas) {
-        this.columnas = columnas;
+    public String getRutaArchivo() {
+        return archivo;
     }
 
     /**
@@ -235,15 +257,6 @@ public class Opciones {
      */
     public boolean getTodasLasColumnas() {
         return todasLasColumnas;
-    }
-
-    /**
-     * Modifica los filtros a aplicar a las columnas.
-     *
-     * @param filtros los filtros a aplicar a las columnas.
-     */
-    public void setFiltros(List<CondicionFiltro<RegistroCSV>> filtros) {
-        this.filtros = filtros;
     }
 
     /**
@@ -279,6 +292,15 @@ public class Opciones {
     public CriterioFiltro<RegistroCSV> getCriterioFiltro() {
         if (criterioFiltro == null) setCriterioFiltro();
         return criterioFiltro;
+    }
+
+    public File getArchivoDeSalida() {
+        setArchivoDeSalida(new File(carpetaTemporal.getParent() + File.separator + "resultado.csv"));
+        return archivoDeSalida;
+    }
+
+    public void setArchivoDeSalida(File archivoDeSalida) {
+        this.archivoDeSalida = archivoDeSalida;
     }
 
     /**
