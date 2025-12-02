@@ -4,27 +4,25 @@ import unam.pcic.analisis.AnalizadorRendimiento;
 import unam.pcic.dominio.*;
 import unam.pcic.io.AdminArchivosTmp;
 import unam.pcic.io.DivisorArchivo;
-import unam.pcic.io.LectorCSV;
 import unam.pcic.io.Logger;
 import unam.pcic.procesamiento.ProcesadorCSV;
 import unam.pcic.utilidades.Opciones;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * - Orquesta el flujo completo
- * - Ejecuta la versión secuencial y la concurrente
- * - Invoca el analisis de rendimiento.
+ * - Ejecuta la versión secuencial y/o la concurrente según Opciones
+ * - Invoca el análisis de rendimiento.
  * - Coordina la generación de outputs.
  */
 public class ControladorAplicacion {
 
     /**
      * Ejecuta la aplicación según las configuraciones.
-     * Ejecuta ambos modos de procesamiento.
+     *  Respeta el modo elegido por el usuario:
+     *  - SECUENCIAL
+     *  - CONCURRENTE
+     *  - AMBOS (primero secuencial y luego concurrente)
      *
      * @param opciones Opciones para ejecutar el programa.
      */
@@ -42,15 +40,26 @@ public class ControladorAplicacion {
             System.exit(1);
         }
 
-        // TODO: Que la versión secuencial no tome los subarchivos
-        logger.debug("Inicia la ejecución secuencial");
-        ControladorAplicacion.ejecutar(opciones, Procesamiento.SECUENCIAL);
+        if (opciones.isEjecutarAmbos()) {
+            logger.debug("Modo seleccionado: AMBOS (SECUENCIAL y CONCURRENTE)");
 
-        // TODO: Que solo la versión concurrente tome los subarchivos
-        logger.debug("Inicia la ejecución secuencial");
-        ControladorAplicacion.ejecutar(opciones, Procesamiento.CONCURRENTE);
+            logger.debug("Inicia la ejecución SECUENCIAL");
+            ControladorAplicacion.ejecutar(opciones, Procesamiento.SECUENCIAL);
 
-        //AdminArchivosTmp.eliminaCarpetaTemporal(opciones.getCarpetaTemporal());
+            logger.debug("Inicia la ejecución CONCURRENTE");
+            ControladorAplicacion.ejecutar(opciones, Procesamiento.CONCURRENTE);
+
+        } else if (opciones.getModoProcesamiento() == Procesamiento.CONCURRENTE) {
+            logger.debug("Modo seleccionado: CONCURRENTE");
+            logger.debug("Inicia la ejecución CONCURRENTE");
+            ControladorAplicacion.ejecutar(opciones, Procesamiento.CONCURRENTE);
+        } else {
+            logger.debug("Modo seleccionado: SECUENCIAL");
+            logger.debug("Inicia la ejecución SECUENCIAL");
+            ControladorAplicacion.ejecutar(opciones, Procesamiento.SECUENCIAL);
+        }
+
+        AdminArchivosTmp.eliminaCarpetaTemporal(opciones.getCarpetaTemporal());
     }
 
     /**

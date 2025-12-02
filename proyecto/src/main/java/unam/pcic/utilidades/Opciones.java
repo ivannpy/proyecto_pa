@@ -3,6 +3,7 @@ package unam.pcic.utilidades;
 import unam.pcic.dominio.CondicionFiltro;
 import unam.pcic.dominio.CriterioFiltro;
 import unam.pcic.dominio.RegistroCSV;
+import unam.pcic.Procesamiento;
 
 import java.io.File;
 import java.util.Arrays;
@@ -74,6 +75,16 @@ public class Opciones {
      * El archivo de salida
      */
     private File archivoDeSalida;
+
+    /**
+     * El modo de procesamiento
+     */
+    private Procesamiento modoProcesamiento = Procesamiento.SECUENCIAL;
+
+    /**
+     * Si se van a ejecutar ambos modos de procesamiento
+     */
+    private boolean ejecutarAmbos = false;
 
     /**
      * Constructor para fijar la cantidad de subarchivos a crear.
@@ -153,7 +164,7 @@ public class Opciones {
     }
 
     /**
-     * Modifica si hay argumentos al programa.
+     * Modifica si se pasaron argumentos al programa.
      *
      * @param hayArgumentos si hay argumentos al programa.
      */
@@ -295,12 +306,34 @@ public class Opciones {
     }
 
     public File getArchivoDeSalida() {
-        setArchivoDeSalida(new File(carpetaTemporal.getParent() + File.separator + "resultado.csv"));
+        String nombreArchivoFinal;
+        if (modoProcesamiento == Procesamiento.SECUENCIAL) {
+            nombreArchivoFinal = "resultado_secuencial.csv";
+        } else {
+            nombreArchivoFinal = "resultado_concurrente.csv";
+        }
+        setArchivoDeSalida(new File(carpetaTemporal.getParent() + File.separator + nombreArchivoFinal));
         return archivoDeSalida;
     }
 
     public void setArchivoDeSalida(File archivoDeSalida) {
         this.archivoDeSalida = archivoDeSalida;
+    }
+
+    public Procesamiento getModoProcesamiento() {
+        return modoProcesamiento;
+    }
+
+    public void setModoProcesamiento(Procesamiento modoProcesamiento) {
+        this.modoProcesamiento = modoProcesamiento;
+    }
+
+    public boolean isEjecutarAmbos() {
+        return ejecutarAmbos;
+    }
+
+    public void setEjecutarAmbos(boolean ejecutarAmbos) {
+        this.ejecutarAmbos = ejecutarAmbos;
     }
 
     /**
