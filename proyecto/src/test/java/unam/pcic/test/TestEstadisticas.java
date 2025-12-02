@@ -11,12 +11,12 @@ import unam.pcic.utilidades.Opciones;
 public class TestEstadisticas {
 
     public TestEstadisticas() {
-
     }
 
     @Test
     public void testNubeDePalabras() {
-        String[] juegos = new String[]{"Among Us",
+        String[] juegos = new String[]{
+                "Among Us",
                 "Halo: The Master Chief Collection",
                 "PUBG: BATTLEGROUNDS",
                 "Grand Theft Auto V"};
@@ -38,7 +38,6 @@ public class TestEstadisticas {
         analizadorRendimiento.iniciar();
         Estadisticas.generaNubesDePalabras(opciones, juegos, "spanish", quitarStopWords);
         analizadorRendimiento.finalizar();
-        System.out.println("Tiempo en generar n-gramas" + analizadorRendimiento.getTiempoTranscurrido() + " s.");
-
+        System.out.println("Tiempo en generar n-gramas: " + analizadorRendimiento.getTiempoTranscurrido() + " s.");
     }
 }
