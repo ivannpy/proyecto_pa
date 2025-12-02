@@ -26,8 +26,6 @@ public class Estadisticas {
             "para", "pero", "poco", "por", "porque", "que", "qué", "se", "si", "sí",
             "sin", "sobre", "su", "sus", "te", "tu", "tus", "un", "una", "unas", "unos",
             "ya", "y",
-
-            // --- Extensión ---
             "aún", "además", "adrede", "ahora", "alrededor", "ambos", "apenas",
             "aproximadamente", "aquel", "aquella", "aquellas", "aquello", "aquellos",
             "aquí", "arriba", " abajo", "bajo", "bastante", "bien", "casi", "cerca",
@@ -62,27 +60,20 @@ public class Estadisticas {
             "have", "has", "had", "having", "do", "does", "did", "doing", "i", "you",
             "he", "she", "it", "we", "they", "me", "him", "her", "us", "them", "my",
             "your", "his", "their",
-
             "as", "because", "while", "if", "until", "afterwards", "against", "between",
             "without", "within", "along", "across", "behind", "beyond", "beside",
             "unless", "where", "when", "why", "how",
-
             "aren't", "isn't", "wasn't", "weren't", "can't", "couldn't", "didn't",
             "doesn't", "hadn't", "hasn't", "haven't", "mustn't", "shouldn't",
             "won't", "wouldn't", "i'm", "you're", "we're", "they're", "i've",
             "you've", "we've", "they've", "i'll", "you'll", "he'll", "she'll",
             "we'll", "they'll", "i'd", "you'd", "he'd", "she'd", "we'd", "they'd",
-
             "mine", "yours", "ours", "theirs", "anyone", "anything", "everyone",
             "everything", "someone", "something", "noone", "nobody",
-
             "might", "may", "must", "shall", "would", "could", "ought",
-
             "almost", "already", "also", "quite", "really", "perhaps", "maybe",
-
             "this", "that", "these", "those", "another", "enough", "several",
             "many", "much", "least", "less",
-
             "etc", "etc.", "via", "per", "therefore", "thus", "hence",
             "although", "however", "meanwhile"
     );
@@ -92,9 +83,6 @@ public class Estadisticas {
                                          String[] juegos) {
         // Dada una columna numérica, calcula el promedio de los valores de cada juego.
     }
-
-
-    // STOP WORDS para nubes de palabras
 
     private static boolean esStopWord(String palabra, String idioma) {
         if (palabra == null || palabra.isEmpty()) return true;
