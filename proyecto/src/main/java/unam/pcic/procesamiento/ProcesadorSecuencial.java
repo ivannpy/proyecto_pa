@@ -27,7 +27,7 @@ public class ProcesadorSecuencial implements ProcesadorCSV {
     private void procesaArchivo(File archivo, EscritorCSV escritor, CriterioFiltro<RegistroCSV> filtro) {
         Logger logger = Logger.getInstancia();
 
-        logger.info("Procesando archivo: " + archivo.getName());
+        logger.debug("Procesando archivo: " + archivo.getName());
 
         LectorCSV lector = new LectorCSV(archivo, true);
 

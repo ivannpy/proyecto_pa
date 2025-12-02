@@ -80,9 +80,9 @@ public class Estadisticas {
             if (columnas[i].equals("language")) indiceLanguage = i;
         }
 
-        //assert indiceGame != -1;
-        //assert indiceReview != -1;
-        //assert indiceLanguage != -1;
+        assert indiceGame != -1;
+        assert indiceReview != -1;
+        assert indiceLanguage != -1;
 
         CondicionFiltro<RegistroCSV> condicionJuego = new CondicionIgualdad(indiceGame, juego);
         CondicionFiltro<RegistroCSV> condicionIdioma = new CondicionIgualdad(indiceLanguage, idioma);
@@ -149,5 +149,4 @@ public class Estadisticas {
                 .forEach(e -> System.out.println(e.getKey() + " -> " + e.getValue()));
         System.out.println();
     }
-
 }
