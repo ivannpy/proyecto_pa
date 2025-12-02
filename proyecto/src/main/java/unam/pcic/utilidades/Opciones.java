@@ -59,7 +59,7 @@ public class Opciones {
     /**
      * Cantidad de subarchivos a crear
      */
-    private final int cantidadSubarchivos;
+    private int cantidadSubarchivos;
 
     /**
      * La carpeta temporal
@@ -102,6 +102,15 @@ public class Opciones {
      */
     public Opciones() {
         this(2);
+    }
+
+    /**
+     * Fijar la cantidad de subarchivos a crear como un múltiplo de la cantidad de procesadores.
+     *
+     * @param multiplo El factor para calcular la cantidad de subarchivos.
+     */
+    public void setCantidadSubarchivos(int multiplo) {
+        this.cantidadSubarchivos = cantidadProcesadores * multiplo;
     }
 
     /**

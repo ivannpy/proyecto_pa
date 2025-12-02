@@ -17,11 +17,13 @@ public class TestEstadisticas {
     public void testNubeDePalabras() {
         String[] juegos = new String[]{"Counter-Strike","Halo: The Master Chief Collection"};
 
-        String[] args = new String[]{".\\data\\sample.csv", "-c", "2,10,11", "-f", "c1=spanish", "-l", "10",};
+        String[] args = new String[]{".\\data\\sample.csv",
+                                    "-c", "2,10,11",
+                                    "-f", "c1=spanish",
+                                    "-l", "10",
+                                    "-m", "both"};
 
         Opciones opciones = Configuracion.parsea(args);
-
-        System.out.println(opciones);
 
         ControladorAplicacion.ejecutar(opciones);
 

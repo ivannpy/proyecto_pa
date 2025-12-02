@@ -1,6 +1,9 @@
 package unam.pcic.test;
 
 import org.junit.Test;
+import unam.pcic.ControladorAplicacion;
+import unam.pcic.utilidades.Configuracion;
+import unam.pcic.utilidades.Opciones;
 
 public class TestCantidadSubarchivos {
     public TestCantidadSubarchivos() {
@@ -9,6 +12,24 @@ public class TestCantidadSubarchivos {
 
     @Test
     public void testRendimiento() {
+        String[] args = new String[]{"C:\\Users\\jivan\\Descargas\\Steam reviews\\all_reviews\\all_reviews.csv",
+                "-c", "2,10,11",
+                "-f", "c1=spanish",
+                "-l", "10",
+                "-m", "conc"};
+
+        Opciones opciones = Configuracion.parsea(args);
+        opciones.setCantidadSubarchivos(1);
+        ControladorAplicacion.ejecutar(opciones);
+
+        opciones.setCantidadSubarchivos(2);
+        ControladorAplicacion.ejecutar(opciones);
+
+        opciones.setCantidadSubarchivos(4);
+        ControladorAplicacion.ejecutar(opciones);
+
+        opciones.setCantidadSubarchivos(8);
+        ControladorAplicacion.ejecutar(opciones);
 
     }
 }

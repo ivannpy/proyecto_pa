@@ -30,8 +30,9 @@ public class ControladorAplicacion {
         Logger logger = Logger.getInstancia();
 
         // Dividir archivo en subarchivos
+        AnalizadorRendimiento analizador = new AnalizadorRendimiento(opciones);
         DivisorArchivo divisor = new DivisorArchivo(opciones);
-
+        analizador.iniciar();
         try {
             logger.info("Dividiendo archivo en subarchivos...");
             divisor.divide();
@@ -39,6 +40,9 @@ public class ControladorAplicacion {
             logger.error("Error al dividir archivo: " + e.getMessage());
             System.exit(1);
         }
+
+        analizador.finalizar();
+        logger.info("Tiempo que tomo dividir archivo :" + analizador.getTiempoTranscurrido() + " s.");
 
         if (opciones.isEjecutarAmbos()) {
             logger.debug("Modo seleccionado: AMBOS (SECUENCIAL y CONCURRENTE)");
