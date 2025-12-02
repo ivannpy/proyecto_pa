@@ -1,0 +1,91 @@
+Juego: Halo: The Master Chief Collection
+Idioma: english
+Con stop words: No
+
+1-gramas:
+halo -> 99603
+game -> 61713
+s -> 40327
+games -> 28747
+good -> 27386
+t -> 25933
+pc -> 22974
+play -> 22757
+its -> 20580
+like -> 18661
+reach -> 17115
+great -> 16933
+fun -> 14841
+one -> 14150
+get -> 13061
+time -> 12324
+multiplayer -> 12130
+what -> 11633
+still -> 11161
+playing -> 10832
+
+2-gramas:
+s halo -> 8805
+don t -> 7135
+halo reach -> 7032
+its halo -> 6276
+halo pc -> 6236
+halo halo -> 5239
+halo games -> 4867
+master chief -> 4635
+co op -> 3879
+good game -> 3531
+halo ce -> 3488
+great game -> 2915
+play halo -> 2863
+played halo -> 2759
+doesn t -> 2524
+halo s -> 2379
+halo game -> 2368
+chief collection -> 2258
+playing halo -> 2216
+yes yes -> 2192
+
+3-gramas:
+halo halo halo -> 3147
+master chief collection -> 2231
+yes yes yes -> 2037
+s halo pc -> 1684
+flag dropped flag -> 1353
+flag taken flag -> 1303
+taken flag dropped -> 1257
+dropped flag taken -> 1254
+wort wort wort -> 1253
+halo master chief -> 952
+halo combat evolved -> 926
+its halo pc -> 909
+never played halo -> 825
+hill controlled hill -> 775
+halo pc what -> 759
+halo reach halo -> 758
+controlled hill controlled -> 689
+best game ever -> 685
+s halo what -> 684
+halo ce halo -> 676
+
+4-gramas:
+halo halo halo halo -> 2614
+yes yes yes yes -> 1978
+flag dropped flag taken -> 1254
+dropped flag taken flag -> 1243
+flag taken flag dropped -> 1237
+taken flag dropped flag -> 1236
+halo master chief collection -> 890
+wort wort wort wort -> 803
+hill controlled hill controlled -> 688
+controlled hill controlled hill -> 685
+gained lead lost lead -> 534
+dmr dmr dmr dmr -> 482
+armor lock armor lock -> 473
+lock armor lock armor -> 469
+orange orange orange orange -> 447
+halo pc halo pc -> 434
+pc halo pc halo -> 413
+lead gained lead lost -> 408
+lost lead gained lead -> 395
+lead lost lead gained -> 390

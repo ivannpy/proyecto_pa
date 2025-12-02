@@ -1,0 +1,91 @@
+Juego: Grand Theft Auto V
+Idioma: english
+Con stop words: No
+
+1-gramas:
+game -> 312094
+good -> 101514
+online -> 86086
+fun -> 79441
+gta -> 77950
+s -> 72407
+t -> 69943
+play -> 59535
+its -> 49435
+get -> 47345
+like -> 45240
+rockstar -> 45072
+money -> 41421
+great -> 41381
+story -> 35104
+time -> 34489
+best -> 33812
+one -> 31203
+buy -> 28943
+even -> 28738
+
+2-gramas:
+good game -> 30465
+don t -> 25028
+single player -> 18038
+gta online -> 17382
+great game -> 16931
+gta v -> 15016
+best game -> 13392
+take two -> 12102
+story mode -> 11277
+fun game -> 9203
+game ever -> 8847
+grand theft -> 7614
+shark cards -> 7553
+theft auto -> 7459
+open world -> 7112
+play game -> 7016
+nice game -> 6937
+online mode -> 6500
+love game -> 6325
+its fun -> 5913
+
+3-gramas:
+grand theft auto -> 7269
+best game ever -> 6131
+theft auto v -> 3094
+one best games -> 2701
+don t buy -> 2215
+open world game -> 2126
+buy shark cards -> 2122
+fun fun fun -> 2118
+yes yes yes -> 1886
+its good game -> 1880
+loading loading loading -> 1652
+crash crash crash -> 1429
+don t know -> 1424
+best open world -> 1402
+take two interactive -> 1368
+game don t -> 1359
+gta v online -> 1304
+fun play friends -> 1272
+don t get -> 1267
+game play friends -> 1240
+
+4-gramas:
+grand theft auto v -> 3051
+fun fun fun fun -> 2022
+yes yes yes yes -> 1731
+loading loading loading loading -> 1551
+crash crash crash crash -> 1417
+𝒪𝓊𝒾 𝒪𝓊𝒾 𝒪𝓊𝒾 𝒪𝓊𝒾 -> 1139
+bogdan bogdan bogdan bogdan -> 1042
+one best games ever -> 1029
+modder modder modder modder -> 984
+kappa kappa kappa kappa -> 882
+best open world game -> 862
+kill kill kill kill -> 830
+beep beep beep beep -> 820
+ㅤ ㅤ ㅤ ㅤ -> 802
+best game ever played -> 757
+don t buy game -> 751
+bruh bruh bruh bruh -> 733
+good good good good -> 689
+pr pr pr pr -> 688
+easy learn hard master -> 663

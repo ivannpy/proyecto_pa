@@ -15,7 +15,7 @@ public class TestEstadisticas {
 
     @Test
     public void testNubeDePalabras() {
-        String[] juegos = new String[]{"PUBG: BATTLEGROUNDS"};
+        String[] juegos = new String[]{"Grand Theft Auto V"};
 
         // "Halo: The Master Chief Collection",
         //                "PUBG: BATTLEGROUNDS",
@@ -29,7 +29,7 @@ public class TestEstadisticas {
         String[] args = new String[]{archivoCompleto,
                 "-c", "2,10,11",
                 //"-f", "c1=spanish",
-                "-f", "c0=" + "PUBG: BATTLEGROUNDS",
+                "-f", "c0=" + "Grand Theft Auto V",
                 "-l", "10",
                 "-m", "conc"};
 

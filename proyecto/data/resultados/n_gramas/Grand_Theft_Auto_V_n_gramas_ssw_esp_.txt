@@ -1,0 +1,91 @@
+Juego: Grand Theft Auto V
+Idioma: spanish
+Con stop words: No
+
+1-gramas:
+juego -> 22820
+online -> 7942
+bueno -> 7060
+gta -> 6475
+buen -> 4949
+historia -> 4565
+mas -> 4184
+mejor -> 4065
+modo -> 3983
+jugar -> 3683
+god -> 3015
+hacer -> 2777
+tiene -> 2771
+amigos -> 2733
+ta -> 2698
+rockstar -> 2676
+horas -> 2524
+v -> 2506
+son -> 2318
+recomiendo -> 2152
+
+2-gramas:
+buen juego -> 4135
+god god -> 2006
+gta v -> 1572
+modo historia -> 1433
+modo online -> 1368
+mejor juego -> 1324
+ta bueno -> 996
+mamá mamá -> 765
+excelente juego -> 760
+gran juego -> 660
+jugar amigos -> 619
+juego bueno -> 615
+theft auto -> 577
+mejores juegos -> 575
+grand theft -> 571
+gta online -> 562
+uno mejores -> 561
+mundo abierto -> 556
+e e -> 497
+take two -> 480
+
+3-gramas:
+god god god -> 1999
+mamá mamá mamá -> 762
+grand theft auto -> 564
+e e e -> 484
+bugs bugs bugs -> 407
+uno mejores juegos -> 393
+theft auto v -> 286
+ta bueno compralo -> 282
+mejor juego mundo -> 220
+gta san andreas -> 176
+mejor juego historia -> 163
+modo historia online -> 141
+juego mundo abierto -> 136
+buen juego recomiendo -> 111
+lleno bugs lleno -> 109
+bugs lleno bugs -> 108
+historia modo online -> 106
+abduzcan abduzcan abduzcan -> 100
+juego modo historia -> 90
+putas putas putas -> 90
+
+4-gramas:
+god god god god -> 1997
+mamá mamá mamá mamá -> 759
+e e e e -> 478
+bugs bugs bugs bugs -> 406
+grand theft auto v -> 280
+lleno bugs lleno bugs -> 108
+bugs lleno bugs lleno -> 107
+abduzcan abduzcan abduzcan abduzcan -> 99
+putas putas putas putas -> 89
+ᴥ ʔっʕ ᴥ ʔっʕ -> 78
+ʔっʕ ᴥ ʔっʕ ᴥ -> 78
+modo historia modo online -> 70
+saga grand theft auto -> 69
+trash trash trash trash -> 58
+campeonargentina campeonargentina campeonargentina campeonargentina -> 55
+uno mejores juegos historia -> 50
+servicios rockstar estan disponibles -> 49
+recomiendo juego recomiendo juego -> 47
+rockstar estan disponibles gta -> 47
+estan disponibles gta v -> 47

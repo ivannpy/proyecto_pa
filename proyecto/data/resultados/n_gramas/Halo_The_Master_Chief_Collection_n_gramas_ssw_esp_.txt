@@ -1,0 +1,91 @@
+Juego: Halo: The Master Chief Collection
+Idioma: spanish
+Con stop words: No
+
+1-gramas:
+halo -> 4798
+juego -> 3527
+god -> 2179
+pc -> 1291
+juegos -> 1259
+jugar -> 1221
+mejor -> 1217
+bueno -> 1166
+saga -> 1093
+goty -> 999
+historia -> 952
+mas -> 902
+excelente -> 731
+buen -> 703
+reach -> 678
+ta -> 650
+multijugador -> 611
+tiene -> 595
+xbox -> 580
+son -> 574
+
+2-gramas:
+god god -> 1999
+goty goty -> 977
+buen juego -> 447
+halo reach -> 320
+ta bueno -> 258
+wort wort -> 251
+halo ce -> 240
+saga halo -> 239
+excelente juego -> 233
+halo pc -> 228
+mejor juego -> 196
+master chief -> 195
+vale pena -> 195
+jefe maestro -> 164
+obra maestra -> 164
+halo halo -> 153
+jugar halo -> 152
+puedo decir -> 132
+chief collection -> 128
+bueno compralo -> 111
+
+3-gramas:
+god god god -> 1998
+goty goty goty -> 976
+wort wort wort -> 158
+master chief collection -> 123
+ta bueno compralo -> 103
+ʖ ʖ ʖ -> 89
+the master chief -> 85
+wort wortwort wort -> 69
+wortwort wort wort -> 69
+wort wort wortwort -> 69
+halo combat evolved -> 67
+halo the master -> 66
+uno mejores juegos -> 54
+halo reach halo -> 51
+ㅤ ㅤ ㅤ -> 50
+halo ce halo -> 48
+v v v -> 31
+halo halo halo -> 28
+flag taken flag -> 26
+halo pc mas -> 26
+
+4-gramas:
+god god god god -> 1997
+goty goty goty goty -> 975
+ʖ ʖ ʖ ʖ -> 88
+the master chief collection -> 79
+wort wort wort wort -> 72
+wortwort wort wort wort -> 69
+wort wort wort wortwort -> 69
+wort wort wortwort wort -> 69
+wort wortwort wort wort -> 69
+halo the master chief -> 65
+ㅤ ㅤ ㅤ ㅤ -> 43
+v v v v -> 30
+flag taken flag dropped -> 26
+flag dropped flag taken -> 25
+dropped flag taken flag -> 25
+taken flag dropped flag -> 25
+halo master chief collection -> 16
+halo combat evolved halo -> 15
+jacakles snipersme cago jacakles -> 14
+cago jacakles snipersme cago -> 14

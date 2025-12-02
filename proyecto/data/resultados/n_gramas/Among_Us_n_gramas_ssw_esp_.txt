@@ -1,0 +1,91 @@
+Juego: Among Us
+Idioma: spanish
+Con stop words: No
+
+1-gramas:
+juego -> 11692
+amigos -> 6251
+bueno -> 4608
+jugar -> 3840
+divertido -> 3000
+ta -> 2654
+buen -> 2594
+entretenido -> 1712
+mas -> 1611
+mejor -> 1426
+xd -> 1376
+servidores -> 1293
+impostor -> 1283
+us -> 1275
+among -> 1246
+recomiendo -> 1199
+amogus -> 1177
+son -> 1123
+gente -> 1039
+mama -> 1037
+
+2-gramas:
+buen juego -> 2281
+jugar amigos -> 1746
+among us -> 1176
+ta bueno -> 1061
+mama mama -> 1008
+ඞ ඞ -> 700
+amogus amogus -> 618
+juego divertido -> 527
+juego bueno -> 479
+bueno compralo -> 471
+divertido jugar -> 428
+juego entretenido -> 407
+pasar rato -> 401
+mejor juego -> 395
+nashe nashe -> 387
+juego jugar -> 377
+xd xd -> 344
+bueno juego -> 310
+ta weno -> 307
+us among -> 291
+
+3-gramas:
+mama mama mama -> 999
+ඞ ඞ ඞ -> 688
+amogus amogus amogus -> 607
+ta bueno compralo -> 451
+xd xd xd -> 340
+divertido jugar amigos -> 323
+us among us -> 291
+juego jugar amigos -> 291
+among us among -> 264
+buen juego jugar -> 208
+nashe nashe nashe -> 194
+nashenashe nashe nashe -> 190
+nashe nashenashe nashe -> 190
+nashe nashe nashenashe -> 190
+bueno jugar amigos -> 165
+sussus sussus sussus -> 161
+pepeel pepeel pepeel -> 159
+entretenido jugar amigos -> 153
+pasar rato amigos -> 149
+juego pasar rato -> 118
+
+4-gramas:
+mama mama mama mama -> 990
+ඞ ඞ ඞ ඞ -> 682
+amogus amogus amogus amogus -> 600
+xd xd xd xd -> 337
+among us among us -> 264
+us among us among -> 250
+nashe nashe nashenashe nashe -> 190
+nashe nashenashe nashe nashe -> 190
+nashe nashe nashe nashenashe -> 190
+nashenashe nashe nashe nashe -> 190
+buen juego jugar amigos -> 168
+sussus sussus sussus sussus -> 160
+pepeel pepeel pepeel pepeel -> 158
+when the imposter is -> 115
+amogus when the imposter -> 98
+is amogus when the -> 93
+imposter is amogus when -> 93
+the imposter is amogus -> 93
+buen juego pasar rato -> 81
+juego divertido jugar amigos -> 72

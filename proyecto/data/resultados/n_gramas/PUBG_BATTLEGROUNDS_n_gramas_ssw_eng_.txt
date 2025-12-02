@@ -1,0 +1,91 @@
+Juego: PUBG: BATTLEGROUNDS
+Idioma: english
+Con stop words: No
+
+1-gramas:
+game -> 387272
+s -> 72808
+good -> 71051
+t -> 70692
+play -> 63624
+fun -> 58584
+like -> 52710
+get -> 49710
+its -> 44540
+still -> 39712
+time -> 35421
+pubg -> 34742
+even -> 31865
+great -> 30347
+games -> 29182
+one -> 28778
+better -> 28154
+people -> 27071
+don -> 25921
+best -> 25835
+
+2-gramas:
+don t -> 25857
+good game -> 21461
+great game -> 13454
+early access -> 12883
+regionlockchina regionlockchina -> 12015
+battle royale -> 12003
+fun game -> 9024
+play game -> 8389
+best game -> 7213
+h z -> 7035
+game fun -> 6810
+nice game -> 6593
+region lock -> 6583
+game play -> 6350
+game ever -> 6301
+game s -> 6200
+game still -> 6198
+love game -> 6132
+doesn t -> 6099
+recommend game -> 5655
+
+3-gramas:
+regionlockchina regionlockchina regionlockchina -> 11846
+battle royale game -> 3512
+cheaters cheaters cheaters -> 3127
+region lock china -> 3052
+best game ever -> 2827
+lag lag lag -> 2757
+hackers hackers hackers -> 2673
+nc nc nc -> 2666
+don t buy -> 2448
+china region lock -> 2330
+early access game -> 2328
+best battle royale -> 2252
+lock china region -> 2249
+game don t -> 1779
+don t know -> 1727
+shit shit shit -> 1623
+gang gang gang -> 1588
+playerunknown s battlegrounds -> 1460
+game play friends -> 1407
+don t get -> 1351
+
+4-gramas:
+regionlockchina regionlockchina regionlockchina regionlockchina -> 11677
+cheaters cheaters cheaters cheaters -> 3049
+nc nc nc nc -> 2664
+lag lag lag lag -> 2526
+hackers hackers hackers hackers -> 2498
+lock china region lock -> 2242
+china region lock china -> 1845
+region lock china region -> 1791
+shit shit shit shit -> 1601
+gang gang gang gang -> 1582
+pubg pubg pubg pubg -> 1233
+best battle royale game -> 1206
+crash crash crash crash -> 1165
+stupid stupid stupid stupid -> 1127
+bad bad bad bad -> 1097
+ʖ ʖ ʖ ʖ -> 1004
+为什么 为什么 为什么 为什么 -> 983
+kill kill kill kill -> 972
+lidl lidl lidl lidl -> 957
+region lock region lock -> 835

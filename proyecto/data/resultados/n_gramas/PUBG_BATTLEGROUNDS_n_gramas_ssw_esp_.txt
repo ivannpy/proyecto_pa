@@ -1,0 +1,91 @@
+Juego: PUBG: BATTLEGROUNDS
+Idioma: spanish
+Con stop words: No
+
+1-gramas:
+juego -> 26323
+mas -> 5171
+jugar -> 4560
+buen -> 4256
+bueno -> 3864
+mejor -> 3851
+tiene -> 3013
+regionlockchina -> 2633
+amigos -> 2475
+cada -> 2178
+pubg -> 2080
+son -> 2029
+bugs -> 2028
+recomiendo -> 2025
+partida -> 2002
+horas -> 1937
+mierda -> 1832
+pc -> 1807
+va -> 1735
+ni -> 1731
+
+2-gramas:
+buen juego -> 3361
+regionlockchina regionlockchina -> 2572
+battle royale -> 1151
+jugar amigos -> 675
+mejor juego -> 658
+juego bueno -> 640
+excelente juego -> 592
+early access -> 587
+gran juego -> 527
+juego tiene -> 434
+juego divertido -> 394
+vale pena -> 376
+juego entretenido -> 370
+sigue siendo -> 330
+h z -> 330
+battle royal -> 324
+gb ram -> 314
+horas juego -> 309
+cada partida -> 306
+he jugado -> 306
+
+3-gramas:
+regionlockchina regionlockchina regionlockchina -> 2539
+china cheaters china -> 236
+cheaters china cheaters -> 236
+cheats cheats cheats -> 231
+free to play -> 209
+mejor battle royale -> 202
+m r d -> 200
+t m r -> 200
+p v t -> 200
+v t m -> 200
+d p v -> 199
+r d p -> 199
+liteque vuelva pubg -> 168
+vuelva pubg liteque -> 168
+pubg liteque vuelva -> 168
+hackers hackers hackers -> 159
+uno mejores juegos -> 150
+ㅤ ㅤ ㅤ -> 129
+sanhok sanhok sanhok -> 125
+region lock china -> 120
+
+4-gramas:
+regionlockchina regionlockchina regionlockchina regionlockchina -> 2506
+china cheaters china cheaters -> 236
+cheaters china cheaters china -> 235
+cheats cheats cheats cheats -> 227
+p v t m -> 200
+v t m r -> 200
+t m r d -> 200
+r d p v -> 199
+d p v t -> 199
+m r d p -> 199
+pubg liteque vuelva pubg -> 168
+vuelva pubg liteque vuelva -> 168
+liteque vuelva pubg liteque -> 167
+hackers hackers hackers hackers -> 152
+sanhok sanhok sanhok sanhok -> 124
+nice nice nice nice -> 112
+ㅤ ㅤ ㅤ ㅤ -> 102
+china region lock china -> 92
+lock china region lock -> 90
+region lock china region -> 90

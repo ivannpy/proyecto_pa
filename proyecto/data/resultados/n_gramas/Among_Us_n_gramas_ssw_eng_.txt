@@ -1,0 +1,91 @@
+Juego: Among Us
+Idioma: english
+Con stop words: No
+
+1-gramas:
+game -> 190806
+fun -> 108889
+sus -> 100045
+get -> 67903
+good -> 62477
+friends -> 61018
+play -> 52655
+among -> 50550
+head -> 45882
+s -> 42227
+its -> 42004
+t -> 31822
+like -> 25506
+great -> 25433
+people -> 23331
+amogus -> 21296
+imposter -> 18831
+love -> 18161
+yes -> 16160
+playing -> 15348
+
+2-gramas:
+sus sus -> 54772
+get head -> 44800
+head get -> 43850
+among among -> 22968
+good game -> 19666
+fun game -> 17105
+play friends -> 14722
+don t -> 12388
+great game -> 12337
+game play -> 11123
+amogus amogus -> 10875
+its fun -> 10402
+game fun -> 8731
+fun play -> 7850
+fun fun -> 7313
+ඞ ඞ -> 7102
+fun friends -> 6733
+red sus -> 6667
+its good -> 5446
+best game -> 5181
+
+3-gramas:
+sus sus sus -> 53171
+get head get -> 43539
+head get head -> 43495
+among among among -> 22385
+amogus amogus amogus -> 10685
+ඞ ඞ ඞ -> 7012
+fun fun fun -> 6684
+game play friends -> 6248
+sussy sussy sussy -> 3943
+fun play friends -> 3890
+fun game play -> 3866
+ding ding ding -> 3421
+red sus red -> 2879
+sus red sus -> 2846
+stop make stop -> 2658
+make stop make -> 2651
+yes yes yes -> 2498
+help help help -> 2455
+sus imposter sus -> 2386
+imposter sus imposter -> 2353
+
+4-gramas:
+sus sus sus sus -> 52542
+get head get head -> 43431
+head get head get -> 42984
+among among among among -> 22206
+amogus amogus amogus amogus -> 10593
+ඞ ඞ ඞ ඞ -> 6947
+fun fun fun fun -> 6450
+sussy sussy sussy sussy -> 3907
+ding ding ding ding -> 3079
+red sus red sus -> 2745
+sus red sus red -> 2697
+make stop make stop -> 2647
+stop make stop make -> 2636
+fun game play friends -> 2565
+help help help help -> 2439
+imposter sus imposter sus -> 2327
+sus imposter sus imposter -> 2324
+yes yes yes yes -> 2303
+headget headget headget headget -> 2235
+bad bad bad bad -> 1803
