@@ -37,7 +37,7 @@ public class TestCantidadSubarchivos {
 
     @Test
     public void testRendimientoSecuencial() {
-        // Las pruebas se hacen sobre el archivo de 39.5 GB
+        // Las pruebas finales se hacen sobre el archivo de 39.5 GB
         String archivoParcial = ".\\data\\sample.csv";
         String archivoCompleto = "C:\\Users\\jivan\\Descargas\\Steam reviews\\all_reviews\\all_reviews.csv";
         String[] args = new String[]{archivoParcial,

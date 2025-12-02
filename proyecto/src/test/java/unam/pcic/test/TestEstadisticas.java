@@ -2,6 +2,7 @@ package unam.pcic.test;
 
 import org.junit.Test;
 import unam.pcic.ControladorAplicacion;
+import unam.pcic.analisis.AnalizadorRendimiento;
 import unam.pcic.analisis.Estadisticas;
 import unam.pcic.utilidades.Configuracion;
 import unam.pcic.utilidades.Opciones;
@@ -22,7 +23,7 @@ public class TestEstadisticas {
 
         String archivoParcial = ".\\data\\sample.csv";
         String archivoCompleto = "C:\\Users\\jivan\\Descargas\\Steam reviews\\all_reviews\\all_reviews.csv";
-        String[] args = new String[]{archivoParcial,
+        String[] args = new String[]{archivoCompleto,
                 "-c", "2,10,11",
                 "-f", "c1=spanish",
                 "-l", "10",
@@ -33,7 +34,11 @@ public class TestEstadisticas {
         ControladorAplicacion.ejecutar(opciones);
 
         boolean quitarStopWords = true;
+        AnalizadorRendimiento analizadorRendimiento = new AnalizadorRendimiento(opciones);
+        analizadorRendimiento.iniciar();
         Estadisticas.generaNubesDePalabras(opciones, juegos, "spanish", quitarStopWords);
+        analizadorRendimiento.finalizar();
+        System.out.println("Tiempo en generar n-gramas" + analizadorRendimiento.getTiempoTranscurrido() + " s.");
 
     }
 }
